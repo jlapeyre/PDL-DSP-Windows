@@ -1,0 +1,10 @@
+Changes
+lib/PDL/DSP/mkwindows.pl
+Makefile.PL
+MANIFEST			This list of files
+README.pod
+t/00-load.t
+t/manifest.t
+t/pod-coverage.t
+t/pod.t
+t/1-windows.t

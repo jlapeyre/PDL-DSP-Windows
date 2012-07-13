@@ -1,0 +1,42 @@
+=head1 PDL::DSP::Windows
+
+A module for PDL providing window functions for signal processing.
+
+For more information about this module and what it provides, see the
+documentation for L<PDL::DSP::Windows>.
+
+=head1 INSTALLATION
+
+To install this module from the source package, run the following commands:
+
+	perl Makefile.PL
+	make
+	make test
+	make install
+
+=head1 DEPENDENCIES
+
+The module requires L<PDL>. It is written in pure PDL.
+This means that neither installation nor running
+require any compilers.
+For instance neither C nor Fortran are required.
+
+Some functions and methods will be disabled at runtime if
+other modules are not available. In particular:
+Plotting requires L<PDL::Graphics::Gnuplot>.
+The C<kaiser> window requires L<PDL::GSLSF::BESSEL>.
+The C<dpssw> window requires L<PDL::LinearAlgebra::Special>.
+
+=head1 AUTHOR
+
+John Lapeyre <jlapeyre @ cpan dot org >
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2012 John Lapeyre
+
+This program is free software; you can redistribute it and/or modify it
+under the terms of either: the GNU General Public License as published
+by the Free Software Foundation; or the Artistic License.
+
+See http://dev.perl.org/licenses/ for more information.
