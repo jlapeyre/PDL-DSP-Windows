@@ -28,3 +28,29 @@ lib/PDL/DSP/Windows.pm:
 	cd lib/PDL/DSP && $(PERL) ./mkwindows.pl
 '    
 };
+
+# reroute the main POD into a separate README.pod if requested. This is here
+# purely to generate a README.pod for the github front page
+my $POD_header = <<EOF;
+=head1 OVERVIEW
+
+A module for PDL providing window functions for signal processing.
+This module is currently not on CPAN.
+
+=cut
+
+EOF
+
+if(exists $ARGV[0] && $ARGV[0] eq 'README.pod')
+{
+  open MOD, 'lib/PDL/DSP/Windows.pm' or die "Couldn't open main module";
+  open README, '>README.pod'              or die "Couldn't open README.pod";
+
+  print README $POD_header;
+
+  while (<MOD>)
+  {
+    if (/^=/../^=cut/)
+    { print README; }
+  }
+}
