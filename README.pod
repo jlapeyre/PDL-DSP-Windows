@@ -25,7 +25,7 @@ Some functions and methods will be disabled at runtime if
 other modules are not available. In particular:
 Plotting requires L<PDL::Graphics::Gnuplot>.
 The C<kaiser> window requires L<PDL::GSLSF::BESSEL>.
-The C<dpssw> window requires L<PDL::LinearAlgebra::Special>.
+The C<dpss> window requires L<PDL::LinearAlgebra::Special>.
 
 =head1 AUTHOR
 
