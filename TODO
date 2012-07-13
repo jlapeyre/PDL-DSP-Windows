@@ -15,7 +15,4 @@ mkwindows.pl --
     module. But the tools to determine values of parameters
     for window functions probably belong here.
 
-  * plot more than one window simultaneously.
-
-  
-  
+  * plot more than one window function simultaneously.
