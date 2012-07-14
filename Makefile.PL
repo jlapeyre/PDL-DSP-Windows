@@ -7,7 +7,7 @@ WriteMakefile(
     NAME                => 'PDL::DSP::Windows',
     AUTHOR              => q{John Lapeyre <jlapeyre@cpan.org>},
     VERSION_FROM        => 'lib/PDL/DSP/mkwindows.pl',
-#    ABSTRACT_FROM       => 'lib/PDL/DSP/Windows.pm',
+    ABSTRACT_FROM       => 'lib/PDL/DSP/mkwindows.pl',
     LICENSE=> 'perl',
     PL_FILES            => {},
     PM => {
@@ -32,6 +32,8 @@ lib/PDL/DSP/Windows.pm:
 # reroute the main POD into a separate README.pod if requested. This is here
 # purely to generate a README.pod for the github front page
 my $POD_header = <<EOF;
+PDL-DSP-Windows is Copyright (C) 2012, John Lapeyre.
+
 =head1 OVERVIEW
 
 A module for PDL providing window functions for signal processing.

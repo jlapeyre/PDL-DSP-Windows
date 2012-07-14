@@ -544,8 +544,8 @@ sub _mk_dpss {
     my $sub2 = $periodic ? ',0:-2' : '';
         $sub1 .
     q^  
-        barf 'dpssw: PDL::LinearAlgebra not installed.' unless $HAVE_LinearAlgebra;
-        barf "dpssw: $beta not between 0 and $N." unless
+        barf 'dpss: PDL::LinearAlgebra not installed.' unless $HAVE_LinearAlgebra;
+        barf "dpss: $beta not between 0 and $N." unless
               $beta >= 0 and $beta <= $N;
         $beta /= ($N/2);
         my $k = sequence($N);
@@ -838,7 +838,7 @@ refer to several different functions. As a result, the choice
 of window names is somewhat arbitrary.
 
 The L</kaiser> window function requires
-L<PDL::GSLSF::BESSEL>. The L</dpssw> window function requires
+L<PDL::GSLSF::BESSEL>. The L</dpss> window function requires
 L<PDL::LinearAlgebra>. But the remaining window functions may
 be used if these modules are not installed.
 
@@ -1341,7 +1341,7 @@ sub plot_freq {
     my $ordinates = zeroes($mf)->xlinvals(-$ordinate_range,$ordinate_range);
     my $ylab = 'freqeuncy response (dB)';
     PDL::Graphics::Gnuplot::plot(title => $title,
-       xmin => -$ordinate_range, 
+       xmin => -$ordinate_range, xmax => $ordinate_range, 
        xlabel => $xlab,  ylabel => $ylab,
        with => 'line', $ordinates, 20 * log10($mf) );
     return $self;
@@ -1602,8 +1602,8 @@ by the Free Software Foundation; or the Artistic License.
 
 See http://dev.perl.org/licenses/ for more information.
 
-This software is not licensed or distributed by The MathWorks, Inc.,
-liscensor of MATLAB.
+This software is neither licensed nor distributed by The MathWorks, Inc.,
+maker and liscensor of MATLAB.
 
 =cut
 

@@ -1,0 +1,2 @@
+version=3
+http://search.cpan.org/dist/PDL-DSP-Windows/   .*/PDL-DSP-Windows-v?(\d[\d.-]+)\.(?:tar(?:\.gz|\.bz2)?|tgz|zip)$
