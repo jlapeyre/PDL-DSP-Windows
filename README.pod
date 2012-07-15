@@ -1,3 +1,5 @@
+PDL-DSP-Windows is Copyright (C) 2012, John Lapeyre.
+
 =head1 OVERVIEW
 
 A module for PDL providing window functions for signal processing.
@@ -45,7 +47,7 @@ refer to several different functions. As a result, the choice
 of window names is somewhat arbitrary.
 
 The L</kaiser> window function requires
-L<PDL::GSLSF::BESSEL>. The L</dpssw> window function requires
+L<PDL::GSLSF::BESSEL>. The L</dpss> window function requires
 L<PDL::LinearAlgebra>. But the remaining window functions may
 be used if these modules are not installed.
 
@@ -855,7 +857,7 @@ by the Free Software Foundation; or the Artistic License.
 
 See http://dev.perl.org/licenses/ for more information.
 
-This software is not licensed or distributed by The MathWorks, Inc.,
-liscensor of MATLAB.
+This software is neither licensed nor distributed by The MathWorks, Inc.,
+maker and liscensor of MATLAB.
 
 =cut
