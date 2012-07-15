@@ -800,7 +800,7 @@ our %window_definitions;
 
 =head1 NAME
 
-PDL::DSP::Windows - Windowing functions for signal processing
+PDL::DSP::Windows - Window functions for signal processing
 
 =head1 SYNOPSIS
 
