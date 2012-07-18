@@ -186,7 +186,7 @@ same way as arguments the subroutine L</window>.
 For example:
 
   my $win = new PDL::DSP::Windows(8,'hann');
-  $win->init(10,'hamming);
+  $win->init(10,'hamming');
 
 =cut
 =head2 samples
@@ -324,10 +324,10 @@ The default display type is used.
 =item ordinate => ORDINATE
 
 This sets the units of frequency of the ordinate axis.
-C<ORDINATE> must be one of C<nyquist> (range C<-1,1>), for
+C<ORDINATE> must be one of C<nyquist>, for
 fraction of the nyquist frequency (range C<-1,1>),
 C<sample>, for fraction of the sampling frequncy (range
-C<-.5,.5>, or C<bin> for frequency bin number (range
+C<-.5,.5>), or C<bin> for frequency bin number (range
 C<0,$N-1>). The default value is C<nyquist>.
 
 =back

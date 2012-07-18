@@ -1011,7 +1011,7 @@ same way as arguments the subroutine L</window>.
 For example:
 
   my $win = new PDL::DSP::Windows(8,'hann');
-  $win->init(10,'hamming);
+  $win->init(10,'hamming');
 
 =cut
 
