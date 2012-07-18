@@ -667,11 +667,14 @@ sub print_func_doc1 {
     $octave = alien_prog_string('Octave 3.6.2',$wdef->{octave}) if $wdef->{octave};
     my $matlab = '';
     $matlab = alien_prog_string('Matlab',$wdef->{matlab}) if $wdef->{matlab};
+    my $sig = $signature{$name};
     my $seealso = '';
-    $seealso = 'See also L</' .  $wdef->{seealso} . ">.\n" if $wdef->{seealso};
+    die $name . ' has see also to unknown window function: "' . $wdef->{seealso} . '"'
+    unless not $wdef->{seealso} or exists $window_definitions{$wdef->{seealso}};
+    $seealso = 'See also L<' . $wdef->{seealso} . '|/' 
+        .  $wdef->{seealso} . $sig . ">.\n" if $wdef->{seealso};
     my $periodic = $wdef->{noper} ? 
         'No periodic version of this window is defined.' ."\n" : '';
-    my $sig = $signature{$name};
     my ($as, $fn, $pfn);
     my $codedoc = '';
     if ( defined $wdef->{arrcode} and not $wdef->{nocodedoc} ) {

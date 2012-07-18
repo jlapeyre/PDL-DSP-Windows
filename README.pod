@@ -412,7 +412,7 @@ The Bartlett window. (Ref 1). Another name for this window is the fejer window. 
  1 - abs arr,
 
 where the points in arr range from -1 through 1.
-See also L</triangular>.
+See also L<triangular|/triangular($N)>.
 
 
 =cut
@@ -636,7 +636,7 @@ The Hann window. (Ref 1). One of the Blackman-Harris family, with coefficients
 
  a0 = 0.5, a1 = 0.5
 
-Another name for this window is the hanning window. See also L</hann_matlab>.
+Another name for this window is the hanning window. See also L<hann_matlab|/hann_matlab($N)>.
 
 
 =cut
@@ -649,7 +649,7 @@ The Hann (matlab) window. Equivalent to the Hann window of N+2 points, with the 
 
 where the points in arr are the cosine of points ranging from 2PI/($N+1) through 2PI*$N/($N+1).
 This routine gives the same result as the routine B<hanning> in Matlab.
-See also L</hann>.
+See also L<hann|/hann($N)>.
 
 
 =cut
@@ -700,7 +700,7 @@ The Nuttall window. One of the Blackman-Harris family, with coefficients
 
  a0 = 0.3635819, a1 = 0.4891775, a2 = 0.1365995, a3 = 0.0106411
 
-See also L</nuttall1>.
+See also L<nuttall1|/nuttall1($N)>.
 
 
 =cut
@@ -711,14 +711,14 @@ The Nuttall (v1) window. A window referred to as the Nuttall window. One of the 
  a0 = 0.355768, a1 = 0.487396, a2 = 0.144232, a3 = 0.012604
 
 This routine gives the same result as the routine B<nuttallwin> in Octave 3.6.2.
-See also L</nuttall>.
+See also L<nuttall|/nuttall($N)>.
 
 
 =cut
 =head2 parzen($N)
 
 The Parzen window. (Ref 1). Other names for this window are: Jackson, Valle-Poussin. This function disagrees with the Octave subroutine B<parzenwin>, but agrees with Ref. 1.
-See also L</parzen_octave>.
+See also L<parzen_octave|/parzen_octave($N)>.
 
 
 =cut
@@ -726,7 +726,7 @@ See also L</parzen_octave>.
 
 The Parzen window. No periodic version of this window is defined.
 This routine gives the same result as the routine B<parzenwin> in Octave 3.6.2.
-See also L</parzen>.
+See also L<parzen|/parzen($N)>.
 
 
 =cut
@@ -752,7 +752,7 @@ The Triangular window.  This window is defined by
  1 - abs arr,
 
 where the points in arr range from -$N/($N-1) through $N/($N-1).
-See also L</bartlett>.
+See also L<bartlett|/bartlett($N)>.
 
 
 =cut
