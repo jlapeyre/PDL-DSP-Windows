@@ -973,7 +973,8 @@ sub list_windows {
 
 =for ref
 
-Create a new Windows object. ARGS are interpreted in exactly the
+Create an instance of a Windows object. If C<ARGS> are given, the instance
+is initialized. C<ARGS> are interpreted in exactly the
 same way as arguments the subroutine L</window>.
 
 =for example
@@ -1062,8 +1063,9 @@ sub init {
 
 Generate and return a reference to the piddle of $N samples for the window C<$win>.
 This is the real-space representation of the window.
-The samples are stored in the object C<$win> as well. See the method
-L</get> below.
+The samples are stored in the object C<$win>, but are regenerated
+every time C<samples> is invoked. See the method
+L</get_samples> below.
 
 =for example
 
@@ -1144,7 +1146,8 @@ sub get {
 =for ref
 
 Return a reference to the pdl of samples for the Window instance C<$win>.
-The samples are created with the method L</samples> if they don't exist.
+The samples will be generated with the method L</samples> if and only if
+they have not yet been generated.
 
 =cut
 
@@ -1180,7 +1183,8 @@ sub get_modfreqs {
 
 =for ref
 
-Return an array ref of the parameter values for the instance C<$win>.
+Create a new array containing the parameter values for the instance C<$win>
+and return a reference to the array.
 Note that not all window types take parameters.
 
 =cut
@@ -1205,7 +1209,7 @@ sub get_N {
 
 Return a name suitable for printing associated with the window $win. This is
 something like the name used in the documentation for the particular
-window function.
+window function. This is static data and does not depend on the instance.
 
 =cut
 
@@ -1299,9 +1303,11 @@ The default display type is used.
 =item ordinate => ORDINATE
 
 This sets the units of frequency of the ordinate axis.
-C<ORDINATE> must be one of C<nyquist>, for fraction of the nyquist
-frequency,  C<sample>, for fraction of the sampling frequncy, 
-or C<bin> for frequency bin number.
+C<ORDINATE> must be one of C<nyquist>, for
+fraction of the nyquist frequency (range C<-1,1>),
+C<sample>, for fraction of the sampling frequncy (range
+C<-.5,.5>), or C<bin> for frequency bin number (range
+C<0,$N-1>). The default value is C<nyquist>.
 
 =back
 
