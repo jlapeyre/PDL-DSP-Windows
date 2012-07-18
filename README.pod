@@ -312,8 +312,8 @@ Or this
 =for ref
 
 Plot the frequency response (magnitude of the DFT of the window samples). 
-The response is measured in dB, and the frequency as a fraction of the
-Nyquist frequency.
+The response is plotted in dB, and the frequency 
+(by default) as a fraction of the Nyquist frequency.
 Currently, only PDL::Graphics::Gnuplot is supported.
 The default display type is used.
 
@@ -321,10 +321,10 @@ The default display type is used.
 
 =over
 
-=item ordinate => ORDINATE
+=item coord => COORD
 
-This sets the units of frequency of the ordinate axis.
-C<ORDINATE> must be one of C<nyquist>, for
+This sets the units of frequency of the co-ordinate axis.
+C<COORD> must be one of C<nyquist>, for
 fraction of the nyquist frequency (range C<-1,1>),
 C<sample>, for fraction of the sampling frequncy (range
 C<-.5,.5>), or C<bin> for frequency bin number (range

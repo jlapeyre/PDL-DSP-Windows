@@ -1294,8 +1294,8 @@ Or this
 =for ref
 
 Plot the frequency response (magnitude of the DFT of the window samples). 
-The response is measured in dB, and the frequency as a fraction of the
-Nyquist frequency.
+The response is plotted in dB, and the frequency 
+(by default) as a fraction of the Nyquist frequency.
 Currently, only PDL::Graphics::Gnuplot is supported.
 The default display type is used.
 
@@ -1303,10 +1303,10 @@ The default display type is used.
 
 =over
 
-=item ordinate => ORDINATE
+=item coord => COORD
 
-This sets the units of frequency of the ordinate axis.
-C<ORDINATE> must be one of C<nyquist>, for
+This sets the units of frequency of the co-ordinate axis.
+C<COORD> must be one of C<nyquist>, for
 fraction of the nyquist frequency (range C<-1,1>),
 C<sample>, for fraction of the sampling frequncy (range
 C<-.5,.5>), or C<bin> for frequency bin number (range
@@ -1320,7 +1320,7 @@ sub plot_freq {
     my $self = shift;
     my $opt = new PDL::Options(
         {
-            ordinate => 'nyquist'
+            coord => 'nyquist'
         });
     my $iopts = @_ ? shift : {};
     my $opts = $opt->options($iopts);
@@ -1330,29 +1330,29 @@ sub plot_freq {
     my $param_str = $self->format_plot_param_vals;
     my $title = $self->get_name() . $param_str  
         . ', frequency response. ENBW=' . sprintf("%2.3f",$self->enbw);
-    my $ord = $opts->{ordinate};
-    my ($ordinate_range,$xlab);
-    if ($ord eq 'nyquist') {
-        $ordinate_range = 1;
+    my $coord = $opts->{coord};
+    my ($coordinate_range,$xlab);
+    if ($coord eq 'nyquist') {
+        $coordinate_range = 1;
         $xlab = 'Fraction of Nyquist frequency';
     }
-    elsif ($ord eq 'sample') {
-        $ordinate_range = .5;
+    elsif ($coord eq 'sample') {
+        $coordinate_range = .5;
         $xlab = 'Fraction of sampling freqeuncy';
     }
-    elsif ($ord eq 'bin') {
-        $ordinate_range = ($self->get_N)/2;
+    elsif ($coord eq 'bin') {
+        $coordinate_range = ($self->get_N)/2;
         $xlab = 'bin';
     }
     else {
-        barf "plot_freq: Unknown ordinate unit specification $ord";
+        barf "plot_freq: Unknown ordinate unit specification $coord";
     }
-    my $ordinates = zeroes($mf)->xlinvals(-$ordinate_range,$ordinate_range);
+    my $coordinates = zeroes($mf)->xlinvals(-$coordinate_range,$coordinate_range);
     my $ylab = 'freqeuncy response (dB)';
     PDL::Graphics::Gnuplot::plot(title => $title,
-       xmin => -$ordinate_range, xmax => $ordinate_range, 
+       xmin => -$coordinate_range, xmax => $coordinate_range, 
        xlabel => $xlab,  ylabel => $ylab,
-       with => 'line', $ordinates, 20 * log10($mf) );
+       with => 'line', $coordinates, 20 * log10($mf) );
     return $self;
 }
 
