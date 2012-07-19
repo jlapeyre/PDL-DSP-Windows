@@ -1,10 +1,5 @@
-use strict;
-use warnings;
-use Test::More;
-
-BEGIN {
-    plan tests => 101;
-}
+use strict; use warnings;
+use Test::More 0.88;
 
 use PDL::LiteF;
 use PDL::NiceSlice;
@@ -99,6 +94,6 @@ ok( tapprox( chebpoly( 3  , pdl([.5,1,1.2]) ) , [-1, 1, 3.312] ));
 ok( tapprox( chebpoly( 3  , [.5,1,1.2] ) , [-1, 1, 3.312] ));
 ok( chebpoly( 3, 1.2 ) == 3.312  );
 
-
+done_testing;
 
 
