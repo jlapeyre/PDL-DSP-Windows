@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-$PDL::DSP::Windows::VERSION = '0.01';
+$PDL::DSP::Windows::VERSION = '0.02';
 
 =head1 mkwindows.pl
 
