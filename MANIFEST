@@ -10,11 +10,3 @@ t/00-load.t
 t/manifest.t
 t/pod.t
 t/1-windows.t
-debian/control
-debian/changelog
-debian/copyright
-debian/rules
-debian/watch
-debian/source
-debian/source/format
-debian/compat

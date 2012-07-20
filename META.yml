@@ -1,24 +1,23 @@
----
-abstract: 'Windowing functions for signal processing'
+--- #YAML:1.0
+name:               PDL-DSP-Windows
+version:            0.002
+abstract:           Window functions for signal processing
 author:
-  - 'John Lapeyre <jlapeyre@cpan.org>'
-build_requires:
-  ExtUtils::MakeMaker: 0
+    - John Lapeyre <jlapeyre@cpan.org>
+license:            perl
+distribution_type:  module
 configure_requires:
-  ExtUtils::MakeMaker: 0
-distribution_type: module
-dynamic_config: 0
-generated_by: 'ExtUtils::MakeMaker version 6.57_05'
-license: perl
-meta-spec:
-  url: http://module-build.sourceforge.net/META-spec-v1.4.html
-  version: 1.4
-name: PDL-DSP-Windows
-no_index:
-  directory:
-    - t
-    - inc
+    ExtUtils::MakeMaker:  0
+build_requires:
+    ExtUtils::MakeMaker:  0
 requires:
-  PDL: 0
-  Test::More: 0
-version: 0.01
+    PDL:         0
+    Test::More:  0
+no_index:
+    directory:
+        - t
+        - inc
+generated_by:       ExtUtils::MakeMaker version 6.57_05
+meta-spec:
+    url:      http://module-build.sourceforge.net/META-spec-v1.4.html
+    version:  1.4
