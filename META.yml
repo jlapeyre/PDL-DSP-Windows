@@ -1,5 +1,5 @@
 ---
-abstract: 'Windowing functions for signal processing'
+abstract: 'Window functions for signal processing'
 author:
   - 'John Lapeyre <jlapeyre@cpan.org>'
 build_requires:
@@ -21,4 +21,4 @@ no_index:
 requires:
   PDL: 0
   Test::More: 0
-version: 0.01
+version: 0.002
