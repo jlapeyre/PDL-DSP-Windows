@@ -3,12 +3,12 @@ use strict;
 use warnings;
 use ExtUtils::MakeMaker;
 
-# This file is generated at build time by mkwindows.pl. The
+# The file Windows.pm is generated at build time by mkwindows.pl. The
 # only reason to include it in the distribution is so CPAN
 # will use it for documentation rather than mkwindows.pl. I
 # can't find a better way at the moment.
-
-unlink 'lib/PDL/DSP/Windows.pm';
+# See the bottom of this file Makefile.PL, where 
+# lib/PDL/DSP/Windows.pm is deleted.
 
 WriteMakefile(
     NAME                => 'PDL::DSP::Windows',
@@ -52,7 +52,7 @@ EOF
 
 if(exists $ARGV[0] && $ARGV[0] eq 'README.pod')
 {
-  open MOD, 'lib/PDL/DSP/Windows.pm' or die "Couldn't open main module";
+  open MOD, 'lib/PDL/DSP/Windows.pm' or die "Couldn't open main module Windows.pm";
   open README, '>README.pod'              or die "Couldn't open README.pod";
 
   print README $POD_header;
@@ -63,3 +63,5 @@ if(exists $ARGV[0] && $ARGV[0] eq 'README.pod')
     { print README; }
   }
 }
+
+unlink 'lib/PDL/DSP/Windows.pm';
