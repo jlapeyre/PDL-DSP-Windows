@@ -1,5 +1,9 @@
 Revision history for PDL-DSP-Windows
 
+0.003    Mon Jul 23 21:38:30 CEST 2012
+         GJL. Testing README README.pod .pm files with github
+         and cpan.
+
 0.002    Fri, 20 Jul 2012 16:19:11 +0200
          GJL. Trying new packaging scheme. Bumped version number
 

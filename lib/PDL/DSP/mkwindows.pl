@@ -1,11 +1,14 @@
 use strict;
 use warnings;
 
-$PDL::DSP::Windows::VERSION = '0.003';
+$PDL::DSP::Windows::VERSION = '0.004';
 
 =head1 mkwindows.pl
 
-    Script to write Windows.pm.
+  Script to write the file Windows.pm.
+  N.B. The file Windows.pm is also included in the distribution
+  to help CPAN find documents. It will be deleted and rebuilt
+  by Makefile.PL
 
 =cut
 

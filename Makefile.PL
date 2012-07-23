@@ -3,6 +3,13 @@ use strict;
 use warnings;
 use ExtUtils::MakeMaker;
 
+# This file is generated at build time by mkwindows.pl. The
+# only reason to include it in the distribution is so CPAN
+# will use it for documentation rather than mkwindows.pl. I
+# can't find a better way at the moment.
+
+unlink 'lib/PDL/DSP/Windows.pm';
+
 WriteMakefile(
     NAME                => 'PDL::DSP::Windows',
     AUTHOR              => q{John Lapeyre <jlapeyre@cpan.org>},
@@ -18,7 +25,7 @@ WriteMakefile(
         'PDL' => 0
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
-    clean               => { FILES => 'PDL-DSP-Windows-* lib/PDL/DSP/Windows.pm' },
+    clean               => { FILES => 'PDL-DSP-Windows-* ' },
 );
 
 sub MY::postamble {
