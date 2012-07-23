@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:               PDL-DSP-Windows
-version:            0.002
+version:            0.003
 abstract:           Window functions for signal processing
 author:
     - John Lapeyre <jlapeyre@cpan.org>

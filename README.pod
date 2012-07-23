@@ -199,6 +199,7 @@ For example:
 
 Generate and return a reference to the piddle of $N samples for the window C<$win>.
 This is the real-space representation of the window.
+
 The samples are stored in the object C<$win>, but are regenerated
 every time C<samples> is invoked. See the method
 L</get_samples> below.
@@ -209,6 +210,34 @@ For example:
 
   my $win = new PDL::DSP::Windows(8,'hann');
   print $win->samples(), "\n";
+
+=cut
+=head2 modfreqs
+
+=for usage
+
+  $win->modfreqs();
+
+=for ref
+
+Generate and return a reference to the piddle of the modulus of the
+fourier transform of the samples for the window C<$win>.
+
+These values are stored in the object C<$win>, but are regenerated
+every time C<modfreqs> is invoked. See the method
+L</get_modfreqs> below.
+
+=head3 options
+
+=over
+
+=item min_bins => MIN
+
+This sets the minimum number of frequency bins.
+Default 1000. If necessary, the piddle of window samples
+are padded with zeros before the fourier transform is performed.
+
+=back
 
 =cut
 =head2 get
@@ -248,13 +277,30 @@ they have not yet been generated.
 
 =for usage
 
-  my $winfreqs = $win->get_modfreqs
+  my $winfreqs = $win->get_modfreqs;
+  my $winfreqs = $win->get_modfreqs({OPTS});
 
 =for ref
 
 Return a reference to the pdl of the frequency response (modulus of the DFT) 
-for the Window instance C<$win>. The data are created with the method L</freqs> 
-if they don't exist.
+for the Window instance C<$win>. 
+
+Options are passed to the method L</modfreqs>.
+The data are created with L</modfreqs>
+if they don't exist. The data are also created even
+if they already exist if options are supplied. Otherwise
+the cached data are returned.
+
+=head3 options
+
+=over
+
+=item min_bins => MIN
+
+This sets the minimum number of frequency bins. See
+L</modfreqs>. Default 1000.
+
+=back
 
 =cut
 =head2 get_params
@@ -329,6 +375,11 @@ fraction of the nyquist frequency (range C<-1,1>),
 C<sample>, for fraction of the sampling frequncy (range
 C<-.5,.5>), or C<bin> for frequency bin number (range
 C<0,$N-1>). The default value is C<nyquist>.
+
+=item min_bins => MIN
+
+This sets the minimum number of frequency bins. See
+L</get_modfreqs>. Default 1000.
 
 =back
 
