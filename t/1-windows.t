@@ -107,6 +107,11 @@ subtest 'chebpoly.' => sub {
     ok( chebpoly( 3, 1.2 ) == 3.312  );
 };
 
+subtest 'modfreqs.' => sub {
+        ok( new PDL::DSP::Windows({N=>10})->modfreqs->nelem == 1000 );
+        ok( new PDL::DSP::Windows({N=>10})->modfreqs({min_bins => 100})->nelem == 100 );
+};
+
 done_testing;
 
 

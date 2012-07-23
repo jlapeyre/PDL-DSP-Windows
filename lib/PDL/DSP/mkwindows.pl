@@ -1,11 +1,14 @@
 use strict;
 use warnings;
 
-$PDL::DSP::Windows::VERSION = '0.002';
+$PDL::DSP::Windows::VERSION = '0.003';
 
 =head1 mkwindows.pl
 
-    Script to write Windows.pm.
+  Script to write the file Windows.pm.
+  N.B. The file Windows.pm is also included in the distribution
+  to help CPAN find documents. It will be deleted and rebuilt
+  by Makefile.PL
 
 =cut
 
@@ -764,13 +767,13 @@ print $OH
 
 print $OH  <<'EOTOP';
 use base 'Exporter';
-use strict;
-use warnings;
+use strict; use warnings;
 use PDL::LiteF;
 use PDL::FFT;
 use PDL::Math qw( acos cosh acosh );
 use PDL::Core qw( topdl );
 use PDL::MatrixOps qw( eigens_sym );
+use PDL::Options qw( iparse ifhref );
 
 eval { require PDL::LinearAlgebra::Special };
 my $HAVE_LinearAlgebra = 1 if !$@;
@@ -1066,6 +1069,7 @@ sub init {
 
 Generate and return a reference to the piddle of $N samples for the window C<$win>.
 This is the real-space representation of the window.
+
 The samples are stored in the object C<$win>, but are regenerated
 every time C<samples> is invoked. See the method
 L</get_samples> below.
@@ -1085,12 +1089,41 @@ sub samples {
     $self->{samples} = $self->{code}->(@args);
 }
 
-sub freqs {
-    my $self = shift;
-    my ($min_bins) = 1000;
+=head2 modfreqs
+
+=for usage
+
+  $win->modfreqs();
+
+=for ref
+
+Generate and return a reference to the piddle of the modulus of the
+fourier transform of the samples for the window C<$win>.
+
+These values are stored in the object C<$win>, but are regenerated
+every time C<modfreqs> is invoked. See the method
+L</get_modfreqs> below.
+
+=head3 options
+
+=over
+
+=item min_bins => MIN
+
+This sets the minimum number of frequency bins.
+Default 1000. If necessary, the piddle of window samples
+are padded with zeros before the fourier transform is performed.
+
+=back
+
+=cut
+
+sub modfreqs {
+    my ($self,$inopts) = @_;
+    my %opts = iparse( { min_bins => 1000 }, ifhref($inopts));
     my $data = $self->get('samples');
     my $n = $data->nelem;
-    my $fn = $n > $min_bins ? 2 * $n : $min_bins;
+    my $fn = $n > $opts{min_bins} ? 2 * $n : $opts{min_bins};
     $n--;
     my $freq = zeroes($fn);
     $freq->slice("0:$n") .= $data;
@@ -1163,19 +1196,37 @@ sub get_samples {
 
 =for usage
 
-  my $winfreqs = $win->get_modfreqs
+  my $winfreqs = $win->get_modfreqs;
+  my $winfreqs = $win->get_modfreqs({OPTS});
 
 =for ref
 
 Return a reference to the pdl of the frequency response (modulus of the DFT) 
-for the Window instance C<$win>. The data are created with the method L</freqs> 
-if they don't exist.
+for the Window instance C<$win>. 
+
+Options are passed to the method L</modfreqs>.
+The data are created with L</modfreqs>
+if they don't exist. The data are also created even
+if they already exist if options are supplied. Otherwise
+the cached data are returned.
+
+=head3 options
+
+=over
+
+=item min_bins => MIN
+
+This sets the minimum number of frequency bins. See
+L</modfreqs>. Default 1000.
+
+=back
 
 =cut
 
 sub get_modfreqs {
     my $self = shift;
-    $self->{modfreqs} ? $self->{modfreqs} : $self->freqs;
+    my ($in_opts) = @_;
+    ($self->{modfreqs} and not $in_opts) ? $self->{modfreqs} : $self->modfreqs($in_opts);
 }
 
 =head2 get_params
@@ -1312,6 +1363,11 @@ C<sample>, for fraction of the sampling frequncy (range
 C<-.5,.5>), or C<bin> for frequency bin number (range
 C<0,$N-1>). The default value is C<nyquist>.
 
+=item min_bins => MIN
+
+This sets the minimum number of frequency bins. See
+L</get_modfreqs>. Default 1000.
+
 =back
 
 =cut
@@ -1320,12 +1376,13 @@ sub plot_freq {
     my $self = shift;
     my $opt = new PDL::Options(
         {
-            coord => 'nyquist'
+            coord => 'nyquist',
+            min_bins => 1000
         });
     my $iopts = @_ ? shift : {};
     my $opts = $opt->options($iopts);
     barf "PDL::DSP::Windows::plot Gnuplot not available!" unless $HAVE_GNUPLOT;
-    my $mf = $self->get('modfreqs');
+    my $mf = $self->get_modfreqs({ min_bins => $opts->{min_bins}});
     $mf /= $mf->max;
     my $param_str = $self->format_plot_param_vals;
     my $title = $self->get_name() . $param_str  
