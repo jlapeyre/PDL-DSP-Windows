@@ -1,9 +1,9 @@
-PDL-DSP-Windows is Copyright (C) 2012, John Lapeyre.
-
 =head1 OVERVIEW
 
 A module for PDL providing window functions for signal processing.
-This module is currently not on CPAN.
+Distributions of this module can be downloaded most easily from CPAN. 
+(Commits tagged with version numbers, may also be downloaded from
+ github.)
 
 =cut
 

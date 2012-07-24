@@ -1,9 +1,22 @@
 use strict;
 use warnings;
 
-$PDL::DSP::Windows::VERSION = '0.003';
+$PDL::DSP::Windows::VERSION = '0.004';
+
+=head1   ** THIS IS NOT THE DOCUMENTATION FOR PDL::DSP::Windows. **
+
+=head1  For documentation, see https://github.com/jlapeyre/PDL-DSP-Windows
 
 =head1 mkwindows.pl
+
+  ** THIS IS NOT THE DOCUMENTATION FOR PDL::DSP::Windows. **
+
+  For documentation, see the bottom of the following web page:
+  https://github.com/jlapeyre/PDL-DSP-Windows
+
+=cut
+
+=for comment
 
   Script to write the file Windows.pm.
   N.B. The file Windows.pm is also included in the distribution

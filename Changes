@@ -1,5 +1,8 @@
 Revision history for PDL-DSP-Windows
 
+0.004    Tue Jul 24 02:53:17 CEST 2012
+         GJL. No more trial and error with CPAN
+
 0.003    Mon Jul 23 21:38:30 CEST 2012
          GJL. Testing README README.pod .pm files with github
          and cpan.
