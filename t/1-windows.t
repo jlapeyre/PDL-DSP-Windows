@@ -5,6 +5,13 @@ use PDL::LiteF;
 use PDL::NiceSlice;
 use PDL::DSP::Windows qw( window chebpoly ) ;
 
+eval { require PDL::LinearAlgebra::Special };
+my $HAVE_LinearAlgebra = 1 if !$@;
+
+eval { require PDL::GSLSF::BESSEL; };
+my $HAVE_BESSEL = 1 if !$@;
+
+
 sub tapprox {
   my($a,$b, $eps) = @_;
   $eps ||= 1e-7;
@@ -32,7 +39,7 @@ subtest 'explict values of windows.' => sub {
     ok( tapprox( window(6,'blackman_nuttall'), [qw(0.0003628 0.11051525  0.7982581  0.7982581 0.11051525  0.0003628)]));
     ok( tapprox( window(6,'flattop'), [qw(-0.000421051 -0.067714252 0.60687215 0.60687215 -0.067714252 -0.000421051)]));
     ok(tapprox(window(6,'kaiser',.5/3.1415926), 
-               [qw(0.94030619 0.97829624  0.9975765  0.9975765 0.97829624 0.94030619)]));
+               [qw(0.94030619 0.97829624  0.9975765  0.9975765 0.97829624 0.94030619)])) if $HAVE_BESSEL;
     ok( tapprox( window(10,'tukey',.4), 
                  [qw(0 0.58682409 1 1 1 1 1 1 0.58682409 0)]));
     ok( tapprox( window(8,'chebyshev',10), 
@@ -58,7 +65,7 @@ subtest 'enbw of windows.' => sub {
     ok( tapprox( $win->init($Nbw,'triangular')->enbw, 4/3, $eps));
     ok( tapprox( $win->init(10*$Nbw,'hann')->enbw, 1.5, $eps));
     ok( tapprox( $win->init($Nbw,'blackman')->enbw, 1.72686276895347, $eps));
-    ok( tapprox( $win->init($Nbw,'kaiser',8.6/3.1415926)->enbw, 1.72147863, $eps));
+    ok( tapprox( $win->init($Nbw,'kaiser',8.6/3.1415926)->enbw, 1.72147863, $eps)) if $HAVE_BESSEL;;
     ok( tapprox( $win->init($Nbw,'blackman_harris4')->enbw, 2.0044752407, $eps));
     ok( tapprox( $win->init($Nbw,'bohman')->enbw, 1.78584987506, $eps));
     ok( tapprox( $win->init($Nbw,'cauchy',3)->enbw, 1.489407730, $eps));
@@ -91,6 +98,8 @@ subtest 'relation between periodic and symmetric.' => sub {
                            [poisson => [1]], [ tukey => [.4] ], [dpss => [4] ]   )) {            
             my $name = ref($win) ? shift @$win : $win;
 #    print STDERR $name,"\n";
+            next if $name eq 'kaiser' and not $HAVE_BESSEL;
+            next if $name eq 'dpss' and not $HAVE_LinearAlgebra;
             if (ref($win)) {
                 ok( tapprox( window($N+1,$name, {params => $win->[0]} )->slice("0:$Nm"),window($N,$name,{per => 1, params => $win->[0] })));
             }
