@@ -1,6 +1,5 @@
 Changes
 lib/PDL/DSP/mkwindows.pl
-lib/PDL/DSP/Windows.pm
 Makefile.PL
 LICENSE
 MANIFEST			This list of files
