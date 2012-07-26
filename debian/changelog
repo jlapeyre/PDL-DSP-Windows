@@ -1,3 +1,9 @@
+libpdl-dsp-windows-perl (0.005-1) unstable; urgency=low
+
+  * Upstream release.
+
+ -- John Lapeyre <jlapeyre@cpan.org>  Thu, 26 Jul 2012 12:08:22 +0200
+	
 libpdl-dsp-windows-perl (0.003-1) unstable; urgency=low
 
   * Upstream release.
