@@ -1,7 +1,12 @@
 PDL-DSP-Windows
 
-See README.pod for documentation this module.
-README.pod is the pod documentation extracted
+For online documentation, or browsing of this
+module, do not use CPAN.
+
+Instead, see https://github.com/jlapeyre/PDL-DSP-Windows
+
+See README.pod in this distribution for documentation on
+this module.  README.pod is the pod documentation extracted
 from Windows.pm.
 
 INSTALLATION

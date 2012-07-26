@@ -3,6 +3,9 @@ use strict;
 use warnings;
 use ExtUtils::MakeMaker;
 
+# Following paragraph is incorrect at the moment. Rather
+# don't try to use CPAN, just point users to github.
+#
 # The file Windows.pm is generated at build time by mkwindows.pl. The
 # only reason to include it in the distribution is so CPAN
 # will use it for documentation rather than mkwindows.pl. I
@@ -25,7 +28,7 @@ WriteMakefile(
         'PDL' => 0
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
-    clean               => { FILES => 'PDL-DSP-Windows-* ' },
+    clean               => { FILES => 'PDL-DSP-Windows-* lib/PDL/DSP/Windows.pm ' },
 );
 
 sub MY::postamble {
@@ -39,12 +42,12 @@ lib/PDL/DSP/Windows.pm:
 # reroute the main POD into a separate README.pod if requested. This is here
 # purely to generate a README.pod for the github front page
 my $POD_header = <<EOF;
-PDL-DSP-Windows is Copyright (C) 2012, John Lapeyre.
-
 =head1 OVERVIEW
 
 A module for PDL providing window functions for signal processing.
-This module is currently not on CPAN.
+Distributions of this module can be downloaded most easily from CPAN. 
+(Commits tagged with version numbers, may also be downloaded from
+ github.)
 
 =cut
 
@@ -64,4 +67,4 @@ if(exists $ARGV[0] && $ARGV[0] eq 'README.pod')
   }
 }
 
-unlink 'lib/PDL/DSP/Windows.pm';
+#unlink 'lib/PDL/DSP/Windows.pm';
