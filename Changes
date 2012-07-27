@@ -1,5 +1,8 @@
 Revision history for PDL-DSP-Windows
 
+0.007  Fri, 27 Jul 2012 18:23:43 +0200
+       GJL. utf in pod
+
 0.006  Fri, 27 Jul 2012 10:33:47 +0200
        GJL. try to get cpan to display doc.
 
