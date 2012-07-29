@@ -3,12 +3,15 @@ use strict;
 use warnings;
 use ExtUtils::MakeMaker;
 
+# try again
+# ignore following lines that say to ignore following paragraph
+#
 # Following paragraph is incorrect at the moment. Rather
 # don't try to use CPAN, just point users to github.
 #
-# The file Windows.pm is generated at build time by mkwindows.pl. The
+# The file Windows.pm is generated at build time by mkwindows.not_a_perl_suffix. The
 # only reason to include it in the distribution is so CPAN
-# will use it for documentation rather than mkwindows.pl. I
+# will use it for documentation rather than mkwindows.not_a_perl_suffix. I
 # can't find a better way at the moment.
 # See the bottom of this file Makefile.PL, where 
 # lib/PDL/DSP/Windows.pm is deleted.
@@ -16,8 +19,8 @@ use ExtUtils::MakeMaker;
 WriteMakefile(
     NAME                => 'PDL::DSP::Windows',
     AUTHOR              => q{John Lapeyre <jlapeyre@cpan.org>},
-    VERSION_FROM        => 'lib/PDL/DSP/mkwindows.pl',
-    ABSTRACT_FROM       => 'lib/PDL/DSP/mkwindows.pl',
+    VERSION_FROM        => 'lib/PDL/DSP/mkwindows.not_a_perl_suffix',
+    ABSTRACT_FROM       => 'lib/PDL/DSP/mkwindows.not_a_perl_suffix',
     LICENSE=> 'perl',
     PL_FILES            => {},
     PM => {
@@ -35,7 +38,7 @@ sub MY::postamble {
     '
 
 lib/PDL/DSP/Windows.pm:
-	cd lib/PDL/DSP && $(PERL) ./mkwindows.pl
+	cd lib/PDL/DSP && $(PERL) ./mkwindows.not_a_perl_suffix
 '    
 };
  
@@ -67,4 +70,7 @@ if(exists $ARGV[0] && $ARGV[0] eq 'README.pod')
   }
 }
 
-#unlink 'lib/PDL/DSP/Windows.pm';
+# delete lib/PDL/DSP/Windows.pm so we are sure it will
+# be regenerated.
+
+unlink 'lib/PDL/DSP/Windows.pm';
