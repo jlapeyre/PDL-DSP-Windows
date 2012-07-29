@@ -1,7 +1,9 @@
+# -*-Perl-*-     # for emacs
+
 use strict;
 use warnings;
 
-$PDL::DSP::Windows::VERSION = '0.005';
+$PDL::DSP::Windows::VERSION = '0.007';
 
 =head1   ** THIS IS NOT THE DOCUMENTATION FOR PDL::DSP::Windows. **
 
@@ -11,7 +13,10 @@ $PDL::DSP::Windows::VERSION = '0.005';
 
   ** THIS IS NOT THE DOCUMENTATION FOR PDL::DSP::Windows. **
 
-  For documentation, see the bottom of the following web page:
+  I am trying to get CPAN to display the docs correctly.
+
+  In the meantimes, ** FOR DOCUMENTATION, SEE ** the bottom of the following web page:
+
   https://github.com/jlapeyre/PDL-DSP-Windows
 
 =cut
@@ -816,6 +821,8 @@ $PDL::onlinedoc->scan(__FILE__) if $PDL::onlinedoc;
 our %winsubs;
 our %winpersubs;
 our %window_definitions;
+
+=encoding utf8
 
 =head1 NAME
 
