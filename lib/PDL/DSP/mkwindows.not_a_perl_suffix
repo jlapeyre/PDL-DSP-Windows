@@ -3,11 +3,13 @@
 use strict;
 use warnings;
 
-$PDL::DSP::Windows::VERSION = '0.007';
+$PDL::DSP::Windows::VERSION = '0.008';
 
 =head1   ** THIS IS NOT THE DOCUMENTATION FOR PDL::DSP::Windows. **
 
 =head1  For documentation, see https://github.com/jlapeyre/PDL-DSP-Windows
+
+=head1  
 
 =head1 mkwindows.pl
 
@@ -15,7 +17,7 @@ $PDL::DSP::Windows::VERSION = '0.007';
 
   I am trying to get CPAN to display the docs correctly.
 
-  In the meantimes, ** FOR DOCUMENTATION, SEE ** the bottom of the following web page:
+  In the meantime, ** FOR DOCUMENTATION, SEE ** the bottom of the following web page:
 
   https://github.com/jlapeyre/PDL-DSP-Windows
 
@@ -863,8 +865,8 @@ some functions referred to by several different names, and some names
 refer to several different functions. As a result, the choice
 of window names is somewhat arbitrary.
 
-The L</kaiser> window function requires
-L<PDL::GSLSF::BESSEL>. The L</dpss> window function requires
+The L</kaiser($N,$beta)> window function requires
+L<PDL::GSLSF::BESSEL>. The L</dpss($N,$beta)> window function requires
 L<PDL::LinearAlgebra>. But the remaining window functions may
 be used if these modules are not installed.
 
