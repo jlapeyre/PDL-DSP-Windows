@@ -27,7 +27,7 @@ WriteMakefile(
         'lib/PDL/DSP/Windows.pm' => '$(INST_LIBDIR)/Windows.pm'
     },
     PREREQ_PM => {
-        'Test::More' => 0,
+        'Test::More' => '0.96',
         'PDL' => 0
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
