@@ -807,7 +807,7 @@ my $HAVE_GNUPLOT = 1 if !$@;
 #eval { require PDL::Graphics::PLplot; };
 #my $HAVE_PLPLOT = 1 if !$@;
 
-use PDL::Constants qw(PI);
+use constant PI    => 4 * atan2(1, 1);
 use constant TPI => 2 * PI;
 
 our @ISA = qw(Exporter);
