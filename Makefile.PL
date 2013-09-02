@@ -32,6 +32,11 @@ WriteMakefile(
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean               => { FILES => 'PDL-DSP-Windows-* lib/PDL/DSP/Windows.pm ' },
+    META_MERGE          => {
+        resources => {
+            repository => 'https://github.com/jlapeyre/PDL-DSP-Windows',
+        },
+    },
 );
 
 sub MY::postamble {
