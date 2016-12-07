@@ -545,7 +545,12 @@ $window_definitions{chebyshev} = {
         my $arg = PI/$N * sequence($N);
         my $cw_im = $cw * sin($arg);
         $cw *= cos($arg);
-        PDL::FFT::fftnd($cw,$cw_im);
+        if ($PDL::VERSION < 2.006_04) {
+          PDL::FFT::fftnd($cw,$cw_im);
+        }
+        else {
+          PDL::FFT::ifftnd($cw,$cw_im);
+        }
         $M1 = $N/2;
         $M = $M1-1;
         $pos = 1;
