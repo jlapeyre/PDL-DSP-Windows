@@ -1,6 +1,8 @@
 package PDL::DSP::Windows;
 $PDL::DSP::Windows::VERSION = '0.008';
-use base 'Exporter';
+
+use Exporter 'import';
+
 use strict; use warnings;
 use PDL::LiteF;
 use PDL::FFT;
@@ -23,8 +25,6 @@ my $HAVE_GNUPLOT = 1 if !$@;
 
 use constant PI    => 4 * atan2(1, 1);
 use constant TPI => 2 * PI;
-
-our @ISA = qw(Exporter);
 
 our @EXPORT_OK = qw( window list_windows chebpoly cos_mult_to_pow cos_pow_to_mult
    bartlett bartlett_hann bartlett_hann_per bartlett_per blackman blackman_bnh blackman_bnh_per blackman_ex blackman_ex_per blackman_gen blackman_gen3 blackman_gen3_per blackman_gen4 blackman_gen4_per blackman_gen5 blackman_gen5_per blackman_gen_per blackman_harris blackman_harris4 blackman_harris4_per blackman_harris_per blackman_nuttall blackman_nuttall_per blackman_per bohman bohman_per cauchy cauchy_per chebyshev cos_alpha cos_alpha_per cosine cosine_per dpss dpss_per exponential exponential_per flattop flattop_per gaussian gaussian_per hamming hamming_ex hamming_ex_per hamming_gen hamming_gen_per hamming_per hann hann_matlab hann_per hann_poisson hann_poisson_per kaiser kaiser_per lanczos lanczos_per nuttall nuttall1 nuttall1_per nuttall_per parzen parzen_octave parzen_per poisson poisson_per rectangular rectangular_per triangular triangular_per tukey tukey_per welch welch_per);
