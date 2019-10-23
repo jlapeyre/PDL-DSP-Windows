@@ -1737,13 +1737,13 @@ alias => [ 'Riez','Bochner','Parzen','parabolic'],
 };
 $winpersubs{welch}= \&welch_per;
 
-=head1  Symmetric window functions
+=head1 Symmetric window functions
 
 =head2 bartlett($N)
 
 The Bartlett window. (Ref 1). Another name for this window is the fejer window.  This window is defined by
 
- 1 - abs arr,
+ 1 - abs(arr)
 
 where the points in arr range from -1 through 1.
 See also L<triangular|/triangular($N)>.
@@ -1752,7 +1752,7 @@ See also L<triangular|/triangular($N)>.
 
 The Bartlett-Hann window. Another name for this window is the Modified Bartlett-Hann window.  This window is defined by
 
- 0.62 - 0.48 * abs arr + 0.38* arr1,
+ 0.62 - 0.48 * abs(arr) + 0.38 * arr1
 
 where the points in arr range from -1/2 through 1/2, and arr1 are the cos of points ranging from -PI through PI.
 
@@ -1779,8 +1779,7 @@ The 'exact' Blackman window. (Ref 1). One of the Blackman-Harris family, with co
 The General classic Blackman window. A single parameter family of the 3-term Blackman window.   This window is defined by
 
  my $cx = arr;
-
-    (.5 - $alpha) +  ($cx * ((-.5) +  ($cx * ($alpha)))),
+ .5 - $alpha + ($cx * (-.5 + $cx * $alpha));
 
 where the points in arr are the cos of points ranging from 0 through 2PI.
 
@@ -1829,7 +1828,7 @@ The Blackman-Nuttall window. One of the Blackman-Harris family, with coefficient
 The Bohman window. (Ref 1).  This window is defined by
 
  my $x = abs(arr);
-(1-$x)*cos(PI*$x) +(1/PI)*sin(PI*$x),
+ (1 - $x) * cos(PI * $x) + (1 / PI) * sin(PI * $x)
 
 where the points in arr range from -1 through 1.
 
@@ -1837,7 +1836,7 @@ where the points in arr range from -1 through 1.
 
 The Cauchy window. (Ref 1). Other names for this window are: Abel, Poisson.  This window is defined by
 
- 1 / (1 + (arr * $alpha)**2),
+ 1 / (1 + (arr * $alpha)**2)
 
 where the points in arr range from -1 through 1.
 
@@ -1851,7 +1850,7 @@ This routine gives the same result as the routine B<chebwin> in Octave 3.6.2.
 
 The Cos_alpha window. (Ref 1). Another name for this window is the Power-of-cosine window.  This window is defined by
 
-  arr**$alpha ,
+ arr**$alpha
 
 where the points in arr are the sin of points ranging from 0 through PI.
 
@@ -1859,7 +1858,7 @@ where the points in arr are the sin of points ranging from 0 through PI.
 
 The Cosine window. Another name for this window is the sine window.  This window is defined by
 
- arr,
+ arr
 
 where the points in arr are the sin of points ranging from 0 through PI.
 
@@ -1872,7 +1871,7 @@ Another name for this window is the sleppian window.
 
 The Exponential window.  This window is defined by
 
- 2 ** (1 - abs arr) - 1,
+ 2 ** (1 - abs arr) - 1
 
 where the points in arr range from -1 through 1.
 
@@ -1921,7 +1920,7 @@ Another name for this window is the hanning window. See also L<hann_matlab|/hann
 The Hann (matlab) window. Equivalent to the Hann window of N+2 points, with the endpoints (which are both zero) removed. No periodic version of this window is defined.
  This window is defined by
 
- 0.5 - 0.5 * arr,
+ 0.5 - 0.5 * arr
 
 where the points in arr are the cosine of points ranging from 2PI/($N+1) through 2PI*$N/($N+1).
 This routine gives the same result as the routine B<hanning> in Matlab.
@@ -1931,7 +1930,7 @@ See also L<hann|/hann($N)>.
 
 The Hann-Poisson window. (Ref 1).  This window is defined by
 
- 0.5 * (1 + arr1) * exp (-$alpha * abs arr),
+ 0.5 * (1 + arr1) * exp (-$alpha * abs arr)
 
 where the points in arr range from -1 through 1, and arr1 are the cos of points ranging from -PI through PI.
 
@@ -1940,12 +1939,10 @@ where the points in arr range from -1 through 1, and arr1 are the cos of points 
 The Kaiser window. (Ref 1). The parameter C<$beta> is the approximate half-width of the mainlobe, measured in frequency bins.
 Another name for this window is the Kaiser-Bessel window.  This window is defined by
 
-
-              barf "kaiser: PDL::GSLSF not installed" unless HAVE_BESSEL;
-              $beta *= PI;
-              my @n = PDL::GSLSF::BESSEL::gsl_sf_bessel_In ($beta * sqrt(1 - arr **2),0);
-        my @d = PDL::GSLSF::BESSEL::gsl_sf_bessel_In($beta,0);
-        (shift @n)/(shift @d),
+ $beta *= PI;
+ my @n = gsl_sf_bessel_In($beta * sqrt(1 - arr ** 2), 0);
+ my @d = gsl_sf_bessel_In($beta, 0);
+ $n[0] / $d[0];
 
 where the points in arr range from -1 through 1.
 
@@ -1954,10 +1951,10 @@ where the points in arr range from -1 through 1.
 The Lanczos window. Another name for this window is the sinc window.  This window is defined by
 
  my $x = PI * arr;
- my $res = sin($x)/$x;
+ my $res = sin($x) / $x;
  my $mid;
- $mid = int($N/2), $res->slice($mid) .= 1 if $N % 2;
- $res;,
+ $mid = int($N / 2), $res->slice($mid) .= 1 if $N % 2;
+ $res;
 
 where the points in arr range from -1 through 1.
 
@@ -1993,7 +1990,7 @@ See also L<parzen|/parzen($N)>.
 
 The Poisson window. (Ref 1).  This window is defined by
 
- exp (-$alpha * abs arr),
+ exp(-$alpha * abs(arr))
 
 where the points in arr range from -1 through 1.
 
@@ -2005,7 +2002,7 @@ The Rectangular window. (Ref 1). Other names for this window are: dirichlet, box
 
 The Triangular window.  This window is defined by
 
- 1 - abs arr,
+ 1 - abs(arr)
 
 where the points in arr range from -$N/($N-1) through $N/($N-1).
 See also L<bartlett|/bartlett($N)>.
@@ -2018,7 +2015,7 @@ The Tukey window. (Ref 1). Another name for this window is the tapered cosine wi
 
 The Welch window. (Ref 1). Other names for this window are: Riez, Bochner, Parzen, parabolic.  This window is defined by
 
- 1 - arr**2,
+ 1 - arr**2
 
 where the points in arr range from -1 through 1.
 
@@ -2039,11 +2036,11 @@ This subroutine takes between 1 and 7 numeric arguments  a0, a1, ...
 
 It converts the coefficients of this
 
-  a0 - a1 cos(arg) + a2 cos( 2 * arg) - a3 cos( 3 * arg)  + ...
+ a0 - a1 cos(arg) + a2 cos(2 * arg) - a3 cos(3 * arg)  + ...
 
 To the cofficients of this
 
-  c0 + c1 cos(arg) + c2 cos(arg)**2 + c3 cos(arg)**3  + ...
+ c0 + c1 cos(arg) + c2 cos(arg)**2 + c3 cos(arg)**3  + ...
 
 =head2 cos_pow_to_mult
 
@@ -2053,11 +2050,11 @@ This subroutine takes between 1 and 7 numeric arguments  c0, c1, ...
 
 It converts the coefficients of this
 
-  c0 + c1 cos(arg) + c2 cos(arg)**2 + c3 cos(arg)**3  + ...
+ c0 + c1 cos(arg) + c2 cos(arg)**2 + c3 cos(arg)**3  + ...
 
 To the cofficients of this
 
-  a0 - a1 cos(arg) + a2 cos( 2 * arg) - a3 cos( 3 * arg)  + ...
+ a0 - a1 cos(arg) + a2 cos( 2 * arg) - a3 cos( 3 * arg)  + ...
 
 =cut
 
