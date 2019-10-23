@@ -533,15 +533,9 @@ Note that not all window types take parameters.
 
 =cut
 
-sub get_params {
-    my $self = shift;
-    $self->{params};
-}
+sub get_params { shift->{params} }
 
-sub get_N {
-    my $self = shift;
-    $self->{N};
-}
+sub get_N { shift->{N} }
 
 =head2 get_name
 
@@ -754,10 +748,7 @@ This is just the multiplicative inverse of the C<enbw>.
 
 =cut
 
-sub process_gain {
-    my $self = shift;
-    1/$self->enbw();
-}
+sub process_gain { 1 / shift->enbw }
 
 # not quite correct for some reason.
 # Seems like 10*log10(this) / 1.154
