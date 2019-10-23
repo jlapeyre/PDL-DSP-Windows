@@ -91,7 +91,7 @@ In the following, first the functional interface (non-object oriented) is descri
 L</"FUNCTIONAL INTERFACE">. Next, the object methods are described in L</METHODS>.
 Next the low-level subroutines returning samples for each named window
 are described in  L</"WINDOW FUNCTIONS">. Finally,
-some support routines that may be of interest are described in 
+some support routines that may be of interest are described in
 L</"AUXILIARY SUBROUTINES">.
 
 =head1 FUNCTIONAL INTERFACE
@@ -136,7 +136,7 @@ name in the hash C<OPTIONS>.
 The options follow default PDL::Options rules-- They may be abbreviated,
 and are case-insensitive.
 
-=over 
+=over
 
 =item B<name>
 
@@ -144,7 +144,7 @@ and are case-insensitive.
 This selects one of the window functions listed below. Note
 that the suffix '_per', for periodic, may be ommitted. It
 is specified with the option C<< periodic => 1 >>
-     
+
 
 =item B<params>
 
@@ -228,7 +228,7 @@ For example:
 sub new {
   my $proto = shift;
   my $class = ref($proto) || $proto;
-  my $self = {};   
+  my $self = {};
   bless ($self, $class);
   $self->init(@_) if (@_);
   return $self;
@@ -435,8 +435,8 @@ sub get_samples {
 
 =for ref
 
-Return a reference to the pdl of the frequency response (modulus of the DFT) 
-for the Window instance C<$win>. 
+Return a reference to the pdl of the frequency response (modulus of the DFT)
+for the Window instance C<$win>.
 
 Options are passed to the method L</modfreqs>.
 The data are created with L</modfreqs>
@@ -579,8 +579,8 @@ Or this
 
 =for ref
 
-Plot the frequency response (magnitude of the DFT of the window samples). 
-The response is plotted in dB, and the frequency 
+Plot the frequency response (magnitude of the DFT of the window samples).
+The response is plotted in dB, and the frequency
 (by default) as a fraction of the Nyquist frequency.
 Currently, only PDL::Graphics::Gnuplot is supported.
 The default display type is used.
@@ -620,7 +620,7 @@ sub plot_freq {
     my $mf = $self->get_modfreqs({ min_bins => $opts->{min_bins}});
     $mf /= $mf->max;
     my $param_str = $self->format_plot_param_vals;
-    my $title = $self->get_name() . $param_str  
+    my $title = $self->get_name() . $param_str
         . ', frequency response. ENBW=' . sprintf("%2.3f",$self->enbw);
     my $coord = $opts->{coord};
     my ($coordinate_range,$xlab);
@@ -642,7 +642,7 @@ sub plot_freq {
     my $coordinates = zeroes($mf)->xlinvals(-$coordinate_range,$coordinate_range);
     my $ylab = 'freqeuncy response (dB)';
     PDL::Graphics::Gnuplot::plot(title => $title,
-       xmin => -$coordinate_range, xmax => $coordinate_range, 
+       xmin => -$coordinate_range, xmax => $coordinate_range,
        xlabel => $xlab,  ylabel => $ylab,
        with => 'line', $coordinates, 20 * log10($mf) );
     return $self;
@@ -705,7 +705,7 @@ sub process_gain {
 }
 
 # not quite correct for some reason.
-# Seems like 10*log10(this) / 1.154 
+# Seems like 10*log10(this) / 1.154
 # gives the correct answer in decibels
 
 =head2 scallop_loss
@@ -745,7 +745,7 @@ symmetric version of each window.
 The term 'Blackman-Harris family' is meant to include the Hamming family
 and the Blackman family. These are functions of sums of cosines.
 
-Unless otherwise noted, the arguments in the cosines of all symmetric 
+Unless otherwise noted, the arguments in the cosines of all symmetric
 window functions are multiples of C<$N> numbers uniformly spaced
 from C<0> through C<2 pi>.
 
@@ -925,7 +925,7 @@ sub blackman_gen4 {
   barf "blackman_gen4: 5 arguments expected. Got " . scalar(@_) . ' arguments.' unless @_ == 5;
   my ($N,$a0,$a1,$a2,$a3) = @_;
     my $cx = (cos(zeroes($N)->xlinvals(0,TPI)));
-  
+
     ($a0 - $a2) +  ($cx * ((-$a1 + 3 * $a3) +  ($cx * (2*$a2 + $cx * (-4*$a3)  ))));
 }
 $window_definitions{blackman_gen4} = {
@@ -938,7 +938,7 @@ sub blackman_gen4_per {
   barf "blackman_gen4: 5 arguments expected. Got " . scalar(@_) . ' arguments.' unless @_ == 5;
   my ($N,$a0,$a1,$a2,$a3) = @_;
     my $cx = (cos(zeroes($N)->xlinvals(0, TPI*($N-1)/$N)));
-  
+
     ($a0 - $a2) +  ($cx * ((-$a1 + 3 * $a3) +  ($cx * (2*$a2 + $cx * (-4*$a3)  ))));
 }
 $window_definitions{blackman_gen4} = {
@@ -951,7 +951,7 @@ sub blackman_gen5 {
   barf "blackman_gen5: 6 arguments expected. Got " . scalar(@_) . ' arguments.' unless @_ == 6;
   my ($N,$a0,$a1,$a2,$a3,$a4) = @_;
     my $cx = (cos(zeroes($N)->xlinvals(0,TPI)));
-  
+
     ($a0 - $a2 + $a4) +  ($cx * ((-$a1 + 3 * $a3) +  ($cx * (2*$a2 -8*$a4 + $cx * (-4*$a3 +$cx *(8*$a4))  ))));
 }
 $window_definitions{blackman_gen5} = {
@@ -964,7 +964,7 @@ sub blackman_gen5_per {
   barf "blackman_gen5: 6 arguments expected. Got " . scalar(@_) . ' arguments.' unless @_ == 6;
   my ($N,$a0,$a1,$a2,$a3,$a4) = @_;
     my $cx = (cos(zeroes($N)->xlinvals(0, TPI*($N-1)/$N)));
-  
+
     ($a0 - $a2 + $a4) +  ($cx * ((-$a1 + 3 * $a3) +  ($cx * (2*$a2 -8*$a4 + $cx * (-4*$a3 +$cx *(8*$a4))  ))));
 }
 $window_definitions{blackman_gen5} = {
@@ -1003,7 +1003,7 @@ sub blackman_harris4 {
   barf "blackman_harris4: 1 argument expected. Got " . scalar(@_) . ' arguments.' unless @_ == 1;
   my ($N) = @_;
     my $cx = (cos(zeroes($N)->xlinvals(0,TPI)));
-  
+
     (0.21747) +  ($cx * ((-0.45325) +  ($cx * (0.28256 + $cx * (-0.04672)  ))));
 }
 $window_definitions{blackman_harris4} = {
@@ -1016,7 +1016,7 @@ sub blackman_harris4_per {
   barf "blackman_harris4: 1 argument expected. Got " . scalar(@_) . ' arguments.' unless @_ == 1;
   my ($N) = @_;
     my $cx = (cos(zeroes($N)->xlinvals(0, TPI*($N-1)/$N)));
-  
+
     (0.21747) +  ($cx * ((-0.45325) +  ($cx * (0.28256 + $cx * (-0.04672)  ))));
 }
 $window_definitions{blackman_harris4} = {
@@ -1029,7 +1029,7 @@ sub blackman_nuttall {
   barf "blackman_nuttall: 1 argument expected. Got " . scalar(@_) . ' arguments.' unless @_ == 1;
   my ($N) = @_;
     my $cx = (cos(zeroes($N)->xlinvals(0,TPI)));
-  
+
     (0.2269824) +  ($cx * ((-0.4572542) +  ($cx * (0.273199 + $cx * (-0.0425644)  ))));
 }
 $window_definitions{blackman_nuttall} = {
@@ -1041,7 +1041,7 @@ sub blackman_nuttall_per {
   barf "blackman_nuttall: 1 argument expected. Got " . scalar(@_) . ' arguments.' unless @_ == 1;
   my ($N) = @_;
     my $cx = (cos(zeroes($N)->xlinvals(0, TPI*($N-1)/$N)));
-  
+
     (0.2269824) +  ($cx * ((-0.4572542) +  ($cx * (0.273199 + $cx * (-0.0425644)  ))));
 }
 $window_definitions{blackman_nuttall} = {
@@ -1094,7 +1094,7 @@ $winpersubs{cauchy}= \&cauchy_per;
 sub chebyshev {
   barf "chebyshev: 2 arguments expected. Got " . scalar(@_) . ' arguments.' unless @_ == 2;
   my ($N,$at) = @_;
-    
+
     my ($M,$M1,$pos,$pos1);
     my $cw;
     my $beta = cosh(1/($N-1) * acosh(1/(10**(-$at/20))));
@@ -1182,7 +1182,7 @@ $winpersubs{cosine}= \&cosine_per;
 sub dpss {
   barf "dpss: 2 arguments expected. Got " . scalar(@_) . ' arguments.' unless @_ == 2;
   my ($N,$beta) = @_;
-      
+
         barf 'dpss: PDL::LinearAlgebra not installed.' unless $HAVE_LinearAlgebra;
         barf "dpss: $beta not between 0 and $N." unless
               $beta >= 0 and $beta <= $N;
@@ -1206,7 +1206,7 @@ sub dpss_per {
   barf "dpss: 2 arguments expected. Got " . scalar(@_) . ' arguments.' unless @_ == 2;
   my ($N,$beta) = @_;
     $N++;
-  
+
         barf 'dpss: PDL::LinearAlgebra not installed.' unless $HAVE_LinearAlgebra;
         barf "dpss: $beta not between 0 and $N." unless
               $beta >= 0 and $beta <= $N;
@@ -1248,7 +1248,7 @@ sub flattop {
   barf "flattop: 1 argument expected. Got " . scalar(@_) . ' arguments.' unless @_ == 1;
   my ($N) = @_;
     my $cx = (cos(zeroes($N)->xlinvals(0,TPI)));
-  
+
     (-0.05473684) +  ($cx * ((-0.165894739) +  ($cx * (0.498947372 + $cx * (-0.334315788 +$cx *(0.055578944))  ))));
 }
 $window_definitions{flattop} = {
@@ -1260,7 +1260,7 @@ sub flattop_per {
   barf "flattop: 1 argument expected. Got " . scalar(@_) . ' arguments.' unless @_ == 1;
   my ($N) = @_;
     my $cx = (cos(zeroes($N)->xlinvals(0, TPI*($N-1)/$N)));
-  
+
     (-0.05473684) +  ($cx * ((-0.165894739) +  ($cx * (0.498947372 + $cx * (-0.334315788 +$cx *(0.055578944))  ))));
 }
 $window_definitions{flattop} = {
@@ -1406,7 +1406,7 @@ $winpersubs{hann_poisson}= \&hann_poisson_per;
 sub kaiser {
   barf "kaiser: 2 arguments expected. Got " . scalar(@_) . ' arguments.' unless @_ == 2;
   my ($N,$beta) = @_;
-     
+
               barf "kaiser: PDL::GSLSF not installed" unless $HAVE_BESSEL;
               $beta *= PI;
               my @n = PDL::GSLSF::BESSEL::gsl_sf_bessel_In ($beta * sqrt(1 - (zeroes($N)->xlinvals(-1,1)) **2),0);
@@ -1422,7 +1422,7 @@ $winsubs{kaiser} = \&kaiser;
 sub kaiser_per {
   barf "kaiser: 2 arguments expected. Got " . scalar(@_) . ' arguments.' unless @_ == 2;
   my ($N,$beta) = @_;
-     
+
               barf "kaiser: PDL::GSLSF not installed" unless $HAVE_BESSEL;
               $beta *= PI;
               my @n = PDL::GSLSF::BESSEL::gsl_sf_bessel_In ($beta * sqrt(1 - (zeroes($N)->xlinvals(-1, (-1+1*($N-1))/$N)) **2),0);
@@ -1438,7 +1438,7 @@ $winpersubs{kaiser}= \&kaiser_per;
 sub lanczos {
   barf "lanczos: 1 argument expected. Got " . scalar(@_) . ' arguments.' unless @_ == 1;
   my ($N) = @_;
-    
+
  my $x = PI * (zeroes($N)->xlinvals(-1,1));
  my $res = sin($x)/$x;
  my $mid;
@@ -1453,7 +1453,7 @@ $winsubs{lanczos} = \&lanczos;
 sub lanczos_per {
   barf "lanczos: 1 argument expected. Got " . scalar(@_) . ' arguments.' unless @_ == 1;
   my ($N) = @_;
-    
+
  my $x = PI * (zeroes($N)->xlinvals(-1, (-1+1*($N-1))/$N));
  my $res = sin($x)/$x;
  my $mid;
@@ -1469,7 +1469,7 @@ sub nuttall {
   barf "nuttall: 1 argument expected. Got " . scalar(@_) . ' arguments.' unless @_ == 1;
   my ($N) = @_;
     my $cx = (cos(zeroes($N)->xlinvals(0,TPI)));
-  
+
     (0.2269824) +  ($cx * ((-0.4572542) +  ($cx * (0.273199 + $cx * (-0.0425644)  ))));
 }
 $window_definitions{nuttall} = {
@@ -1480,7 +1480,7 @@ sub nuttall_per {
   barf "nuttall: 1 argument expected. Got " . scalar(@_) . ' arguments.' unless @_ == 1;
   my ($N) = @_;
     my $cx = (cos(zeroes($N)->xlinvals(0, TPI*($N-1)/$N)));
-  
+
     (0.2269824) +  ($cx * ((-0.4572542) +  ($cx * (0.273199 + $cx * (-0.0425644)  ))));
 }
 $window_definitions{nuttall} = {
@@ -1491,7 +1491,7 @@ sub nuttall1 {
   barf "nuttall1: 1 argument expected. Got " . scalar(@_) . ' arguments.' unless @_ == 1;
   my ($N) = @_;
     my $cx = (cos(zeroes($N)->xlinvals(0,TPI)));
-  
+
     (0.211536) +  ($cx * ((-0.449584) +  ($cx * (0.288464 + $cx * (-0.050416)  ))));
 }
 $window_definitions{nuttall1} = {
@@ -1504,7 +1504,7 @@ sub nuttall1_per {
   barf "nuttall1: 1 argument expected. Got " . scalar(@_) . ' arguments.' unless @_ == 1;
   my ($N) = @_;
     my $cx = (cos(zeroes($N)->xlinvals(0, TPI*($N-1)/$N)));
-  
+
     (0.211536) +  ($cx * ((-0.449584) +  ($cx * (0.288464 + $cx * (-0.050416)  ))));
 }
 $window_definitions{nuttall1} = {
@@ -1516,10 +1516,10 @@ $winpersubs{nuttall1}= \&nuttall1_per;
 sub parzen {
   barf "parzen: 1 argument expected. Got " . scalar(@_) . ' arguments.' unless @_ == 1;
   my ($N) = @_;
-    
+
   my $x = zeroes($N)->xlinvals(-1,1);
   my $x1 = $x->where($x <= -.5);
-  my $x2 = $x->where( ($x < .5)  & ($x > -.5) ); 
+  my $x2 = $x->where( ($x < .5)  & ($x > -.5) );
   my $x3 = $x->where($x >= .5);
   $x1 .= 2 * (1-abs($x1))**3;
 #  $x3 .= 2 * (1-abs($x3))**3;
@@ -1535,10 +1535,10 @@ $winsubs{parzen} = \&parzen;
 sub parzen_per {
   barf "parzen: 1 argument expected. Got " . scalar(@_) . ' arguments.' unless @_ == 1;
   my ($N) = @_;
-    
+
   my $x = zeroes($N)->xlinvals(-1,(-1 + ($N-1))/($N));
   my $x1 = $x->where($x <= -.5);
-  my $x2 = $x->where( ($x < .5)  & ($x > -.5) ); 
+  my $x2 = $x->where( ($x < .5)  & ($x > -.5) );
   my $x3 = $x->where($x >= .5);
   $x1 .= 2 * (1-abs($x1))**3;
 #  $x3 .= 2 * (1-abs($x3))**3;
@@ -1554,7 +1554,7 @@ $winpersubs{parzen}= \&parzen_per;
 sub parzen_octave {
   barf "parzen_octave: 1 argument expected. Got " . scalar(@_) . ' arguments.' unless @_ == 1;
   my ($N) = @_;
-    
+
         my $L = $N-1;
         my $r = ($L/2);
         my $r4 = ($r/2);
@@ -1563,7 +1563,7 @@ sub parzen_octave {
         my $n2 = $n->where($n > $r4);
         my $n3 = $n->where($n < -$r4);
         $n1 .= 1 -6.*(abs($n1)/($N/2))**2 + 6*(abs($n1)/($N/2))**3;
-        $n2 .= 2.*(1-abs($n2)/($N/2))**3;        
+        $n2 .= 2.*(1-abs($n2)/($N/2))**3;
         $n3 .= 2.*(1-abs($n3)/($N/2))**3;
         $n;
     ;
@@ -1634,13 +1634,13 @@ $winpersubs{triangular}= \&triangular_per;
 sub tukey {
   barf "tukey: 2 arguments expected. Got " . scalar(@_) . ' arguments.' unless @_ == 2;
   my ($N,$alpha) = @_;
-    
+
   barf("tukey: alpha must be between 0 and 1") unless
          $alpha >=0 and $alpha <= 1;
   return ones($N) if $alpha == 0;
   my $x = zeroes($N)->xlinvals(0,1);
   my $x1 = $x->where($x < $alpha/2);
-  my $x2 = $x->where( ($x <= 1-$alpha/2) & ($x >= $alpha/2) ); 
+  my $x2 = $x->where( ($x <= 1-$alpha/2) & ($x >= $alpha/2) );
   my $x3 = $x->where($x > 1 - $alpha/2);
   $x1 .= 0.5 * ( 1 + cos( PI * (2*$x1/$alpha -1)));
   $x2 .= 1;
@@ -1656,13 +1656,13 @@ $winsubs{tukey} = \&tukey;
 sub tukey_per {
   barf "tukey: 2 arguments expected. Got " . scalar(@_) . ' arguments.' unless @_ == 2;
   my ($N,$alpha) = @_;
-    
+
   barf("tukey: alpha must be between 0 and 1") unless
          $alpha >=0 and $alpha <= 1;
   return ones($N) if $alpha == 0;
   my $x = zeroes($N)->xlinvals(0,($N-1)/$N);
   my $x1 = $x->where($x < $alpha/2);
-  my $x2 = $x->where( ($x <= 1-$alpha/2) & ($x >= $alpha/2) ); 
+  my $x2 = $x->where( ($x <= 1-$alpha/2) & ($x >= $alpha/2) );
   my $x3 = $x->where($x > 1 - $alpha/2);
   $x1 .= 0.5 * ( 1 + cos( PI * (2*$x1/$alpha -1)));
   $x2 .= 1;
@@ -1711,7 +1711,7 @@ See also L<triangular|/triangular($N)>.
 
 
 =cut
-                
+
 
 =head2 bartlett_hann($N)
 
@@ -1723,7 +1723,7 @@ where the points in arr range from -1/2 through 1/2, and arr1 are the cos of poi
 
 
 =cut
-                
+
 
 =head2 blackman($N)
 
@@ -1734,7 +1734,7 @@ The 'classic' Blackman window. (Ref 1). One of the Blackman-Harris family, with 
 
 
 =cut
-                
+
 
 =head2 blackman_bnh($N)
 
@@ -1745,7 +1745,7 @@ The Blackman-Harris (bnh) window. An improved version of the 3-term Blackman-Har
 
 
 =cut
-                
+
 
 =head2 blackman_ex($N)
 
@@ -1756,7 +1756,7 @@ The 'exact' Blackman window. (Ref 1). One of the Blackman-Harris family, with co
 
 
 =cut
-                
+
 
 =head2 blackman_gen($N,$alpha)
 
@@ -1770,7 +1770,7 @@ where the points in arr are the cos of points ranging from 0 through 2PI.
 
 
 =cut
-                
+
 
 =head2 blackman_gen3($N,$a0,$a1,$a2)
 
@@ -1781,7 +1781,7 @@ The general form of the Blackman family.  One of the Blackman-Harris family, wit
 
 
 =cut
-                
+
 
 =head2 blackman_gen4($N,$a0,$a1,$a2,$a3)
 
@@ -1792,7 +1792,7 @@ The general 4-term Blackman-Harris window.  One of the Blackman-Harris family, w
 
 
 =cut
-                
+
 
 =head2 blackman_gen5($N,$a0,$a1,$a2,$a3,$a4)
 
@@ -1803,7 +1803,7 @@ The general 5-term Blackman-Harris window.  One of the Blackman-Harris family, w
 
 
 =cut
-                
+
 
 =head2 blackman_harris($N)
 
@@ -1811,10 +1811,10 @@ The Blackman-Harris window. (Ref 1). One of the Blackman-Harris family, with coe
 
  a0 = 0.422323, a1 = 0.49755, a2 = 0.07922
 
-Another name for this window is the Minimum three term (sample) Blackman-Harris window. 
+Another name for this window is the Minimum three term (sample) Blackman-Harris window.
 
 =cut
-                
+
 
 =head2 blackman_harris4($N)
 
@@ -1822,10 +1822,10 @@ The minimum (sidelobe) four term Blackman-Harris window. (Ref 1). One of the Bla
 
  a0 = 0.35875, a1 = 0.48829, a2 = 0.14128, a3 = 0.01168
 
-Another name for this window is the Blackman-Harris window. 
+Another name for this window is the Blackman-Harris window.
 
 =cut
-                
+
 
 =head2 blackman_nuttall($N)
 
@@ -1836,7 +1836,7 @@ The Blackman-Nuttall window. One of the Blackman-Harris family, with coefficient
 
 
 =cut
-                
+
 
 =head2 bohman($N)
 
@@ -1849,7 +1849,7 @@ where the points in arr range from -1 through 1.
 
 
 =cut
-                
+
 
 =head2 cauchy($N,$alpha)
 
@@ -1861,7 +1861,7 @@ where the points in arr range from -1 through 1.
 
 
 =cut
-                
+
 
 =head2 chebyshev($N,$at)
 
@@ -1871,7 +1871,7 @@ This routine gives the same result as the routine B<chebwin> in Octave 3.6.2.
 
 
 =cut
-                
+
 
 =head2 cos_alpha($N,$alpha)
 
@@ -1883,7 +1883,7 @@ where the points in arr are the sin of points ranging from 0 through PI.
 
 
 =cut
-                
+
 
 =head2 cosine($N)
 
@@ -1895,15 +1895,15 @@ where the points in arr are the sin of points ranging from 0 through PI.
 
 
 =cut
-                
+
 
 =head2 dpss($N,$beta)
 
 The Digital Prolate Spheroidal Sequence (DPSS) window. The parameter C<$beta> is the half-width of the mainlobe, measured in frequency bins. This window maximizes the power in the mainlobe for given C<$N> and C<$beta>.
-Another name for this window is the sleppian window. 
+Another name for this window is the sleppian window.
 
 =cut
-                
+
 
 =head2 exponential($N)
 
@@ -1915,7 +1915,7 @@ where the points in arr range from -1 through 1.
 
 
 =cut
-                
+
 
 =head2 flattop($N)
 
@@ -1926,7 +1926,7 @@ The flat top window. One of the Blackman-Harris family, with coefficients
 
 
 =cut
-                
+
 
 =head2 gaussian($N,$beta)
 
@@ -1938,7 +1938,7 @@ where the points in arr range from -1 through 1.
 
 
 =cut
-                
+
 
 =head2 hamming($N)
 
@@ -1949,7 +1949,7 @@ The Hamming window. (Ref 1). One of the Blackman-Harris family, with coefficient
 
 
 =cut
-                
+
 
 =head2 hamming_ex($N)
 
@@ -1960,7 +1960,7 @@ The 'exact' Hamming window. (Ref 1). One of the Blackman-Harris family, with coe
 
 
 =cut
-                
+
 
 =head2 hamming_gen($N,$a)
 
@@ -1971,7 +1971,7 @@ The general Hamming window. (Ref 1). One of the Blackman-Harris family, with coe
 
 
 =cut
-                
+
 
 =head2 hann($N)
 
@@ -1983,7 +1983,7 @@ Another name for this window is the hanning window. See also L<hann_matlab|/hann
 
 
 =cut
-                
+
 
 =head2 hann_matlab($N)
 
@@ -1998,7 +1998,7 @@ See also L<hann|/hann($N)>.
 
 
 =cut
-                
+
 
 =head2 hann_poisson($N,$alpha)
 
@@ -2010,14 +2010,14 @@ where the points in arr range from -1 through 1, and arr1 are the cos of points 
 
 
 =cut
-                
+
 
 =head2 kaiser($N,$beta)
 
 The Kaiser window. (Ref 1). The parameter C<$beta> is the approximate half-width of the mainlobe, measured in frequency bins.
 Another name for this window is the Kaiser-Bessel window.  This window is defined by
 
-  
+
               barf "kaiser: PDL::GSLSF not installed" unless $HAVE_BESSEL;
               $beta *= PI;
               my @n = PDL::GSLSF::BESSEL::gsl_sf_bessel_In ($beta * sqrt(1 - arr **2),0);
@@ -2028,13 +2028,13 @@ where the points in arr range from -1 through 1.
 
 
 =cut
-                
+
 
 =head2 lanczos($N)
 
 The Lanczos window. Another name for this window is the sinc window.  This window is defined by
 
- 
+
  my $x = PI * arr;
  my $res = sin($x)/$x;
  my $mid;
@@ -2045,7 +2045,7 @@ where the points in arr range from -1 through 1.
 
 
 =cut
-                
+
 
 =head2 nuttall($N)
 
@@ -2057,7 +2057,7 @@ See also L<nuttall1|/nuttall1($N)>.
 
 
 =cut
-                
+
 
 =head2 nuttall1($N)
 
@@ -2070,7 +2070,7 @@ See also L<nuttall|/nuttall($N)>.
 
 
 =cut
-                
+
 
 =head2 parzen($N)
 
@@ -2079,7 +2079,7 @@ See also L<parzen_octave|/parzen_octave($N)>.
 
 
 =cut
-                
+
 
 =head2 parzen_octave($N)
 
@@ -2089,7 +2089,7 @@ See also L<parzen|/parzen($N)>.
 
 
 =cut
-                
+
 
 =head2 poisson($N,$alpha)
 
@@ -2101,14 +2101,14 @@ where the points in arr range from -1 through 1.
 
 
 =cut
-                
+
 
 =head2 rectangular($N)
 
-The Rectangular window. (Ref 1). Other names for this window are: dirichlet, boxcar. 
+The Rectangular window. (Ref 1). Other names for this window are: dirichlet, boxcar.
 
 =cut
-                
+
 
 =head2 triangular($N)
 
@@ -2121,14 +2121,14 @@ See also L<bartlett|/bartlett($N)>.
 
 
 =cut
-                
+
 
 =head2 tukey($N,$alpha)
 
-The Tukey window. (Ref 1). Another name for this window is the tapered cosine window. 
+The Tukey window. (Ref 1). Another name for this window is the tapered cosine window.
 
 =cut
-                
+
 
 =head2 welch($N)
 
@@ -2140,7 +2140,7 @@ where the points in arr range from -1 through 1.
 
 
 =cut
-                
+
 
 # Maxima code to convert between powers of cos and multiple angles in cos
 #grind(trigsimp(trigexpand(a0 - a1*cos(x) +a2*cos(2*x) -a3*cos(3*x) + a4*cos(4*x) -a5*cos(5*x) +a6*cos(6*x))));
@@ -2148,7 +2148,7 @@ where the points in arr range from -1 through 1.
 #32*a6*cos(x)^6-16*a5*cos(x)^5+(8*a4-48*a6)*cos(x)^4+(20*a5-4*a3)*cos(x)^3
 #              +(18*a6-8*a4+2*a2)*cos(x)^2+(-5*a5+3*a3-a1)*cos(x)-a6+a4-a2+a0$
 
-#(%i37) grind(trigsimp(trigreduce(c0 + c1*cos(x) 
+#(%i37) grind(trigsimp(trigreduce(c0 + c1*cos(x)
 #  + c2*cos(x)^2 + c3*cos(x)^3 + c4*cos(x)^4 + c5*cos(x)^5 + c6*cos(x)^6)));
 #
 #(c6*cos(6*x)+2*c5*cos(5*x)+(6*c6+4*c4)*cos(4*x)+(10*c5+8*c3)*cos(3*x)
@@ -2163,11 +2163,11 @@ These subroutines are used internally, but are also available for export.
 Convert Blackman-Harris coefficients. The BH windows are usually defined via coefficients
 for cosines of integer multiples of an argument. The same windows may be written instead
 as terms of powers of cosines of the same argument. These may be computed faster as they
-replace evaluation of cosines with  multiplications. 
+replace evaluation of cosines with  multiplications.
 This subroutine is used internally to implement the Blackman-Harris
-family of windows more efficiently. 
+family of windows more efficiently.
 
-This subroutine takes between 1 and 7 numeric arguments  a0, a1, ...    
+This subroutine takes between 1 and 7 numeric arguments  a0, a1, ...
 
 It converts the coefficients of this
 
@@ -2191,7 +2191,7 @@ To the cofficients of this
 
   a0 - a1 cos(arg) + a2 cos( 2 * arg) - a3 cos( 3 * arg)  + ...
 
-=cut 
+=cut
 
 sub cos_pow_to_mult {
     my( @cin )  = @_;
@@ -2199,7 +2199,7 @@ sub cos_pow_to_mult {
     my $ex = 7 - @cin;
     my @c = (@cin, (0) x $ex);
     my (@as) = (
-        10*$c[6]+12*$c[4]+16*$c[2]+32*$c[0], 20*$c[5]+24*$c[3]+32*$c[1], 
+        10*$c[6]+12*$c[4]+16*$c[2]+32*$c[0], 20*$c[5]+24*$c[3]+32*$c[1],
          15*$c[6]+16*$c[4]+16*$c[2], 10*$c[5]+8*$c[3], 6*$c[6]+4*$c[4], 2*$c[5], $c[6]);
     foreach (1..$ex) {pop (@as)}
     my $sign = -1;
@@ -2282,7 +2282,7 @@ John Lapeyre, C<< <jlapeyre at cpan.org> >>
 
 For study and comparison, the author used documents or output from:
 Thomas Cokelaer's spectral analysis software; Julius O Smith III's
-Spectral Audio Signal Processing web pages; André Carezia's 
+Spectral Audio Signal Processing web pages; André Carezia's
 chebwin.m Octave code; Other code in the Octave signal package.
 
 =head1 LICENSE AND COPYRIGHT
