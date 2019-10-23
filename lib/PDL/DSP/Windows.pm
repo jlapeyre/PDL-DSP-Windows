@@ -1737,10 +1737,7 @@ alias => [ 'Riez','Bochner','Parzen','parabolic'],
 };
 $winpersubs{welch}= \&welch_per;
 
-
 =head1  Symmetric window functions
-
-
 
 =head2 bartlett($N)
 
@@ -1751,10 +1748,6 @@ The Bartlett window. (Ref 1). Another name for this window is the fejer window. 
 where the points in arr range from -1 through 1.
 See also L<triangular|/triangular($N)>.
 
-
-=cut
-
-
 =head2 bartlett_hann($N)
 
 The Bartlett-Hann window. Another name for this window is the Modified Bartlett-Hann window.  This window is defined by
@@ -1763,20 +1756,11 @@ The Bartlett-Hann window. Another name for this window is the Modified Bartlett-
 
 where the points in arr range from -1/2 through 1/2, and arr1 are the cos of points ranging from -PI through PI.
 
-
-=cut
-
-
 =head2 blackman($N)
 
 The 'classic' Blackman window. (Ref 1). One of the Blackman-Harris family, with coefficients
 
  a0 = 0.42, a1 = 0.5, a2 = 0.08
-
-
-
-=cut
-
 
 =head2 blackman_bnh($N)
 
@@ -1784,21 +1768,11 @@ The Blackman-Harris (bnh) window. An improved version of the 3-term Blackman-Har
 
  a0 = 0.4243801, a1 = 0.4973406, a2 = 0.0782793
 
-
-
-=cut
-
-
 =head2 blackman_ex($N)
 
 The 'exact' Blackman window. (Ref 1). One of the Blackman-Harris family, with coefficients
 
  a0 = 0.426590713671539, a1 = 0.496560619088564, a2 = 0.0768486672398968
-
-
-
-=cut
-
 
 =head2 blackman_gen($N,$alpha)
 
@@ -1810,20 +1784,11 @@ The General classic Blackman window. A single parameter family of the 3-term Bla
 
 where the points in arr are the cos of points ranging from 0 through 2PI.
 
-
-=cut
-
-
 =head2 blackman_gen3($N,$a0,$a1,$a2)
 
 The general form of the Blackman family.  One of the Blackman-Harris family, with coefficients
 
  a0 = $a0, a1 = $a1, a2 = $a2
-
-
-
-=cut
-
 
 =head2 blackman_gen4($N,$a0,$a1,$a2,$a3)
 
@@ -1831,21 +1796,11 @@ The general 4-term Blackman-Harris window.  One of the Blackman-Harris family, w
 
  a0 = $a0, a1 = $a1, a2 = $a2, a3 = $a3
 
-
-
-=cut
-
-
 =head2 blackman_gen5($N,$a0,$a1,$a2,$a3,$a4)
 
 The general 5-term Blackman-Harris window.  One of the Blackman-Harris family, with coefficients
 
  a0 = $a0, a1 = $a1, a2 = $a2, a3 = $a3, a4 = $a4
-
-
-
-=cut
-
 
 =head2 blackman_harris($N)
 
@@ -1855,9 +1810,6 @@ The Blackman-Harris window. (Ref 1). One of the Blackman-Harris family, with coe
 
 Another name for this window is the Minimum three term (sample) Blackman-Harris window.
 
-=cut
-
-
 =head2 blackman_harris4($N)
 
 The minimum (sidelobe) four term Blackman-Harris window. (Ref 1). One of the Blackman-Harris family, with coefficients
@@ -1866,19 +1818,11 @@ The minimum (sidelobe) four term Blackman-Harris window. (Ref 1). One of the Bla
 
 Another name for this window is the Blackman-Harris window.
 
-=cut
-
-
 =head2 blackman_nuttall($N)
 
 The Blackman-Nuttall window. One of the Blackman-Harris family, with coefficients
 
  a0 = 0.3635819, a1 = 0.4891775, a2 = 0.1365995, a3 = 0.0106411
-
-
-
-=cut
-
 
 =head2 bohman($N)
 
@@ -1889,10 +1833,6 @@ The Bohman window. (Ref 1).  This window is defined by
 
 where the points in arr range from -1 through 1.
 
-
-=cut
-
-
 =head2 cauchy($N,$alpha)
 
 The Cauchy window. (Ref 1). Other names for this window are: Abel, Poisson.  This window is defined by
@@ -1901,19 +1841,11 @@ The Cauchy window. (Ref 1). Other names for this window are: Abel, Poisson.  Thi
 
 where the points in arr range from -1 through 1.
 
-
-=cut
-
-
 =head2 chebyshev($N,$at)
 
 The Chebyshev window. The frequency response of this window has C<$at> dB of attenuation in the stop-band.
 Another name for this window is the Dolph-Chebyshev window. No periodic version of this window is defined.
 This routine gives the same result as the routine B<chebwin> in Octave 3.6.2.
-
-
-=cut
-
 
 =head2 cos_alpha($N,$alpha)
 
@@ -1923,10 +1855,6 @@ The Cos_alpha window. (Ref 1). Another name for this window is the Power-of-cosi
 
 where the points in arr are the sin of points ranging from 0 through PI.
 
-
-=cut
-
-
 =head2 cosine($N)
 
 The Cosine window. Another name for this window is the sine window.  This window is defined by
@@ -1935,17 +1863,10 @@ The Cosine window. Another name for this window is the sine window.  This window
 
 where the points in arr are the sin of points ranging from 0 through PI.
 
-
-=cut
-
-
 =head2 dpss($N,$beta)
 
 The Digital Prolate Spheroidal Sequence (DPSS) window. The parameter C<$beta> is the half-width of the mainlobe, measured in frequency bins. This window maximizes the power in the mainlobe for given C<$N> and C<$beta>.
 Another name for this window is the sleppian window.
-
-=cut
-
 
 =head2 exponential($N)
 
@@ -1955,20 +1876,11 @@ The Exponential window.  This window is defined by
 
 where the points in arr range from -1 through 1.
 
-
-=cut
-
-
 =head2 flattop($N)
 
 The flat top window. One of the Blackman-Harris family, with coefficients
 
  a0 = 0.21557895, a1 = 0.41663158, a2 = 0.277263158, a3 = 0.083578947, a4 = 0.006947368
-
-
-
-=cut
-
 
 =head2 gaussian($N,$beta)
 
@@ -1978,20 +1890,11 @@ The Gaussian window. (Ref 1). Another name for this window is the Weierstrass wi
 
 where the points in arr range from -1 through 1.
 
-
-=cut
-
-
 =head2 hamming($N)
 
 The Hamming window. (Ref 1). One of the Blackman-Harris family, with coefficients
 
  a0 = 0.54, a1 = 0.46
-
-
-
-=cut
-
 
 =head2 hamming_ex($N)
 
@@ -1999,21 +1902,11 @@ The 'exact' Hamming window. (Ref 1). One of the Blackman-Harris family, with coe
 
  a0 = 0.53836, a1 = 0.46164
 
-
-
-=cut
-
-
 =head2 hamming_gen($N,$a)
 
 The general Hamming window. (Ref 1). One of the Blackman-Harris family, with coefficients
 
  a0 = $a, a1 = (1-$a)
-
-
-
-=cut
-
 
 =head2 hann($N)
 
@@ -2022,10 +1915,6 @@ The Hann window. (Ref 1). One of the Blackman-Harris family, with coefficients
  a0 = 0.5, a1 = 0.5
 
 Another name for this window is the hanning window. See also L<hann_matlab|/hann_matlab($N)>.
-
-
-=cut
-
 
 =head2 hann_matlab($N)
 
@@ -2038,10 +1927,6 @@ where the points in arr are the cosine of points ranging from 2PI/($N+1) through
 This routine gives the same result as the routine B<hanning> in Matlab.
 See also L<hann|/hann($N)>.
 
-
-=cut
-
-
 =head2 hann_poisson($N,$alpha)
 
 The Hann-Poisson window. (Ref 1).  This window is defined by
@@ -2049,10 +1934,6 @@ The Hann-Poisson window. (Ref 1).  This window is defined by
  0.5 * (1 + arr1) * exp (-$alpha * abs arr),
 
 where the points in arr range from -1 through 1, and arr1 are the cos of points ranging from -PI through PI.
-
-
-=cut
-
 
 =head2 kaiser($N,$beta)
 
@@ -2068,14 +1949,9 @@ Another name for this window is the Kaiser-Bessel window.  This window is define
 
 where the points in arr range from -1 through 1.
 
-
-=cut
-
-
 =head2 lanczos($N)
 
 The Lanczos window. Another name for this window is the sinc window.  This window is defined by
-
 
  my $x = PI * arr;
  my $res = sin($x)/$x;
@@ -2085,10 +1961,6 @@ The Lanczos window. Another name for this window is the sinc window.  This windo
 
 where the points in arr range from -1 through 1.
 
-
-=cut
-
-
 =head2 nuttall($N)
 
 The Nuttall window. One of the Blackman-Harris family, with coefficients
@@ -2096,10 +1968,6 @@ The Nuttall window. One of the Blackman-Harris family, with coefficients
  a0 = 0.3635819, a1 = 0.4891775, a2 = 0.1365995, a3 = 0.0106411
 
 See also L<nuttall1|/nuttall1($N)>.
-
-
-=cut
-
 
 =head2 nuttall1($N)
 
@@ -2110,28 +1978,16 @@ The Nuttall (v1) window. A window referred to as the Nuttall window. One of the 
 This routine gives the same result as the routine B<nuttallwin> in Octave 3.6.2.
 See also L<nuttall|/nuttall($N)>.
 
-
-=cut
-
-
 =head2 parzen($N)
 
 The Parzen window. (Ref 1). Other names for this window are: Jackson, Valle-Poussin. This function disagrees with the Octave subroutine B<parzenwin>, but agrees with Ref. 1.
 See also L<parzen_octave|/parzen_octave($N)>.
-
-
-=cut
-
 
 =head2 parzen_octave($N)
 
 The Parzen window. No periodic version of this window is defined.
 This routine gives the same result as the routine B<parzenwin> in Octave 3.6.2.
 See also L<parzen|/parzen($N)>.
-
-
-=cut
-
 
 =head2 poisson($N,$alpha)
 
@@ -2141,16 +1997,9 @@ The Poisson window. (Ref 1).  This window is defined by
 
 where the points in arr range from -1 through 1.
 
-
-=cut
-
-
 =head2 rectangular($N)
 
 The Rectangular window. (Ref 1). Other names for this window are: dirichlet, boxcar.
-
-=cut
-
 
 =head2 triangular($N)
 
@@ -2161,16 +2010,9 @@ The Triangular window.  This window is defined by
 where the points in arr range from -$N/($N-1) through $N/($N-1).
 See also L<bartlett|/bartlett($N)>.
 
-
-=cut
-
-
 =head2 tukey($N,$alpha)
 
 The Tukey window. (Ref 1). Another name for this window is the tapered cosine window.
-
-=cut
-
 
 =head2 welch($N)
 
@@ -2179,9 +2021,6 @@ The Welch window. (Ref 1). Other names for this window are: Riez, Bochner, Parze
  1 - arr**2,
 
 where the points in arr range from -1 through 1.
-
-
-=cut
 
 =head1 AUXILIARY SUBROUTINES
 
