@@ -302,38 +302,42 @@ For example:
 sub init {
     my $self = shift;
 
-    my $opt = new PDL::Options(
-        {
-            name => 'hamming',
-            periodic => 0,   # symmetric or periodic
-            N => undef,           # order
-            params => undef,
-        });
-    my ($N,$name,$params,$periodic);
-    $N = shift unless ref ($_[0]);
-    $name = shift unless ref ($_[0]);
-    $params = shift unless ref ($_[0]) eq 'HASH';
-    $periodic = shift unless ref ($_[0]);
-    my $iopts = @_ ? shift : {};
-    my $opts = $opt->options($iopts);
-    $name = $opts->{name} unless $name;
+    my ( $N, $name, $params, $periodic );
+
+    $N        = shift unless ref $_[0];
+    $name     = shift unless ref $_[0];
+    $params   = shift unless ref $_[0] eq 'HASH';
+    $periodic = shift unless ref $_[0];
+
+    my $opts = PDL::Options->new({
+        name     => 'hamming',
+        periodic => 0,          # symmetric or periodic
+        N        => undef,      # order
+        params   => undef,
+    })->options( shift // {} );
+
+    $name     ||= $opts->{name};
+    $N        ||= $opts->{N};
+    $periodic ||= $opts->{periodic};
+    $params   //= $opts->{params};
+    $params   = [$params] if defined $params && !ref $params;
+
     $name =~ s/_per$//;
-    $N = $opts->{N} unless $N;
-    $params = $opts->{params} unless defined $params;
-    $params = [$params] if defined $params and not ref $params;
-    $periodic = $opts->{periodic} unless $periodic;
+
     my $ws = $periodic ? \%winpersubs : \%winsubs;
     if ( not exists $ws->{$name}) {
         my $perstr = $periodic ? 'periodic' : 'symmetric';
         barf "window: Unknown $perstr window '$name'.";
     }
-    $self->{name} = $name;
-    $self->{N} = $N;
+
+    $self->{name}     = $name;
+    $self->{N}        = $N;
     $self->{periodic} = $periodic;
-    $self->{params} = $params;
-    $self->{code} = $ws->{$name};
-    $self->{samples} = undef;
+    $self->{params}   = $params;
+    $self->{code}     = $ws->{$name};
+    $self->{samples}  = undef;
     $self->{modfreqs} = undef;
+
     return $self;
 }
 
