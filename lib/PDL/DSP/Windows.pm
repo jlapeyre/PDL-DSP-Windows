@@ -20,9 +20,6 @@ my $HAVE_BESSEL = 1 if !$@;
 eval { require PDL::Graphics::Gnuplot; };
 my $HAVE_GNUPLOT = 1 if !$@;
 
-#eval { require PDL::Graphics::PLplot; };
-#my $HAVE_PLPLOT = 1 if !$@;
-
 use constant PI    => 4 * atan2(1, 1);
 use constant TPI => 2 * PI;
 
@@ -723,7 +720,6 @@ Compute and return the scalloping loss of the window.
 
 sub scallop_loss {
     my ($w) = @_;
-#    my $x = (sequence($w) - ($w->nelem/2)) * (PI/$w->nelem);
     my $x = sequence($w) * (PI/$w->nelem);
     sqrt( (($w*cos($x))->sum)**2 + (($w*sin($x))->sum)**2 ) /
         $w->sum;
@@ -1522,7 +1518,6 @@ sub parzen {
   my $x2 = $x->where( ($x < .5)  & ($x > -.5) );
   my $x3 = $x->where($x >= .5);
   $x1 .= 2 * (1-abs($x1))**3;
-#  $x3 .= 2 * (1-abs($x3))**3;
   $x3 .= $x1->slice('-1:0:-1');
   $x2 .= 1 - 6 * $x2**2 *(1-abs($x2));
   return $x;
@@ -1541,7 +1536,6 @@ sub parzen_per {
   my $x2 = $x->where( ($x < .5)  & ($x > -.5) );
   my $x3 = $x->where($x >= .5);
   $x1 .= 2 * (1-abs($x1))**3;
-#  $x3 .= 2 * (1-abs($x3))**3;
   $x3 .= $x1->slice('-1:1:-1');
   $x2 .= 1 - 6 * $x2**2 *(1-abs($x2));
   return $x;
@@ -2140,19 +2134,6 @@ where the points in arr range from -1 through 1.
 
 
 =cut
-
-
-# Maxima code to convert between powers of cos and multiple angles in cos
-#grind(trigsimp(trigexpand(a0 - a1*cos(x) +a2*cos(2*x) -a3*cos(3*x) + a4*cos(4*x) -a5*cos(5*x) +a6*cos(6*x))));
-#
-#32*a6*cos(x)^6-16*a5*cos(x)^5+(8*a4-48*a6)*cos(x)^4+(20*a5-4*a3)*cos(x)^3
-#              +(18*a6-8*a4+2*a2)*cos(x)^2+(-5*a5+3*a3-a1)*cos(x)-a6+a4-a2+a0$
-
-#(%i37) grind(trigsimp(trigreduce(c0 + c1*cos(x)
-#  + c2*cos(x)^2 + c3*cos(x)^3 + c4*cos(x)^4 + c5*cos(x)^5 + c6*cos(x)^6)));
-#
-#(c6*cos(6*x)+2*c5*cos(5*x)+(6*c6+4*c4)*cos(4*x)+(10*c5+8*c3)*cos(3*x)
-#            +(15*c6+16*c4+16*c2)*cos(2*x)+(20*c5+24*c3+32*c1)*cos(x)+10*c6+12*c4+16*c2+32*c0)  /32$
 
 =head1 AUXILIARY SUBROUTINES
 
