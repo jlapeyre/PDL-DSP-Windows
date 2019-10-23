@@ -28,8 +28,53 @@ use constant TPI => 2 * PI;
 
 use Exporter 'import';
 
-our @EXPORT_OK = qw( window list_windows chebpoly cos_mult_to_pow cos_pow_to_mult
-   bartlett bartlett_hann bartlett_hann_per bartlett_per blackman blackman_bnh blackman_bnh_per blackman_ex blackman_ex_per blackman_gen blackman_gen3 blackman_gen3_per blackman_gen4 blackman_gen4_per blackman_gen5 blackman_gen5_per blackman_gen_per blackman_harris blackman_harris4 blackman_harris4_per blackman_harris_per blackman_nuttall blackman_nuttall_per blackman_per bohman bohman_per cauchy cauchy_per chebyshev cos_alpha cos_alpha_per cosine cosine_per dpss dpss_per exponential exponential_per flattop flattop_per gaussian gaussian_per hamming hamming_ex hamming_ex_per hamming_gen hamming_gen_per hamming_per hann hann_matlab hann_per hann_poisson hann_poisson_per kaiser kaiser_per lanczos lanczos_per nuttall nuttall1 nuttall1_per nuttall_per parzen parzen_octave parzen_per poisson poisson_per rectangular rectangular_per triangular triangular_per tukey tukey_per welch welch_per);
+our @EXPORT_OK = qw(
+    window
+    list_windows
+
+    chebpoly
+    cos_mult_to_pow
+    cos_pow_to_mult
+
+    bartlett                   bartlett_per
+    bartlett_hann         bartlett_hann_per
+    blackman                   blackman_per
+    blackman_bnh           blackman_bnh_per
+    blackman_ex             blackman_ex_per
+    blackman_gen           blackman_gen_per
+    blackman_gen3         blackman_gen3_per
+    blackman_gen4         blackman_gen4_per
+    blackman_gen5         blackman_gen5_per
+    blackman_harris     blackman_harris_per
+    blackman_harris4   blackman_harris4_per
+    blackman_nuttall   blackman_nuttall_per
+    bohman                       bohman_per
+    cauchy                       cauchy_per
+    chebyshev
+    cos_alpha                 cos_alpha_per
+    cosine                       cosine_per
+    dpss                           dpss_per
+    exponential             exponential_per
+    flattop                     flattop_per
+    gaussian                   gaussian_per
+    hamming                     hamming_per
+    hamming_ex               hamming_ex_per
+    hamming_gen             hamming_gen_per
+    hann                           hann_per
+    hann_matlab
+    hann_poisson           hann_poisson_per
+    kaiser                       kaiser_per
+    lanczos                     lanczos_per
+    nuttall                     nuttall_per
+    nuttall1                   nuttall1_per
+    parzen                       parzen_per
+    parzen_octave
+    poisson                     poisson_per
+    rectangular             rectangular_per
+    triangular               triangular_per
+    tukey                         tukey_per
+    welch                         welch_per
+);
 
 $PDL::onlinedoc->scan(__FILE__) if $PDL::onlinedoc;
 
