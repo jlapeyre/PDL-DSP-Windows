@@ -401,26 +401,32 @@ are padded with zeros before the fourier transform is performed.
 =cut
 
 sub modfreqs {
-    my ($self,$inopts) = @_;
-    my %opts = iparse( { min_bins => 1000 }, ifhref($inopts));
-    my $data = $self->get('samples');
+    my $self = shift;
+    my %opts = iparse( { min_bins => 1000 }, ifhref(shift) );
+
+    my $data = $self->get_samples;
+
     my $n = $data->nelem;
     my $fn = $n > $opts{min_bins} ? 2 * $n : $opts{min_bins};
+
     $n--;
+
     my $freq = zeroes($fn);
     $freq->slice("0:$n") .= $data;
+
     PDL::FFT::realfft($freq);
+
     my $real = zeros($freq);
     my $img  = zeros($freq);
-    my $mid = ($freq->nelem)/2 - 1;
+    my $mid  = ( $freq->nelem ) / 2 - 1;
     my $mid1 = $mid + 1;
-    $real->slice("0:$mid") .= $freq->slice("$mid:0:-1");
+
+    $real->slice("0:$mid")   .= $freq->slice("$mid:0:-1");
     $real->slice("$mid1:-1") .= $freq->slice("0:$mid");
-    $img->slice("0:$mid") .= $freq->slice("-1:$mid1:-1");
-    $img->slice("$mid1:-1") .= $freq->slice("$mid1:-1");
-    my $mod = $real**2 + $img**2;
-    $self->{modfreqs} = $mod;
-    return $mod;
+    $img->slice("0:$mid")    .= $freq->slice("-1:$mid1:-1");
+    $img->slice("$mid1:-1")  .= $freq->slice("$mid1:-1");
+
+    return $self->{modfreqs} = $real ** 2 + $img ** 2;
 }
 
 =head2 get
