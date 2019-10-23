@@ -367,7 +367,7 @@ For example:
 
 sub samples {
     my $self = shift;
-    my @args = defined $self->{params} ? ($self->{N}, @{$self->{params}} ) : ($self->{N});
+    my @args = ( $self->{N}, @{ $self->{params} // [] } );
     $self->{samples} = $self->{code}->(@args);
 }
 
