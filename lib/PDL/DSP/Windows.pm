@@ -1,8 +1,6 @@
 package PDL::DSP::Windows;
 $PDL::DSP::Windows::VERSION = '0.008';
 
-use Exporter 'import';
-
 use strict; use warnings;
 use PDL::LiteF;
 use PDL::FFT;
@@ -11,17 +9,24 @@ use PDL::Core qw( topdl );
 use PDL::MatrixOps qw( eigens_sym );
 use PDL::Options qw( iparse ifhref );
 
-eval { require PDL::LinearAlgebra::Special };
-my $HAVE_LinearAlgebra = 1 if !$@;
+use constant {
+    HAVE_LinearAlgebra => eval { require PDL::LinearAlgebra::Special; 1 } || 0,
+    HAVE_BESSEL        => eval { require PDL::GSLSF::BESSEL; 1 }          || 0,
+    HAVE_GNUPLOT       => eval { require PDL::Graphics::Gnuplot; 1 }      || 0,
+    USE_FFTW_DIRECTION => do {
+        use version;
+        version->parse($PDL::VERSION) < version->parse('2.006_04');
+    },
+};
 
-eval { require PDL::GSLSF::BESSEL; };
-my $HAVE_BESSEL = 1 if !$@;
+use namespace::clean;
 
-eval { require PDL::Graphics::Gnuplot; };
-my $HAVE_GNUPLOT = 1 if !$@;
-
-use constant PI    => 4 * atan2(1, 1);
+# These constants defined after cleaning our namespace to avoid
+# breaking existing code that might use them.
+use constant PI  => 4 * atan2(1, 1);
 use constant TPI => 2 * PI;
+
+use Exporter 'import';
 
 our @EXPORT_OK = qw( window list_windows chebpoly cos_mult_to_pow cos_pow_to_mult
    bartlett bartlett_hann bartlett_hann_per bartlett_per blackman blackman_bnh blackman_bnh_per blackman_ex blackman_ex_per blackman_gen blackman_gen3 blackman_gen3_per blackman_gen4 blackman_gen4_per blackman_gen5 blackman_gen5_per blackman_gen_per blackman_harris blackman_harris4 blackman_harris4_per blackman_harris_per blackman_nuttall blackman_nuttall_per blackman_per bohman bohman_per cauchy cauchy_per chebyshev cos_alpha cos_alpha_per cosine cosine_per dpss dpss_per exponential exponential_per flattop flattop_per gaussian gaussian_per hamming hamming_ex hamming_ex_per hamming_gen hamming_gen_per hamming_per hann hann_matlab hann_per hann_poisson hann_poisson_per kaiser kaiser_per lanczos lanczos_per nuttall nuttall1 nuttall1_per nuttall_per parzen parzen_octave parzen_per poisson poisson_per rectangular rectangular_per triangular triangular_per tukey tukey_per welch welch_per);
@@ -552,7 +557,7 @@ The default display type is used.
 
 sub plot {
     my $self = shift;
-    barf "PDL::DSP::Windows::plot Gnuplot not available!" unless $HAVE_GNUPLOT;
+    barf "PDL::DSP::Windows::plot Gnuplot not available!" unless HAVE_GNUPLOT;
     my $w = $self->get('samples');
     my $title = $self->get_name() .$self->format_plot_param_vals;
     PDL::Graphics::Gnuplot::plot( title => $title, xlabel => 'Time (samples)',
@@ -613,7 +618,7 @@ sub plot_freq {
         });
     my $iopts = @_ ? shift : {};
     my $opts = $opt->options($iopts);
-    barf "PDL::DSP::Windows::plot Gnuplot not available!" unless $HAVE_GNUPLOT;
+    barf "PDL::DSP::Windows::plot Gnuplot not available!" unless HAVE_GNUPLOT;
     my $mf = $self->get_modfreqs({ min_bins => $opts->{min_bins}});
     $mf /= $mf->max;
     my $param_str = $self->format_plot_param_vals;
@@ -1108,7 +1113,7 @@ sub chebyshev {
         my $arg = PI/$N * sequence($N);
         my $cw_im = $cw * sin($arg);
         $cw *= cos($arg);
-        if ($PDL::VERSION < 2.006_04) {
+        if (USE_FFTW_DIRECTION) {
           PDL::FFT::fftnd($cw,$cw_im);
         }
         else {
@@ -1179,7 +1184,7 @@ sub dpss {
   barf "dpss: 2 arguments expected. Got " . scalar(@_) . ' arguments.' unless @_ == 2;
   my ($N,$beta) = @_;
 
-        barf 'dpss: PDL::LinearAlgebra not installed.' unless $HAVE_LinearAlgebra;
+        barf 'dpss: PDL::LinearAlgebra not installed.' unless HAVE_LinearAlgebra;
         barf "dpss: $beta not between 0 and $N." unless
               $beta >= 0 and $beta <= $N;
         $beta /= ($N/2);
@@ -1203,7 +1208,7 @@ sub dpss_per {
   my ($N,$beta) = @_;
     $N++;
 
-        barf 'dpss: PDL::LinearAlgebra not installed.' unless $HAVE_LinearAlgebra;
+        barf 'dpss: PDL::LinearAlgebra not installed.' unless HAVE_LinearAlgebra;
         barf "dpss: $beta not between 0 and $N." unless
               $beta >= 0 and $beta <= $N;
         $beta /= ($N/2);
@@ -1403,7 +1408,7 @@ sub kaiser {
   barf "kaiser: 2 arguments expected. Got " . scalar(@_) . ' arguments.' unless @_ == 2;
   my ($N,$beta) = @_;
 
-              barf "kaiser: PDL::GSLSF not installed" unless $HAVE_BESSEL;
+              barf "kaiser: PDL::GSLSF not installed" unless HAVE_BESSEL;
               $beta *= PI;
               my @n = PDL::GSLSF::BESSEL::gsl_sf_bessel_In ($beta * sqrt(1 - (zeroes($N)->xlinvals(-1,1)) **2),0);
         my @d = PDL::GSLSF::BESSEL::gsl_sf_bessel_In($beta,0);
@@ -1419,7 +1424,7 @@ sub kaiser_per {
   barf "kaiser: 2 arguments expected. Got " . scalar(@_) . ' arguments.' unless @_ == 2;
   my ($N,$beta) = @_;
 
-              barf "kaiser: PDL::GSLSF not installed" unless $HAVE_BESSEL;
+              barf "kaiser: PDL::GSLSF not installed" unless HAVE_BESSEL;
               $beta *= PI;
               my @n = PDL::GSLSF::BESSEL::gsl_sf_bessel_In ($beta * sqrt(1 - (zeroes($N)->xlinvals(-1, (-1+1*($N-1))/$N)) **2),0);
         my @d = PDL::GSLSF::BESSEL::gsl_sf_bessel_In($beta,0);
@@ -2012,7 +2017,7 @@ The Kaiser window. (Ref 1). The parameter C<$beta> is the approximate half-width
 Another name for this window is the Kaiser-Bessel window.  This window is defined by
 
 
-              barf "kaiser: PDL::GSLSF not installed" unless $HAVE_BESSEL;
+              barf "kaiser: PDL::GSLSF not installed" unless HAVE_BESSEL;
               $beta *= PI;
               my @n = PDL::GSLSF::BESSEL::gsl_sf_bessel_In ($beta * sqrt(1 - arr **2),0);
         my @d = PDL::GSLSF::BESSEL::gsl_sf_bessel_In($beta,0);
