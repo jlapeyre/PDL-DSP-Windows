@@ -729,8 +729,7 @@ This is just the average of the samples.
 =cut
 
 sub coherent_gain {
-    my $self = shift;
-    my $w = $self->get('samples');
+    my $w = shift->get_samples;
     $w->sum / $w->nelem;
 }
 
