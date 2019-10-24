@@ -90,15 +90,15 @@ PDL::DSP::Windows - Window functions for signal processing
 
 =head1 SYNOPSIS
 
-       use PDL;
-       use PDL::DSP::Windows('window');
-       my $samples = window( 10, 'tukey', { params => .5 });
+    use PDL;
+    use PDL::DSP::Windows('window');
+    my $samples = window( 10, 'tukey', { params => .5 });
 
-       use PDL;
-       use PDL::DSP::Windows;
-       my $win = new PDL::DSP::Windows(10, 'tukey', { params => .5 });
-       print $win->coherent_gain , "\n";
-       $win->plot;
+    use PDL;
+    use PDL::DSP::Windows;
+    my $win = new PDL::DSP::Windows(10, 'tukey', { params => .5 });
+    print $win->coherent_gain , "\n";
+    $win->plot;
 
 =head1 DESCRIPTION
 
@@ -135,21 +135,21 @@ Finally, for analyzing window functions, object methods, such as L</new>,
 L</plot>, L</plot_freq> are provided.
 
 In the following, first the functional interface (non-object oriented) is described in
-L</"FUNCTIONAL INTERFACE">. Next, the object methods are described in L</METHODS>.
+L</'FUNCTIONAL INTERFACE'>. Next, the object methods are described in L</METHODS>.
 Next the low-level subroutines returning samples for each named window
-are described in  L</"WINDOW FUNCTIONS">. Finally,
+are described in  L</'WINDOW FUNCTIONS'>. Finally,
 some support routines that may be of interest are described in
-L</"AUXILIARY SUBROUTINES">.
+L</'AUXILIARY SUBROUTINES'>.
 
 =head1 FUNCTIONAL INTERFACE
 
 =head2 window
 
-       $win = window({OPTIONS});
-       $win = window($N,{OPTIONS});
-       $win = window($N,$name,{OPTIONS});
-       $win = window($N,$name,$params,{OPTIONS});
-       $win = window($N,$name,$params,$periodic);
+    $win = window({OPTIONS});
+    $win = window($N,{OPTIONS});
+    $win = window($N,$name,{OPTIONS});
+    $win = window($N,$name,$params,{OPTIONS});
+    $win = window($N,$name,$params,$periodic);
 
 Returns an C<$N> point window of type C<$name>.
 The arguments may be passed positionally in the order
@@ -158,25 +158,25 @@ name in the hash C<OPTIONS>.
 
 =head3 EXAMPLES
 
- # Each of the following return a 100 point symmetric hamming window.
+    # Each of the following return a 100 point symmetric hamming window.
 
-   $win = window(100);
-   $win = window(100, 'hamming');
-   $win = window(100, { name => 'hamming' );
-   $win = window({ N=> 100, name => 'hamming' );
+    $win = window(100);
+    $win = window(100, 'hamming');
+    $win = window(100, { name => 'hamming' );
+    $win = window({ N=> 100, name => 'hamming' );
 
- # Each of the following returns a 100 point symmetric hann window.
+    # Each of the following returns a 100 point symmetric hann window.
 
-   $win = window(100, 'hann');
-   $win = window(100, { name => 'hann' );
+    $win = window(100, 'hann');
+    $win = window(100, { name => 'hann' );
 
- # Returns a 100 point periodic hann window.
+    # Returns a 100 point periodic hann window.
 
-   $win = window(100, 'hann', { periodic => 1 } );
+    $win = window(100, 'hann', { periodic => 1 } );
 
- # Returns a 100 point symmetric Kaiser window with alpha=2.
+    # Returns a 100 point symmetric Kaiser window with alpha=2.
 
-   $win = window(100, 'kaiser', { params => 2 });
+    $win = window(100, 'kaiser', { params => 2 });
 
 =head3 OPTIONS
 
@@ -192,9 +192,7 @@ This selects one of the window functions listed below. Note
 that the suffix '_per', for periodic, may be ommitted. It
 is specified with the option C<< periodic => 1 >>
 
-
 =item B<params>
-
 
 ref to array of parameter or parameters for the  window-function
 subroutine. Only some window-function subroutines take
@@ -223,8 +221,8 @@ sub window {
 
 =head2 list_windows
 
-     list_windows
-     list_windows STR
+    list_windows
+    list_windows STR
 
 C<list_windows> prints the names all of the available windows.
 C<list_windows STR> prints only the names of windows matching
@@ -255,7 +253,7 @@ sub list_windows {
 
 =for usage
 
-  my $win = new PDL::DSP::Windows(ARGS);
+    my $win = new PDL::DSP::Windows(ARGS);
 
 =for ref
 
@@ -267,8 +265,8 @@ same way as arguments the subroutine L</window>.
 
 For example:
 
-  my $win1 = new PDL::DSP::Windows(8,'hann');
-  my $win2 = new PDL::DSP::Windows( { N => 8, name => 'hann' } );
+    my $win1 = new PDL::DSP::Windows(8,'hann');
+    my $win2 = new PDL::DSP::Windows( { N => 8, name => 'hann' } );
 
 =cut
 
@@ -283,7 +281,7 @@ sub new {
 
 =for usage
 
-  $win->init(ARGS);
+    $win->init(ARGS);
 
 =for ref
 
@@ -294,8 +292,8 @@ same way as arguments the subroutine L</window>.
 
 For example:
 
-  my $win = new PDL::DSP::Windows(8,'hann');
-  $win->init(10,'hamming');
+    my $win = new PDL::DSP::Windows(8,'hann');
+    $win->init(10,'hamming');
 
 =cut
 
@@ -345,7 +343,7 @@ sub init {
 
 =for usage
 
-  $win->samples();
+    $win->samples();
 
 =for ref
 
@@ -360,8 +358,8 @@ L</get_samples> below.
 
 For example:
 
-  my $win = new PDL::DSP::Windows(8,'hann');
-  print $win->samples(), "\n";
+    my $win = new PDL::DSP::Windows(8,'hann');
+    print $win->samples(), "\n";
 
 =cut
 
@@ -375,7 +373,7 @@ sub samples {
 
 =for usage
 
-  $win->modfreqs();
+    $win->modfreqs();
 
 =for ref
 
@@ -433,7 +431,7 @@ sub modfreqs {
 
 =for usage
 
-  my $windata = $win->get('samples');
+    my $windata = $win->get('samples');
 
 =for ref
 
@@ -445,8 +443,8 @@ method L</samples> if they don't exist.
 
 For example:
 
-  my $win = new PDL::DSP::Windows(8,'hann');
-  print $win->get('samples'), "\n";
+    my $win = new PDL::DSP::Windows(8,'hann');
+    print $win->get('samples'), "\n";
 
 =cut
 
@@ -465,7 +463,7 @@ sub get {
 
 =for usage
 
-  my $windata = $win->get_samples
+    my $windata = $win->get_samples
 
 =for ref
 
@@ -485,8 +483,8 @@ sub get_samples {
 
 =for usage
 
-  my $winfreqs = $win->get_modfreqs;
-  my $winfreqs = $win->get_modfreqs({OPTS});
+    my $winfreqs = $win->get_modfreqs;
+    my $winfreqs = $win->get_modfreqs({OPTS});
 
 =for ref
 
@@ -523,7 +521,7 @@ sub get_modfreqs {
 
 =for usage
 
-  my $params = $win->get_params
+    my $params = $win->get_params
 
 =for ref
 
@@ -541,7 +539,7 @@ sub get_N { shift->{N} }
 
 =for usage
 
-  print  $win->get_name , "\n";
+    print  $win->get_name , "\n";
 
 =for ref
 
@@ -620,11 +618,9 @@ Can be called like this
 
     $win->plot_freq;
 
-
 Or this
 
     $win->plot_freq( {ordinate => ORDINATE });
-
 
 =for ref
 
@@ -710,8 +706,7 @@ Compute and return the equivalent noise bandwidth of the window.
 =cut
 
 sub enbw {
-    my $self = shift;
-    my $w = $self->get('samples'); # hmm have to quote samples here
+    my $w = shift->get_samples;
     ($w->nelem) * ($w**2)->sum / ($w->sum)**2;
 }
 
@@ -1743,7 +1738,7 @@ $winpersubs{welch}= \&welch_per;
 
 The Bartlett window. (Ref 1). Another name for this window is the fejer window.  This window is defined by
 
- 1 - abs(arr)
+    1 - abs(arr)
 
 where the points in arr range from -1 through 1.
 See also L<triangular|/triangular($N)>.
@@ -1752,7 +1747,7 @@ See also L<triangular|/triangular($N)>.
 
 The Bartlett-Hann window. Another name for this window is the Modified Bartlett-Hann window.  This window is defined by
 
- 0.62 - 0.48 * abs(arr) + 0.38 * arr1
+    0.62 - 0.48 * abs(arr) + 0.38 * arr1
 
 where the points in arr range from -1/2 through 1/2, and arr1 are the cos of points ranging from -PI through PI.
 
@@ -1760,26 +1755,26 @@ where the points in arr range from -1/2 through 1/2, and arr1 are the cos of poi
 
 The 'classic' Blackman window. (Ref 1). One of the Blackman-Harris family, with coefficients
 
- a0 = 0.42, a1 = 0.5, a2 = 0.08
+    a0 = 0.42, a1 = 0.5, a2 = 0.08
 
 =head2 blackman_bnh($N)
 
 The Blackman-Harris (bnh) window. An improved version of the 3-term Blackman-Harris window given by Nuttall (Ref 2, p. 89). One of the Blackman-Harris family, with coefficients
 
- a0 = 0.4243801, a1 = 0.4973406, a2 = 0.0782793
+    a0 = 0.4243801, a1 = 0.4973406, a2 = 0.0782793
 
 =head2 blackman_ex($N)
 
 The 'exact' Blackman window. (Ref 1). One of the Blackman-Harris family, with coefficients
 
- a0 = 0.426590713671539, a1 = 0.496560619088564, a2 = 0.0768486672398968
+    a0 = 0.426590713671539, a1 = 0.496560619088564, a2 = 0.0768486672398968
 
 =head2 blackman_gen($N,$alpha)
 
 The General classic Blackman window. A single parameter family of the 3-term Blackman window.   This window is defined by
 
- my $cx = arr;
- .5 - $alpha + ($cx * (-.5 + $cx * $alpha));
+    my $cx = arr;
+    .5 - $alpha + ($cx * (-.5 + $cx * $alpha));
 
 where the points in arr are the cos of points ranging from 0 through 2PI.
 
@@ -1787,25 +1782,25 @@ where the points in arr are the cos of points ranging from 0 through 2PI.
 
 The general form of the Blackman family.  One of the Blackman-Harris family, with coefficients
 
- a0 = $a0, a1 = $a1, a2 = $a2
+    a0 = $a0, a1 = $a1, a2 = $a2
 
 =head2 blackman_gen4($N,$a0,$a1,$a2,$a3)
 
 The general 4-term Blackman-Harris window.  One of the Blackman-Harris family, with coefficients
 
- a0 = $a0, a1 = $a1, a2 = $a2, a3 = $a3
+    a0 = $a0, a1 = $a1, a2 = $a2, a3 = $a3
 
 =head2 blackman_gen5($N,$a0,$a1,$a2,$a3,$a4)
 
 The general 5-term Blackman-Harris window.  One of the Blackman-Harris family, with coefficients
 
- a0 = $a0, a1 = $a1, a2 = $a2, a3 = $a3, a4 = $a4
+    a0 = $a0, a1 = $a1, a2 = $a2, a3 = $a3, a4 = $a4
 
 =head2 blackman_harris($N)
 
 The Blackman-Harris window. (Ref 1). One of the Blackman-Harris family, with coefficients
 
- a0 = 0.422323, a1 = 0.49755, a2 = 0.07922
+    a0 = 0.422323, a1 = 0.49755, a2 = 0.07922
 
 Another name for this window is the Minimum three term (sample) Blackman-Harris window.
 
@@ -1813,7 +1808,7 @@ Another name for this window is the Minimum three term (sample) Blackman-Harris 
 
 The minimum (sidelobe) four term Blackman-Harris window. (Ref 1). One of the Blackman-Harris family, with coefficients
 
- a0 = 0.35875, a1 = 0.48829, a2 = 0.14128, a3 = 0.01168
+    a0 = 0.35875, a1 = 0.48829, a2 = 0.14128, a3 = 0.01168
 
 Another name for this window is the Blackman-Harris window.
 
@@ -1821,14 +1816,14 @@ Another name for this window is the Blackman-Harris window.
 
 The Blackman-Nuttall window. One of the Blackman-Harris family, with coefficients
 
- a0 = 0.3635819, a1 = 0.4891775, a2 = 0.1365995, a3 = 0.0106411
+    a0 = 0.3635819, a1 = 0.4891775, a2 = 0.1365995, a3 = 0.0106411
 
 =head2 bohman($N)
 
 The Bohman window. (Ref 1).  This window is defined by
 
- my $x = abs(arr);
- (1 - $x) * cos(PI * $x) + (1 / PI) * sin(PI * $x)
+    my $x = abs(arr);
+    (1 - $x) * cos(PI * $x) + (1 / PI) * sin(PI * $x)
 
 where the points in arr range from -1 through 1.
 
@@ -1836,7 +1831,7 @@ where the points in arr range from -1 through 1.
 
 The Cauchy window. (Ref 1). Other names for this window are: Abel, Poisson.  This window is defined by
 
- 1 / (1 + (arr * $alpha)**2)
+    1 / (1 + (arr * $alpha)**2)
 
 where the points in arr range from -1 through 1.
 
@@ -1850,7 +1845,7 @@ This routine gives the same result as the routine B<chebwin> in Octave 3.6.2.
 
 The Cos_alpha window. (Ref 1). Another name for this window is the Power-of-cosine window.  This window is defined by
 
- arr**$alpha
+    arr**$alpha
 
 where the points in arr are the sin of points ranging from 0 through PI.
 
@@ -1858,7 +1853,7 @@ where the points in arr are the sin of points ranging from 0 through PI.
 
 The Cosine window. Another name for this window is the sine window.  This window is defined by
 
- arr
+    arr
 
 where the points in arr are the sin of points ranging from 0 through PI.
 
@@ -1871,7 +1866,7 @@ Another name for this window is the sleppian window.
 
 The Exponential window.  This window is defined by
 
- 2 ** (1 - abs arr) - 1
+    2 ** (1 - abs arr) - 1
 
 where the points in arr range from -1 through 1.
 
@@ -1879,13 +1874,13 @@ where the points in arr range from -1 through 1.
 
 The flat top window. One of the Blackman-Harris family, with coefficients
 
- a0 = 0.21557895, a1 = 0.41663158, a2 = 0.277263158, a3 = 0.083578947, a4 = 0.006947368
+    a0 = 0.21557895, a1 = 0.41663158, a2 = 0.277263158, a3 = 0.083578947, a4 = 0.006947368
 
 =head2 gaussian($N,$beta)
 
 The Gaussian window. (Ref 1). Another name for this window is the Weierstrass window.  This window is defined by
 
- exp (-0.5 * ($beta * arr )**2),
+    exp (-0.5 * ($beta * arr )**2),
 
 where the points in arr range from -1 through 1.
 
@@ -1893,34 +1888,34 @@ where the points in arr range from -1 through 1.
 
 The Hamming window. (Ref 1). One of the Blackman-Harris family, with coefficients
 
- a0 = 0.54, a1 = 0.46
+    a0 = 0.54, a1 = 0.46
 
 =head2 hamming_ex($N)
 
 The 'exact' Hamming window. (Ref 1). One of the Blackman-Harris family, with coefficients
 
- a0 = 0.53836, a1 = 0.46164
+    a0 = 0.53836, a1 = 0.46164
 
 =head2 hamming_gen($N,$a)
 
 The general Hamming window. (Ref 1). One of the Blackman-Harris family, with coefficients
 
- a0 = $a, a1 = (1-$a)
+    a0 = $a, a1 = (1-$a)
 
 =head2 hann($N)
 
 The Hann window. (Ref 1). One of the Blackman-Harris family, with coefficients
 
- a0 = 0.5, a1 = 0.5
+    a0 = 0.5, a1 = 0.5
 
 Another name for this window is the hanning window. See also L<hann_matlab|/hann_matlab($N)>.
 
 =head2 hann_matlab($N)
 
 The Hann (matlab) window. Equivalent to the Hann window of N+2 points, with the endpoints (which are both zero) removed. No periodic version of this window is defined.
- This window is defined by
+This window is defined by
 
- 0.5 - 0.5 * arr
+    0.5 - 0.5 * arr
 
 where the points in arr are the cosine of points ranging from 2PI/($N+1) through 2PI*$N/($N+1).
 This routine gives the same result as the routine B<hanning> in Matlab.
@@ -1930,7 +1925,7 @@ See also L<hann|/hann($N)>.
 
 The Hann-Poisson window. (Ref 1).  This window is defined by
 
- 0.5 * (1 + arr1) * exp (-$alpha * abs arr)
+    0.5 * (1 + arr1) * exp (-$alpha * abs arr)
 
 where the points in arr range from -1 through 1, and arr1 are the cos of points ranging from -PI through PI.
 
@@ -1939,10 +1934,10 @@ where the points in arr range from -1 through 1, and arr1 are the cos of points 
 The Kaiser window. (Ref 1). The parameter C<$beta> is the approximate half-width of the mainlobe, measured in frequency bins.
 Another name for this window is the Kaiser-Bessel window.  This window is defined by
 
- $beta *= PI;
- my @n = gsl_sf_bessel_In($beta * sqrt(1 - arr ** 2), 0);
- my @d = gsl_sf_bessel_In($beta, 0);
- $n[0] / $d[0];
+    $beta *= PI;
+    my @n = gsl_sf_bessel_In($beta * sqrt(1 - arr ** 2), 0);
+    my @d = gsl_sf_bessel_In($beta, 0);
+    $n[0] / $d[0];
 
 where the points in arr range from -1 through 1.
 
@@ -1950,11 +1945,11 @@ where the points in arr range from -1 through 1.
 
 The Lanczos window. Another name for this window is the sinc window.  This window is defined by
 
- my $x = PI * arr;
- my $res = sin($x) / $x;
- my $mid;
- $mid = int($N / 2), $res->slice($mid) .= 1 if $N % 2;
- $res;
+    my $x = PI * arr;
+    my $res = sin($x) / $x;
+    my $mid;
+    $mid = int($N / 2), $res->slice($mid) .= 1 if $N % 2;
+    $res;
 
 where the points in arr range from -1 through 1.
 
@@ -1962,7 +1957,7 @@ where the points in arr range from -1 through 1.
 
 The Nuttall window. One of the Blackman-Harris family, with coefficients
 
- a0 = 0.3635819, a1 = 0.4891775, a2 = 0.1365995, a3 = 0.0106411
+    a0 = 0.3635819, a1 = 0.4891775, a2 = 0.1365995, a3 = 0.0106411
 
 See also L<nuttall1|/nuttall1($N)>.
 
@@ -1970,7 +1965,7 @@ See also L<nuttall1|/nuttall1($N)>.
 
 The Nuttall (v1) window. A window referred to as the Nuttall window. One of the Blackman-Harris family, with coefficients
 
- a0 = 0.355768, a1 = 0.487396, a2 = 0.144232, a3 = 0.012604
+    a0 = 0.355768, a1 = 0.487396, a2 = 0.144232, a3 = 0.012604
 
 This routine gives the same result as the routine B<nuttallwin> in Octave 3.6.2.
 See also L<nuttall|/nuttall($N)>.
@@ -1990,7 +1985,7 @@ See also L<parzen|/parzen($N)>.
 
 The Poisson window. (Ref 1).  This window is defined by
 
- exp(-$alpha * abs(arr))
+    exp(-$alpha * abs(arr))
 
 where the points in arr range from -1 through 1.
 
@@ -2002,7 +1997,7 @@ The Rectangular window. (Ref 1). Other names for this window are: dirichlet, box
 
 The Triangular window.  This window is defined by
 
- 1 - abs(arr)
+    1 - abs(arr)
 
 where the points in arr range from -$N/($N-1) through $N/($N-1).
 See also L<bartlett|/bartlett($N)>.
@@ -2015,7 +2010,7 @@ The Tukey window. (Ref 1). Another name for this window is the tapered cosine wi
 
 The Welch window. (Ref 1). Other names for this window are: Riez, Bochner, Parzen, parabolic.  This window is defined by
 
- 1 - arr**2
+    1 - arr**2
 
 where the points in arr range from -1 through 1.
 
@@ -2036,11 +2031,11 @@ This subroutine takes between 1 and 7 numeric arguments  a0, a1, ...
 
 It converts the coefficients of this
 
- a0 - a1 cos(arg) + a2 cos(2 * arg) - a3 cos(3 * arg)  + ...
+    a0 - a1 cos(arg) + a2 cos(2 * arg) - a3 cos(3 * arg)  + ...
 
 To the cofficients of this
 
- c0 + c1 cos(arg) + c2 cos(arg)**2 + c3 cos(arg)**3  + ...
+    c0 + c1 cos(arg) + c2 cos(arg)**2 + c3 cos(arg)**3  + ...
 
 =head2 cos_pow_to_mult
 
@@ -2050,11 +2045,11 @@ This subroutine takes between 1 and 7 numeric arguments  c0, c1, ...
 
 It converts the coefficients of this
 
- c0 + c1 cos(arg) + c2 cos(arg)**2 + c3 cos(arg)**3  + ...
+    c0 + c1 cos(arg) + c2 cos(arg)**2 + c3 cos(arg)**3  + ...
 
 To the cofficients of this
 
- a0 - a1 cos(arg) + a2 cos( 2 * arg) - a3 cos( 3 * arg)  + ...
+    a0 - a1 cos(arg) + a2 cos( 2 * arg) - a3 cos( 3 * arg)  + ...
 
 =cut
 
