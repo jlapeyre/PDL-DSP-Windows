@@ -2068,16 +2068,32 @@ To the cofficients of this
 =cut
 
 sub cos_pow_to_mult {
-    my( @cin )  = @_;
+    my @cin = @_;
     barf 'cos_pow_to_mult: number of args not less than 8.' if @cin > 7;
+
     my $ex = 7 - @cin;
-    my @c = (@cin, (0) x $ex);
-    my (@as) = (
-        10*$c[6]+12*$c[4]+16*$c[2]+32*$c[0], 20*$c[5]+24*$c[3]+32*$c[1],
-         15*$c[6]+16*$c[4]+16*$c[2], 10*$c[5]+8*$c[3], 6*$c[6]+4*$c[4], 2*$c[5], $c[6]);
-    foreach (1..$ex) {pop (@as)}
+
+    my @c = ( @cin, (0) x $ex );
+
+    my @as = (
+        10 * $c[6] + 12 * $c[4] + 16 * $c[2] + 32 * $c[0],
+        20 * $c[5] + 24 * $c[3] + 32 * $c[1],
+        15 * $c[6] + 16 * $c[4] + 16 * $c[2],
+        10 * $c[5] +  8 * $c[3],
+         6 * $c[6] +  4 * $c[4],
+         2 * $c[5],
+        $c[6],
+    );
+
+    pop @as for 1 .. $ex;
+
     my $sign = -1;
-    foreach (@as) { $_ /= (-$sign*32); $sign *= -1 }
+
+    foreach (@as) {
+        $_ /= -$sign * 32;
+        $sign *= -1;
+    }
+
     @as;
 }
 
@@ -2100,35 +2116,49 @@ is pure perl/pdl, requiring no C/Fortran compiler.
 =cut
 
 sub chebpoly {
-    barf 'chebpoly: Two arguments expected. Got ' .scalar(@_) ."\n" unless @_==2;
-    my ($n,$x) = @_;
-    if (ref($x)) {
-        $x = topdl($x);
+    barf 'chebpoly: Two arguments expected. Got ' .scalar(@_) . "\n" unless @_ == 2;
+
+    my ( $n, $x ) = @_;
+
+    if ( ref $x ) {
         barf "chebpoly: neither $n nor $x is a scalar number" if ref($n);
+        $x = topdl($x);
+
         my $tn = zeroes($x);
-        my ($ind1,$ind2);
-        ($ind1,$ind2) = which_both(abs($x) <= 1);
-        $tn->index($ind1) .= cos($n*(acos($x->index($ind1))));
-        $tn->index($ind2) .= cosh($n*(acosh($x->index($ind2))));
+
+        my ( $ind1, $ind2 ) = which_both( abs($x) <= 1 );
+
+        $tn->index($ind1) .= cos( $n * acos( $x->index($ind1) ) );
+        $tn->index($ind2) .= cosh( $n * acosh( $x->index($ind2) ) );
+
         return $tn;
     }
-    else {
-        $n = topdl($n) if ref($n);
-        return cos($n*(acos($x))) if abs($x) <= 1;
-        return cosh($n*(acosh($x)));
-    }
+
+    $n = topdl($n) if ref $n;
+    return abs($x) <= 1 ? cos( $n * acos($x) ) : cosh( $n * acosh($x) );
 }
 
 
 sub cos_mult_to_pow {
     my( @ain )  = @_;
     barf('cos_mult_to_pow: number of args not less than 8.') if @ain > 7;
+
     my $ex = 7 - @ain;
-    my @a = (@ain, (0) x $ex);
+
+    my @a = ( @ain, (0) x $ex );
+
     my (@cs) = (
-        -$a[6]+$a[4]-$a[2]+$a[0], -5*$a[5]+3*$a[3]-$a[1], 18*$a[6]-8*$a[4]+2*$a[2], 20*$a[5]-4*$a[3],
-        8*$a[4]-48*$a[6], -16*$a[5], 32*$a[6]);
-    foreach (1..$ex) {pop (@cs)}
+        -$a[6] + $a[4] - $a[2] + $a[0],
+         -5 * $a[5] +  3 * $a[3] - $a[1],
+         18 * $a[6] -  8 * $a[4] + 2 * $a[2],
+         20 * $a[5] -  4 * $a[3],
+          8 * $a[4] - 48 * $a[6],
+        -16 * $a[5],
+         32 * $a[6]
+    );
+
+    pop @cs for 1 .. $ex;
+
     @cs;
 }
 
