@@ -1,7 +1,9 @@
 package PDL::DSP::Windows;
 $PDL::DSP::Windows::VERSION = '0.008';
 
-use strict; use warnings;
+use strict;
+use warnings;
+
 use PDL::LiteF;
 use PDL::FFT;
 use PDL::Math qw( acos cosh acosh );
