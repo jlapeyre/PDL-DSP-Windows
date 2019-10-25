@@ -1,5 +1,4 @@
 Changes
-lib/PDL/DSP/mkwindows.not_a_perl_suffix
 lib/PDL/DSP/Windows.pm
 Makefile.PL
 LICENSE
