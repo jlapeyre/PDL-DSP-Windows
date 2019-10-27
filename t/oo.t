@@ -40,6 +40,59 @@ subtest 'Empty constructor' => sub {
     };
 };
 
+subtest 'Simple accesors' => sub {
+    is +PDL::DSP::Windows->new(10)->get_N, 10,
+        '->get_N returns number of elements';
+
+    is_deeply +PDL::DSP::Windows->new(10)->get_param_names,
+        undef,
+        '->get_param_names returns undef when parameters do not exist';
+
+    is_deeply +PDL::DSP::Windows->new( 10, 'cauchy' )->get_param_names,
+        ['$alpha'],
+        '->get_param_names returns param names when they exist';
+
+    is_deeply +PDL::DSP::Windows->new( 10, 'cauchy' )->get_params, undef,
+        '->get_params returns undef with no params';
+
+    is_deeply +PDL::DSP::Windows->new( 10, 'cauchy', 3 )->get_params, [3],
+        '->get_params returns array ref if window has params';
+
+    is_deeply +PDL::DSP::Windows->new( 10, 'cauchy', 3 )->format_param_vals,
+        'alpha = 3',
+        '->format_param_vals stringifies params with values';
+
+    is_deeply +PDL::DSP::Windows->new(
+            10, 'blackman_gen3', [1, 2, 3]
+        )->format_param_vals,
+        'a0 = 1, a1 = 2, a2 = 3',
+        '->format_param_vals stringifies multiple params with values';
+
+    is +PDL::DSP::Windows->new( 10, 'hamming' )->get_name, 'Hamming window',
+        '->get_name returns name from sub name';
+
+    is +PDL::DSP::Windows->new( 10, 'hann_matlab' )->get_name,
+        'Hann (matlab) window',
+        '->get_name returns alternate short name when provided';
+
+    is +PDL::DSP::Windows->new( 10, 'blackman_gen3' )->get_name,
+        '*The general form of the Blackman family. ',
+        '->get_name returns long name if no short name is available';
+
+    is +PDL::DSP::Windows->new( 10, 'blackman_nuttall' )->get_name,
+        'Blackman-Nuttall window',
+        '->get_name returns short name if available';
+
+    my $window = PDL::DSP::Windows->new(10);
+
+    is $window->coherent_gain,
+        $window->get_samples->sum / $window->get_samples->nelem,
+        '->coherent_gain is average of window samples';
+
+    is $window->process_gain, 1 / $window->enbw,
+        '->process_gain is inverse of enbw';
+};
+
 subtest 'Samples accesors' => sub {
     my $window = PDL::DSP::Windows->new(10);
 
