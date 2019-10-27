@@ -156,21 +156,21 @@ subtest 'enbw of windows.' => sub {
 
     for (
         # The following agree with Thomas Cokelaer's python package
-        [ [ $Nbw, 'hamming'                 ], 1.36288566       => 5 ],
-        [ [ $Nbw, 'rectangular'             ], 1.0              => 5 ],
-        [ [ $Nbw, 'triangular'              ], 4 / 3            => 5 ],
-        [ [ $Nbw * 10, 'hann'               ], 1.5              => 4 ],
-        [ [ $Nbw, 'blackman'                ], 1.72686276895347 => 5 ],
-        [ [ $Nbw, 'blackman_harris4'        ], 2.0044752407     => 5 ],
-        [ [ $Nbw, 'bohman'                  ], 1.78584987506    => 5 ],
-        [ [ $Nbw, 'cauchy', 3               ], 1.489407730      => 5 ],
-        [ [ $Nbw, 'poisson', 2              ], 1.31307123       => 5 ],
-        [ [ $Nbw, 'hann_poisson', 0.5       ], 1.6092559        => 5 ],
-        [ [ $Nbw, 'lanczos'                 ], 1.29911199       => 5 ],
-        [ [ $Nbw, 'tukey', 0.25             ], 1.1021080        => 5 ],
-        [ [ $Nbw, 'parzen'                  ], 1.917577         => 5 ],
+        [ [ $Nbw, 'hamming'                 ], 1.36288567 ],
+        [ [ $Nbw, 'rectangular'             ], 1.0        ],
+        [ [ $Nbw, 'triangular'              ], 4 / 3      ],
+        [ [ $Nbw * 10, 'hann'               ], 1.5  =>  4 ],
+        [ [ $Nbw, 'blackman'                ], 1.72686277 ],
+        [ [ $Nbw, 'blackman_harris4'        ], 2.00447524 ],
+        [ [ $Nbw, 'bohman'                  ], 1.78584988 ],
+        [ [ $Nbw, 'cauchy', 3               ], 1.48940773 ],
+        [ [ $Nbw, 'poisson', 2              ], 1.31307123 ],
+        [ [ $Nbw, 'hann_poisson', 0.5       ], 1.60925592 ],
+        [ [ $Nbw, 'lanczos'                 ], 1.29911200 ],
+        [ [ $Nbw, 'tukey', 0.25             ], 1.10210808 ],
+        [ [ $Nbw, 'parzen'                  ], 1.91757736 ],
         # These agree with other values found on web
-        [ [ $Nbw, 'flattop'                 ], 3.77             => 3 ],
+        [ [ $Nbw, 'flattop'                 ], 3.77 =>  3 ],
     ) {
         my ( $args, $expected, $precision ) = @{$_};
         my ( undef, $name ) = @{$args};
