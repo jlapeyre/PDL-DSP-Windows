@@ -210,6 +210,7 @@ subtest 'relation between periodic and symmetric.' => sub {
             hann             => [],
             lanczos          => [],
             nuttall          => [],
+            nuttall1         => [],
             parzen           => [],
             rectangular      => [],
             triangular       => [],
