@@ -116,6 +116,19 @@ subtest 'explict values of windows.' => sub {
     );
 
     tapprox(
+        window( 10, 'parzen' ),
+        [ 0, 0.021947874, 0.17558299, 0.55555556, 0.93415638, 0.93415638, 0.55555556, 0.17558299, 0.021947874, 0],
+        'parzen',
+        7,
+    );
+
+    tapprox(
+        window( 10, 'parzen_octave' ),
+        [ 0.002, 0.054, 0.25, 0.622, 0.946, 0.946, 0.622, 0.25, 0.054, 0.002 ],
+        'parzen',
+    );
+
+    tapprox(
         window( 8, 'chebyshev', 10 ),
         [ 1, 0.45192476, 0.5102779, 0.54133813, 0.54133813, 0.5102779, 0.45192476, 1 ],
         'chebyshev',
@@ -169,6 +182,7 @@ subtest 'enbw of windows.' => sub {
         [ [ $Nbw, 'lanczos'                 ], 1.29911200 ],
         [ [ $Nbw, 'tukey', 0.25             ], 1.10210808 ],
         [ [ $Nbw, 'parzen'                  ], 1.91757736 ],
+        [ [ $Nbw, 'parzen_octave'           ], 1.91746032 ],
         # These agree with other values found on web
         [ [ $Nbw, 'flattop'                 ], 3.77 =>  3 ],
     ) {
