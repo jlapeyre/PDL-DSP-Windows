@@ -222,6 +222,7 @@ subtest 'relation between periodic and symmetric.' => sub {
             hamming          => [],
             hamming_ex       => [],
             hann             => [],
+            hann_poisson     => [ 0.5 ],
             lanczos          => [],
             nuttall          => [],
             nuttall1         => [],
