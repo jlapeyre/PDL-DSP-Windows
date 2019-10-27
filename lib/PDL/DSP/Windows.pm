@@ -787,20 +787,12 @@ sub bartlett {
     my ($N) = @_;
     1 - abs( zeroes($N)->xlinvals( -1, 1 ) );
 }
-$window_definitions{bartlett} = {
-    alias => ['fejer'],
-};
-$winsubs{bartlett} = \&bartlett;
 
 sub bartlett_per {
     barf 'bartlett: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
     my ($N) = @_;
     1 - abs( zeroes($N)->xlinvals( -1, ( -1 + 1 * ( $N - 1 ) ) / $N ) );
 }
-$window_definitions{bartlett} = {
-    alias => ['fejer'],
-};
-$winpersubs{bartlett} = \&bartlett_per;
 
 sub bartlett_hann {
     barf 'bartlett_hann: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
@@ -808,11 +800,6 @@ sub bartlett_hann {
     0.62 - 0.48 * abs( zeroes($N)->xlinvals( -0.5, 0.5 ) )
         + 0.38 * cos( zeroes($N)->xlinvals( -PI, PI ) );
 }
-$window_definitions{bartlett_hann} = {
-    fn    => 'Bartlett-Hann',
-    alias => ['Modified Bartlett-Hann'],
-};
-$winsubs{bartlett_hann} = \&bartlett_hann;
 
 sub bartlett_hann_per {
     barf 'bartlett_hann: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
@@ -820,11 +807,6 @@ sub bartlett_hann_per {
     0.62 - 0.48 * abs( zeroes($N)->xlinvals( -0.5, ( -0.5 + 0.5 * ( $N - 1 ) ) / $N ) )
         + 0.38 * cos( zeroes($N)->xlinvals( -PI, ( -PI + PI * ( $N - 1 ) ) / $N ) );
 }
-$window_definitions{bartlett_hann} = {
-    fn    => 'Bartlett-Hann',
-    alias => ['Modified Bartlett-Hann'],
-};
-$winpersubs{bartlett_hann}= \&bartlett_hann_per;
 
 sub blackman {
     barf 'blackman: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
@@ -832,10 +814,6 @@ sub blackman {
     my $cx = cos( zeroes($N)->xlinvals( 0, TPI ) );
     0.34 + $cx * ( -0.5 + $cx * 0.16 );
 }
-$window_definitions{blackman} = {
-    fn => q!'classic' Blackman!,
-};
-$winsubs{blackman} = \&blackman;
 
 sub blackman_per {
     barf 'blackman: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
@@ -843,10 +821,6 @@ sub blackman_per {
     my $cx = cos( zeroes($N)->xlinvals( 0, TPI * ( $N - 1 ) / $N ) );
     0.34 + $cx * ( -0.5 + $cx * 0.16 );
 }
-$window_definitions{blackman} = {
-    fn => q!'classic' Blackman!,
-};
-$winpersubs{blackman}= \&blackman_per;
 
 sub blackman_bnh {
     barf 'blackman_bnh: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
@@ -854,11 +828,6 @@ sub blackman_bnh {
     my $cx = cos( zeroes($N)->xlinvals( 0, TPI ) );
     0.3461008 + $cx * ( -0.4973406 + $cx * 0.1565586 );
 }
-$window_definitions{blackman_bnh} = {
-    pfn => 'Blackman-Harris (bnh)',
-    fn  => '*An improved version of the 3-term Blackman-Harris window given by Nuttall (Ref 2, p. 89).',
-};
-$winsubs{blackman_bnh} = \&blackman_bnh;
 
 sub blackman_bnh_per {
     barf 'blackman_bnh: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
@@ -866,11 +835,6 @@ sub blackman_bnh_per {
     my $cx = cos( zeroes($N)->xlinvals( 0, TPI * ( $N - 1 ) / $N ) );
     0.3461008 + $cx * ( -0.4973406 + $cx * 0.1565586 );
 }
-$window_definitions{blackman_bnh} = {
-    pfn => 'Blackman-Harris (bnh)',
-    fn  => '*An improved version of the 3-term Blackman-Harris window given by Nuttall (Ref 2, p. 89).',
-};
-$winpersubs{blackman_bnh} = \&blackman_bnh_per;
 
 sub blackman_ex {
     barf 'blackman_ex: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
@@ -878,10 +842,6 @@ sub blackman_ex {
     my $cx = cos( zeroes($N)->xlinvals( 0, TPI ) );
     0.349742046431642 + $cx * ( -0.496560619088564 + $cx * 0.153697334479794 );
 }
-$window_definitions{blackman_ex} = {
-    fn => q!'exact' Blackman!,
-};
-$winsubs{blackman_ex} = \&blackman_ex;
 
 sub blackman_ex_per {
     barf 'blackman_ex: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
@@ -889,10 +849,6 @@ sub blackman_ex_per {
     my $cx = cos( zeroes($N)->xlinvals( 0, TPI * ( $N - 1 ) / $N ) );
     0.349742046431642 + $cx * ( -0.496560619088564 + $cx * 0.153697334479794 );
 }
-$window_definitions{blackman_ex} = {
-    fn => q!'exact' Blackman!,
-};
-$winpersubs{blackman_ex} = \&blackman_ex_per;
 
 sub blackman_gen {
     barf 'blackman_gen: 2 arguments expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 2;
@@ -900,12 +856,6 @@ sub blackman_gen {
     my $cx = cos( zeroes($N)->xlinvals( 0, TPI ) );
     0.5 - $alpha + $cx * ( -0.5 + $cx * $alpha );
 }
-$window_definitions{blackman_gen} = {
-    pfn    => 'General classic Blackman',
-    fn     => '*A single parameter family of the 3-term Blackman window. ',
-    params => ['$alpha'],
-};
-$winsubs{blackman_gen} = \&blackman_gen;
 
 sub blackman_gen_per {
     barf 'blackman_gen: 2 arguments expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 2;
@@ -913,12 +863,6 @@ sub blackman_gen_per {
     my $cx = cos( zeroes($N)->xlinvals( 0, TPI * ( $N - 1 ) / $N ) );
     0.5 - $alpha + $cx * ( -0.5 + $cx * $alpha );
 }
-$window_definitions{blackman_gen} = {
-    pfn    => 'General classic Blackman',
-    fn     => '*A single parameter family of the 3-term Blackman window. ',
-    params => ['$alpha'],
-};
-$winpersubs{blackman_gen} = \&blackman_gen_per;
 
 sub blackman_gen3 {
     barf 'blackman_gen3: 4 arguments expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 4;
@@ -926,11 +870,6 @@ sub blackman_gen3 {
     my $cx = cos( zeroes($N)->xlinvals( 0, TPI ) );
     $a0 - $a2 + ( $cx * ( -$a1 + $cx * 2 * $a2 ) );
 }
-$window_definitions{blackman_gen3} = {
-    fn     => '*The general form of the Blackman family. ',
-    params => [ '$a0', '$a1', '$a2' ],
-};
-$winsubs{blackman_gen3} = \&blackman_gen3;
 
 sub blackman_gen3_per {
     barf 'blackman_gen3: 4 arguments expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 4;
@@ -938,11 +877,6 @@ sub blackman_gen3_per {
     my $cx = cos( zeroes($N)->xlinvals( 0, TPI * ( $N - 1 ) / $N ) );
     $a0 - $a2 + ( $cx * ( -$a1 + $cx * 2 * $a2 ) );
 }
-$window_definitions{blackman_gen3} = {
-    fn     => '*The general form of the Blackman family. ',
-    params => [ '$a0', '$a1', '$a2' ],
-};
-$winpersubs{blackman_gen3} = \&blackman_gen3_per;
 
 sub blackman_gen4 {
     barf 'blackman_gen4: 5 arguments expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 5;
@@ -950,11 +884,6 @@ sub blackman_gen4 {
     my $cx = cos( zeroes($N)->xlinvals( 0, TPI ) );
     $a0 - $a2 + $cx * ( ( -$a1 + 3 * $a3 ) + $cx * ( 2 * $a2 + $cx * -4 * $a3 ) );
 }
-$window_definitions{blackman_gen4} = {
-    fn     => '*The general 4-term Blackman-Harris window. ',
-    params => [ '$a0', '$a1', '$a2', '$a3' ],
-};
-$winsubs{blackman_gen4} = \&blackman_gen4;
 
 sub blackman_gen4_per {
     barf 'blackman_gen4: 5 arguments expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 5;
@@ -962,11 +891,6 @@ sub blackman_gen4_per {
     my $cx = cos( zeroes($N)->xlinvals( 0, TPI * ( $N - 1 ) / $N ) );
     $a0 - $a2 + $cx * ( ( -$a1 + 3 * $a3 ) + $cx * ( 2 * $a2 + $cx * -4 * $a3 ) );
 }
-$window_definitions{blackman_gen4} = {
-    fn     => '*The general 4-term Blackman-Harris window. ',
-    params => [ '$a0', '$a1', '$a2', '$a3' ],
-};
-$winpersubs{blackman_gen4}= \&blackman_gen4_per;
 
 sub blackman_gen5 {
     barf 'blackman_gen5: 6 arguments expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 6;
@@ -975,11 +899,6 @@ sub blackman_gen5 {
     $a0 - $a2 + $a4 + $cx * ( ( -$a1 + 3 * $a3 )
         + $cx * ( 2 * $a2 - 8 * $a4 + $cx * ( -4 * $a3 + $cx * 8 * $a4 ) ) );
 }
-$window_definitions{blackman_gen5} = {
-    fn     => '*The general 5-term Blackman-Harris window. ',
-    params => [ '$a0', '$a1', '$a2', '$a3', '$a4' ],
-};
-$winsubs{blackman_gen5} = \&blackman_gen5;
 
 sub blackman_gen5_per {
     barf 'blackman_gen5: 6 arguments expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 6;
@@ -988,11 +907,6 @@ sub blackman_gen5_per {
     $a0 - $a2 + $a4 + $cx * ( ( -$a1 + 3 * $a3 )
         + $cx * ( 2 * $a2 - 8 * $a4 + $cx * ( -4 * $a3 + $cx * 8 * $a4 ) ) );
 }
-$window_definitions{blackman_gen5} = {
-    fn     => '*The general 5-term Blackman-Harris window. ',
-    params => [ '$a0', '$a1', '$a2', '$a3', '$a4' ],
-};
-$winpersubs{blackman_gen5}= \&blackman_gen5_per;
 
 sub blackman_harris {
     barf 'blackman_harris: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
@@ -1000,11 +914,6 @@ sub blackman_harris {
     my $cx = cos( zeroes($N)->xlinvals( 0, TPI ) );
     0.343103 + $cx * ( -0.49755 + $cx * 0.15844 );
 }
-$window_definitions{blackman_harris} = {
-    fn    => 'Blackman-Harris',
-    alias => ['Minimum three term (sample) Blackman-Harris'],
-};
-$winsubs{blackman_harris} = \&blackman_harris;
 
 sub blackman_harris_per {
     barf 'blackman_harris: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
@@ -1012,11 +921,6 @@ sub blackman_harris_per {
     my $cx = cos( zeroes($N)->xlinvals( 0, TPI * ( $N - 1 ) / $N ) );
     0.343103 + $cx * ( -0.49755 + $cx * 0.15844 );
 }
-$window_definitions{blackman_harris} = {
-    fn    => 'Blackman-Harris',
-    alias => ['Minimum three term (sample) Blackman-Harris'],
-};
-$winpersubs{blackman_harris}= \&blackman_harris_per;
 
 sub blackman_harris4 {
     barf 'blackman_harris4: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
@@ -1024,11 +928,6 @@ sub blackman_harris4 {
     my $cx = cos( zeroes($N)->xlinvals( 0, TPI ) );
     0.21747 + $cx * ( -0.45325 + $cx * ( 0.28256 + $cx * -0.04672 ) );
 }
-$window_definitions{blackman_harris4} = {
-    fn    => 'minimum (sidelobe) four term Blackman-Harris',
-    alias => ['Blackman-Harris'],
-};
-$winsubs{blackman_harris4} = \&blackman_harris4;
 
 sub blackman_harris4_per {
     barf 'blackman_harris4: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
@@ -1036,11 +935,6 @@ sub blackman_harris4_per {
     my $cx = cos( zeroes($N)->xlinvals( 0, TPI * ( $N - 1 ) / $N ) );
     0.21747 + $cx * ( -0.45325 + $cx * ( 0.28256 + $cx * -0.04672 ) );
 }
-$window_definitions{blackman_harris4} = {
-    fn    => 'minimum (sidelobe) four term Blackman-Harris',
-    alias => ['Blackman-Harris'],
-};
-$winpersubs{blackman_harris4}= \&blackman_harris4_per;
 
 sub blackman_nuttall {
     barf 'blackman_nuttall: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
@@ -1048,10 +942,6 @@ sub blackman_nuttall {
     my $cx = cos( zeroes($N)->xlinvals( 0, TPI ) );
     0.2269824 + $cx * ( -0.4572542 + $cx * ( 0.273199 + $cx * -0.0425644 ) );
 }
-$window_definitions{blackman_nuttall} = {
-    fn => 'Blackman-Nuttall',
-};
-$winsubs{blackman_nuttall} = \&blackman_nuttall;
 
 sub blackman_nuttall_per {
     barf 'blackman_nuttall: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
@@ -1059,10 +949,6 @@ sub blackman_nuttall_per {
     my $cx = cos( zeroes($N)->xlinvals( 0, TPI * ( $N - 1 ) / $N ) );
     0.2269824 + $cx * ( -0.4572542 + $cx * ( 0.273199 + $cx * -0.0425644 ) );
 }
-$window_definitions{blackman_nuttall} = {
-    fn => 'Blackman-Nuttall',
-};
-$winpersubs{blackman_nuttall}= \&blackman_nuttall_per;
 
 sub bohman {
     barf 'bohman: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
@@ -1070,8 +956,6 @@ sub bohman {
     my $x = abs( zeroes($N)->xlinvals( -1, 1 ) );
     ( 1 - $x ) * cos( PI * $x ) + ( 1 / PI ) * sin( PI * $x );
 }
-$window_definitions{bohman} = {};
-$winsubs{bohman} = \&bohman;
 
 sub bohman_per {
     barf 'bohman: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
@@ -1079,30 +963,18 @@ sub bohman_per {
     my $x = abs( zeroes($N)->xlinvals( -1, ( -1 + 1 * ( $N - 1 ) ) / $N ) );
     ( 1 - $x ) * cos( PI * $x ) + ( 1 / PI ) * sin( PI * $x );
 }
-$window_definitions{bohman} = {};
-$winpersubs{bohman} = \&bohman_per;
 
 sub cauchy {
     barf 'cauchy: 2 arguments expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 2;
     my ( $N, $alpha ) = @_;
     1 / ( 1 + ( zeroes($N)->xlinvals( -1, 1 ) * $alpha ) ** 2 );
 }
-$window_definitions{cauchy} = {
-    params => ['$alpha'],
-    alias  => [ 'Abel', 'Poisson' ],
-};
-$winsubs{cauchy} = \&cauchy;
 
 sub cauchy_per {
     barf 'cauchy: 2 arguments expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 2;
     my ( $N, $alpha ) = @_;
     1 / ( 1 + ( zeroes($N)->xlinvals( -1, ( -1 + 1 * ( $N - 1 ) ) / $N ) * $alpha ) ** 2 );
 }
-$window_definitions{cauchy} = {
-    params => ['$alpha'],
-    alias  => [ 'Abel', 'Poisson' ],
-};
-$winpersubs{cauchy}= \&cauchy_per;
 
 sub chebyshev {
     barf 'chebyshev: 2 arguments expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 2;
@@ -1151,53 +1023,30 @@ sub chebyshev {
 
     $cwout;
 }
-$window_definitions{chebyshev} = {
-    params => ['$at'],
-    alias => ['Dolph-Chebyshev'],
-};
-$winsubs{chebyshev} = \&chebyshev;
 
 sub cos_alpha {
     barf 'cos_alpha: 2 arguments expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 2;
     my ( $N, $alpha ) = @_;
     ( sin( zeroes($N)->xlinvals( 0, PI ) ) ) ** $alpha ;
 }
-$window_definitions{cos_alpha} = {
-    params => ['$alpha'],
-    alias  => ['Power-of-cosine'],
-};
-$winsubs{cos_alpha} = \&cos_alpha;
 
 sub cos_alpha_per {
     barf 'cos_alpha: 2 arguments expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 2;
     my ( $N, $alpha ) = @_;
     sin( zeroes($N)->xlinvals( 0, PI * ( $N - 1 ) / $N ) ) ** $alpha ;
 }
-$window_definitions{cos_alpha} = {
-    params => ['$alpha'],
-    alias  => ['Power-of-cosine'],
-};
-$winpersubs{cos_alpha}= \&cos_alpha_per;
 
 sub cosine {
     barf 'cosine: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
     my ($N) = @_;
     sin( zeroes($N)->xlinvals( 0, PI ) );
 }
-$window_definitions{cosine} = {
-    alias => ['sine'],
-};
-$winsubs{cosine} = \&cosine;
 
 sub cosine_per {
     barf 'cosine: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
     my ($N) = @_;
     sin( zeroes($N)->xlinvals( 0, PI * ( $N - 1 ) / $N ) );
 }
-$window_definitions{cosine} = {
-    alias => ['sine'],
-};
-$winpersubs{cosine}= \&cosine_per;
 
 sub dpss {
     barf 'dpss: 2 arguments expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 2;
@@ -1218,12 +1067,6 @@ sub dpss {
 
     $ev->slice("($i)")->copy;
 }
-$window_definitions{dpss} = {
-    fn     => 'Digital Prolate Spheroidal Sequence (DPSS)',
-    params => ['$beta'],
-    alias  => ['sleppian'],
-};
-$winsubs{dpss} = \&dpss;
 
 sub dpss_per {
     barf 'dpss: 2 arguments expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 2;
@@ -1245,28 +1088,18 @@ sub dpss_per {
 
     $ev->slice("($i),0:-2")->copy;
 }
-$window_definitions{dpss} = {
-    fn     => 'Digital Prolate Spheroidal Sequence (DPSS)',
-    params => ['$beta'],
-    alias  => ['sleppian'],
-};
-$winpersubs{dpss}= \&dpss_per;
 
 sub exponential {
     barf 'exponential: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
     my ($N) = @_;
     2 ** ( 1 - abs( zeroes($N)->xlinvals( -1, 1 ) ) ) - 1;
 }
-$window_definitions{exponential} = {};
-$winsubs{exponential} = \&exponential;
 
 sub exponential_per {
     barf 'exponential: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
     my ($N) = @_;
     2 ** ( 1 - abs( zeroes($N)->xlinvals( -1, ( -1 + 1 * ( $N - 1 ) ) / $N ) ) ) - 1;
 }
-$window_definitions{exponential} = {};
-$winpersubs{exponential}= \&exponential_per;
 
 sub flattop {
     barf 'flattop: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
@@ -1274,10 +1107,6 @@ sub flattop {
     my $cx = cos( zeroes($N)->xlinvals( 0, TPI ) );
     -0.05473684 + $cx * ( -0.165894739 + $cx * ( 0.498947372 + $cx * ( -0.334315788 + $cx * 0.055578944 ) ) );
 }
-$window_definitions{flattop} = {
-    fn => 'flat top',
-};
-$winsubs{flattop} = \&flattop;
 
 sub flattop_per {
     barf 'flattop: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
@@ -1285,121 +1114,72 @@ sub flattop_per {
     my $cx = cos( zeroes($N)->xlinvals( 0, TPI * ( $N - 1 ) / $N ) );
     -0.05473684 + $cx * ( -0.165894739 + $cx * ( 0.498947372 + $cx * ( -0.334315788 + $cx * 0.055578944 ) ) );
 }
-$window_definitions{flattop} = {
-    fn => 'flat top',
-};
-$winpersubs{flattop} = \&flattop_per;
 
 sub gaussian {
     barf 'gaussian: 2 arguments expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 2;
     my ( $N, $beta ) = @_;
     exp( -0.5 * ( $beta * zeroes($N)->xlinvals( -1, 1 ) ) ** 2);
 }
-$window_definitions{gaussian} = {
-    params => ['$beta'],
-    alias  => ['Weierstrass'],
-};
-$winsubs{gaussian} = \&gaussian;
 
 sub gaussian_per {
     barf 'gaussian: 2 arguments expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 2;
     my ( $N, $beta ) = @_;
     exp( -0.5 * ( $beta * zeroes($N)->xlinvals( -1, ( -1 + 1 * ( $N - 1 ) ) / $N ) ) ** 2 );
 }
-$window_definitions{gaussian} = {
-    params => ['$beta'],
-    alias  => ['Weierstrass'],
-};
-$winpersubs{gaussian}= \&gaussian_per;
 
 sub hamming {
     barf 'hamming: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
     my ($N) = @_;
     0.54 + -0.46 * cos( zeroes($N)->xlinvals( 0, TPI ) );
 }
-$window_definitions{hamming} = {};
-$winsubs{hamming} = \&hamming;
 
 sub hamming_per {
     barf 'hamming: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
     my ($N) = @_;
     0.54 + -0.46 * cos( zeroes($N)->xlinvals( 0, TPI * ( $N - 1 ) / $N ) );
 }
-$window_definitions{hamming} = {};
-$winpersubs{hamming} = \&hamming_per;
 
 sub hamming_ex {
     barf 'hamming_ex: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
     my ($N) = @_;
     0.53836 + -0.46164 * cos( zeroes($N)->xlinvals( 0, TPI ) );
 }
-$window_definitions{hamming_ex} = {
-    fn => q!'exact' Hamming!,
-};
-$winsubs{hamming_ex} = \&hamming_ex;
 
 sub hamming_ex_per {
     barf 'hamming_ex: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
     my ($N) = @_;
     0.53836 + -0.46164 * cos( zeroes($N)->xlinvals( 0, TPI * ( $N - 1 ) / $N ) );
 }
-$window_definitions{hamming_ex} = {
-    fn => q!'exact' Hamming!,
-};
-$winpersubs{hamming_ex}= \&hamming_ex_per;
 
 sub hamming_gen {
     barf 'hamming_gen: 2 arguments expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 2;
     my ( $N, $a ) = @_;
     $a - ( 1 - $a ) * cos( zeroes($N)->xlinvals( 0, TPI ) );
 }
-$window_definitions{hamming_gen} = {
-    fn     => 'general Hamming',
-    params => ['$a'],
-};
-$winsubs{hamming_gen} = \&hamming_gen;
 
 sub hamming_gen_per {
     barf 'hamming_gen: 2 arguments expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 2;
     my ( $N, $a ) = @_;
     $a - ( 1 - $a ) * cos( zeroes($N)->xlinvals( 0, TPI * ( $N - 1 ) / $N ) );
 }
-$window_definitions{hamming_gen} = {
-    fn     => 'general Hamming',
-    params => ['$a'],
-};
-$winpersubs{hamming_gen} = \&hamming_gen_per;
 
 sub hann {
     barf 'hann: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
     my ($N) = @_;
     0.5 + -0.5 * cos( zeroes($N)->xlinvals( 0, TPI ) );
 }
-$window_definitions{hann} = {
-    alias => ['hanning'],
-};
-$winsubs{hann} = \&hann;
 
 sub hann_per {
     barf 'hann: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
     my ($N) = @_;
     0.5 + -0.5 * cos( zeroes($N)->xlinvals( 0, TPI * ( $N - 1 ) / $N ) );
 }
-$window_definitions{hann} = {
-    alias => ['hanning'],
-};
-$winpersubs{hann} = \&hann_per;
 
 sub hann_matlab {
     barf 'hann_matlab: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
     my ($N) = @_;
     0.5 - 0.5 * cos( zeroes($N)->xlinvals( TPI / ( $N + 1 ), TPI * $N / ( $N + 1 ) ) );
 }
-$window_definitions{hann_matlab} = {
-    pfn => 'Hann (matlab)',
-    fn  => '*Equivalent to the Hann window of N+2 points, with the endpoints (which are both zero) removed.',
-};
-$winsubs{hann_matlab} = \&hann_matlab;
 
 sub hann_poisson {
     barf 'hann_poisson: 2 arguments expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 2;
@@ -1408,11 +1188,6 @@ sub hann_poisson {
         * exp( -$alpha * abs( zeroes($N)->xlinvals( -1, 1 ) ) );
 
 }
-$window_definitions{hann_poisson} = {
-    fn     => 'Hann-Poisson',
-    params => ['$alpha'],
-};
-$winsubs{hann_poisson} = \&hann_poisson;
 
 sub hann_poisson_per {
     barf 'hann_poisson: 2 arguments expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 2;
@@ -1420,11 +1195,6 @@ sub hann_poisson_per {
     0.5 * ( 1 + cos( zeroes($N)->xlinvals( -PI, ( -PI + PI * ( $N - 1 ) ) / $N ) ) )
         * exp( -$alpha * abs( zeroes($N)->xlinvals( -1, ( -1 + 1 * ( $N - 1 ) ) / $N ) ) );
 }
-$window_definitions{hann_poisson} = {
-    fn     => 'Hann-Poisson',
-    params => ['$alpha'],
-};
-$winpersubs{hann_poisson}= \&hann_poisson_per;
 
 sub kaiser {
     barf 'kaiser: 2 arguments expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 2;
@@ -1441,11 +1211,6 @@ sub kaiser {
 
     $n / $d;
 }
-$window_definitions{kaiser} = {
-    params => ['$beta'],
-    alias  => ['Kaiser-Bessel'],
-};
-$winsubs{kaiser} = \&kaiser;
 
 sub kaiser_per {
     barf 'kaiser: 2 arguments expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 2;
@@ -1462,11 +1227,6 @@ sub kaiser_per {
 
     $n / $d;
 }
-$window_definitions{kaiser} = {
-    params => ['$beta'],
-    alias  => ['Kaiser-Bessel'],
-};
-$winpersubs{kaiser}= \&kaiser_per;
 
 sub lanczos {
     barf 'lanczos: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
@@ -1480,11 +1240,6 @@ sub lanczos {
     $res;
 }
 
-$window_definitions{lanczos} = {
-    alias => ['sinc'],
-};
-$winsubs{lanczos} = \&lanczos;
-
 sub lanczos_per {
     barf 'lanczos: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
     my ($N) = @_;
@@ -1496,10 +1251,6 @@ sub lanczos_per {
 
     $res;
 }
-$window_definitions{lanczos} = {
-    alias => ['sinc'],
-};
-$winpersubs{lanczos} = \&lanczos_per;
 
 sub nuttall {
     barf 'nuttall: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
@@ -1507,8 +1258,6 @@ sub nuttall {
     my $cx = cos( zeroes($N)->xlinvals( 0, TPI ) );
     0.2269824 + $cx * ( -0.4572542 + $cx * ( 0.273199 + $cx * -0.0425644 ) );
 }
-$window_definitions{nuttall} = {};
-$winsubs{nuttall} = \&nuttall;
 
 sub nuttall_per {
     barf 'nuttall: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
@@ -1516,8 +1265,6 @@ sub nuttall_per {
     my $cx = cos( zeroes($N)->xlinvals( 0, TPI * ( $N - 1 ) / $N ) );
     0.2269824 + $cx * ( -0.4572542 + $cx * ( 0.273199 + $cx * -0.0425644 ) );
 }
-$window_definitions{nuttall} = {};
-$winpersubs{nuttall} = \&nuttall_per;
 
 sub nuttall1 {
   barf 'nuttall1: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
@@ -1526,11 +1273,6 @@ sub nuttall1 {
 
     (0.211536) +  ($cx * ((-0.449584) +  ($cx * (0.288464 + $cx * (-0.050416)  ))));
 }
-$window_definitions{nuttall1} = {
-    pfn => 'Nuttall (v1)',
-    fn  => '*A window referred to as the Nuttall window.',
-};
-$winsubs{nuttall1} = \&nuttall1;
 
 sub nuttall1_per {
     barf 'nuttall1: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
@@ -1538,11 +1280,6 @@ sub nuttall1_per {
     my $cx = cos( zeroes($N)->xlinvals( 0, TPI * ( $N - 1 ) / $N ) );
     0.211536 + $cx * ( -0.449584 + $cx * ( 0.288464 + $cx * -0.050416 ) );
 }
-$window_definitions{nuttall1} = {
-    pfn => 'Nuttall (v1)',
-    fn  => '*A window referred to as the Nuttall window.',
-};
-$winpersubs{nuttall1}= \&nuttall1_per;
 
 sub parzen {
   barf 'parzen: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
@@ -1560,10 +1297,6 @@ sub parzen {
 
   $x;
 }
-$window_definitions{parzen} = {
-    alias => [ 'Jackson', 'Valle-Poussin' ],
-};
-$winsubs{parzen} = \&parzen;
 
 sub parzen_per {
     barf 'parzen: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
@@ -1581,10 +1314,6 @@ sub parzen_per {
 
     $x;
 }
-$window_definitions{parzen} = {
-    alias => [ 'Jackson', 'Valle-Poussin'],
-};
-$winpersubs{parzen}= \&parzen_per;
 
 sub parzen_octave {
     barf 'parzen_octave: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
@@ -1605,66 +1334,42 @@ sub parzen_octave {
 
     $n;
 }
-$window_definitions{parzen_octave} = {
-    fn => 'Parzen',
-};
-$winsubs{parzen_octave} = \&parzen_octave;
 
 sub poisson {
     barf 'poisson: 2 arguments expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 2;
     my ( $N, $alpha ) = @_;
     exp( -$alpha * abs( zeroes($N)->xlinvals( -1, 1 ) ) );
 }
-$window_definitions{poisson} = {
-    params => ['$alpha'],
-};
-$winsubs{poisson} = \&poisson;
 
 sub poisson_per {
     barf 'poisson: 2 arguments expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 2;
     my ( $N, $alpha ) = @_;
     exp( -$alpha * abs( zeroes($N)->xlinvals( -1, ( -1 + 1 * ( $N - 1 ) ) / $N ) ) );
 }
-$window_definitions{poisson} = {
-    params => ['$alpha'],
-};
-$winpersubs{poisson} = \&poisson_per;
 
 sub rectangular {
     barf 'rectangular: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
     my ($N) = @_;
     ones($N);
 }
-$window_definitions{rectangular} = {
-    alias => [ 'dirichlet', 'boxcar' ],
-};
-$winsubs{rectangular} = \&rectangular;
 
 sub rectangular_per {
     barf 'rectangular: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
     my ($N) = @_;
     ones($N);
 }
-$window_definitions{rectangular} = {
-    alias => [ 'dirichlet', 'boxcar' ],
-};
-$winpersubs{rectangular} = \&rectangular_per;
 
 sub triangular {
     barf 'triangular: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
     my ($N) = @_;
     1 - abs( zeroes($N)->xlinvals( -( $N - 1 ) / $N, ( $N - 1 ) / $N ) );
 }
-$window_definitions{triangular} = {};
-$winsubs{triangular} = \&triangular;
 
 sub triangular_per {
     barf 'triangular: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
     my ($N) = @_;
     1 - abs( zeroes($N)->xlinvals( -$N / ( $N + 1 ), -1 / ( $N + 1 ) + ( $N - 1 ) / ( $N + 1 ) ) );
 }
-$window_definitions{triangular} = {};
-$winpersubs{triangular} = \&triangular_per;
 
 sub tukey {
     barf 'tukey: 2 arguments expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 2;
@@ -1686,11 +1391,6 @@ sub tukey {
 
     return $x;
 }
-$window_definitions{tukey} = {
-    params => ['$alpha'],
-    alias  => ['tapered cosine'],
-};
-$winsubs{tukey} = \&tukey;
 
 sub tukey_per {
     barf 'tukey: 2 arguments expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 2;
@@ -1712,31 +1412,227 @@ sub tukey_per {
 
     return $x;
 }
-$window_definitions{tukey} = {
-    params => ['$alpha'],
-    alias  => ['tapered cosine'],
-};
-$winpersubs{tukey} = \&tukey_per;
 
 sub welch {
     barf 'welch: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
     my ($N) = @_;
     1 - zeroes($N)->xlinvals( -1, 1 ) ** 2;
 }
-$window_definitions{welch} = {
-    alias => [ 'Riez', 'Bochner', 'Parzen', 'parabolic' ],
-};
-$winsubs{welch} = \&welch;
 
 sub welch_per {
     barf 'welch: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
     my ($N) = @_;
     1 - zeroes($N)->xlinvals( -1, ( -1 + 1 * ( $N - 1 ) ) / $N ) ** 2;
 }
-$window_definitions{welch} = {
-    alias => [ 'Riez', 'Bochner', 'Parzen', 'parabolic' ],
-};
-$winpersubs{welch} = \&welch_per;
+
+# Static data
+
+%window_definitions = (
+    bartlett_hann => {
+        fn    => 'Bartlett-Hann',
+        alias => ['Modified Bartlett-Hann'],
+    },
+    bartlett => {
+        alias => ['fejer'],
+    },
+    blackman_bnh => {
+        pfn => 'Blackman-Harris (bnh)',
+        fn  => '*An improved version of the 3-term Blackman-Harris window given by Nuttall (Ref 2, p. 89).',
+    },
+    blackman_ex => {
+        fn => q!'exact' Blackman!,
+    },
+    blackman_gen => {
+        pfn    => 'General classic Blackman',
+        fn     => '*A single parameter family of the 3-term Blackman window. ',
+        params => ['$alpha'],
+    },
+    blackman_gen3 => {
+        fn     => '*The general form of the Blackman family. ',
+        params => [ '$a0', '$a1', '$a2' ],
+    },
+    blackman_gen4 => {
+        fn     => '*The general 4-term Blackman-Harris window. ',
+        params => [ '$a0', '$a1', '$a2', '$a3' ],
+    },
+    blackman_gen5 => {
+        fn     => '*The general 5-term Blackman-Harris window. ',
+        params => [ '$a0', '$a1', '$a2', '$a3', '$a4' ],
+    },
+    blackman_harris4 => {
+        fn    => 'minimum (sidelobe) four term Blackman-Harris',
+        alias => ['Blackman-Harris'],
+    },
+    blackman_harris => {
+        fn    => 'Blackman-Harris',
+        alias => ['Minimum three term (sample) Blackman-Harris'],
+    },
+    blackman_nuttall => {
+        fn => 'Blackman-Nuttall',
+    },
+    blackman => {
+        fn => q!'classic' Blackman!,
+    },
+    bohman => {},
+    cauchy => {
+        params => ['$alpha'],
+        alias  => [ 'Abel', 'Poisson' ],
+    },
+    chebyshev => {
+        params => ['$at'],
+        alias => ['Dolph-Chebyshev'],
+    },
+    cos_alpha => {
+        params => ['$alpha'],
+        alias  => ['Power-of-cosine'],
+    },
+    cosine => {
+        alias => ['sine'],
+    },
+    dpss => {
+        fn     => 'Digital Prolate Spheroidal Sequence (DPSS)',
+        params => ['$beta'],
+        alias  => ['sleppian'],
+    },
+    exponential => {},
+    flattop => {
+        fn => 'flat top',
+    },
+    gaussian => {
+        params => ['$beta'],
+        alias  => ['Weierstrass'],
+    },
+    hamming_ex => {
+        fn => q!'exact' Hamming!,
+    },
+    hamming_gen => {
+        fn     => 'general Hamming',
+        params => ['$a'],
+    },
+    hamming => {},
+    hann_matlab => {
+        pfn => 'Hann (matlab)',
+        fn  => '*Equivalent to the Hann window of N+2 points, with the endpoints (which are both zero) removed.',
+    },
+    hann_poisson => {
+        fn     => 'Hann-Poisson',
+        params => ['$alpha'],
+    },
+    hann => {
+        alias => ['hanning'],
+    },
+    kaiser => {
+        params => ['$beta'],
+        alias  => ['Kaiser-Bessel'],
+    },
+    lanczos => {
+        alias => ['sinc'],
+    },
+    nuttall1 => {
+        pfn => 'Nuttall (v1)',
+        fn  => '*A window referred to as the Nuttall window.',
+    },
+    nuttall => {},
+    parzen_octave => {
+        fn => 'Parzen',
+    },
+    parzen => {
+        alias => [ 'Jackson', 'Valle-Poussin'],
+    },
+    poisson => {
+        params => ['$alpha'],
+    },
+    rectangular => {
+        alias => [ 'dirichlet', 'boxcar' ],
+    },
+    triangular => {},
+    tukey => {
+        params => ['$alpha'],
+        alias  => ['tapered cosine'],
+    },
+    welch => {
+        alias => [ 'Riez', 'Bochner', 'Parzen', 'parabolic' ],
+    },
+);
+
+%winpersubs = map { $_ => __PACKAGE__->can("${_}_per") } qw(
+    bartlett_hann
+    bartlett
+    blackman_bnh
+    blackman_ex
+    blackman_gen3
+    blackman_gen4
+    blackman_gen5
+    blackman_gen
+    blackman_harris4
+    blackman_harris
+    blackman_nuttall
+    blackman
+    bohman
+    cauchy
+    cos_alpha
+    cosine
+    dpss
+    exponential
+    flattop
+    gaussian
+    hamming_ex
+    hamming_gen
+    hamming
+    hann_poisson
+    hann
+    kaiser
+    lanczos
+    nuttall1
+    nuttall
+    parzen
+    poisson
+    rectangular
+    triangular
+    tukey
+    welch
+);
+
+%winsubs = map { $_ => __PACKAGE__->can($_) } qw(
+    bartlett_hann
+    bartlett
+    blackman_bnh
+    blackman_ex
+    blackman_gen3
+    blackman_gen4
+    blackman_gen5
+    blackman_gen
+    blackman_harris4
+    blackman_harris
+    blackman_nuttall
+    blackman
+    bohman
+    cauchy
+    chebyshev
+    cos_alpha
+    cosine
+    dpss
+    exponential
+    flattop
+    gaussian
+    hamming_ex
+    hamming_gen
+    hamming
+    hann_matlab
+    hann_poisson
+    hann
+    kaiser
+    lanczos
+    nuttall1
+    nuttall
+    parzen_octave
+    parzen
+    poisson
+    rectangular
+    triangular
+    tukey
+    welch
+);
 
 =head1 Symmetric window functions
 
