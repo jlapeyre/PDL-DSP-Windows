@@ -41,6 +41,8 @@ subtest 'Empty constructor' => sub {
 };
 
 subtest 'Samples accesors' => sub {
+    my $error;
+
     my $window = PDL::DSP::Windows->new(10);
 
     is $window->{samples}, undef,
@@ -68,6 +70,91 @@ subtest 'Samples accesors' => sub {
 
     is ref $window->samples, 'PDL',
         '->samples redefines value';
+
+    try {
+        $window->get_samples;
+    }
+    catch {
+        chomp( $error = $_ );
+    }
+    finally {
+        local $TODO = 'Code uses piddle in conditional';
+        is $error, undef;
+        undef $error;
+    };
+};
+
+subtest 'Modfreqs accesors' => sub {
+    my $error;
+
+    my $window = PDL::DSP::Windows->new(10);
+
+    is $window->{modfreqs}, undef,
+        'Modfreqs begins as undef';
+
+    delete $window->{modfreqs};
+    is ref $window->get_modfreqs, 'PDL',
+        '->get_modfreqs defines value';
+
+    delete $window->{modfreqs};
+    try {
+        is ref $window->get('modfreqs'), 'PDL',
+            '->get("modfreqs") defines value';
+    }
+    catch {
+        chomp( $error = $_ );
+    }
+    finally {
+        local $TODO = 'Code calls undefined sub';
+        is $error, undef;
+        undef $error;
+    };
+
+    delete $window->{modfreqs};
+    is ref $window->modfreqs, 'PDL',
+        '->modfreqs defines value';
+
+    $window->{modfreqs} = [];
+
+    is ref $window->get_modfreqs, 'ARRAY',
+        '->get_modfreqs does not redefine value';
+
+    is ref $window->get('modfreqs'), 'ARRAY',
+        '->get("modfreqs") does not redefine value';
+
+    is ref $window->modfreqs, 'PDL',
+        '->modfreqs redefines value';
+
+    {
+        $window->{modfreqs} = [];
+        my $freq = $window->get_modfreqs( min_bins => 10_000 );
+        is ref $freq, 'PDL',
+            '->get_modfreqs redefines values if given parameters';
+        # TODO Should this have warned?
+        is $freq->nelem, 1_000,
+            '->get_modfreqs ignores parameters if not in hashref';
+    }
+
+    try {
+        $window->get_modfreqs;
+    }
+    catch {
+        chomp( $error = $_ );
+    }
+    finally {
+        local $TODO = 'Code uses piddle in conditional';
+        is $error, undef;
+        undef $error;
+    };
+
+    {
+        $window->{modfreqs} = [];
+        my $freq = $window->get_modfreqs({ min_bins => 10_000 });
+        is ref $freq, 'PDL',
+            '->get_modfreqs redefines values if given parameters';
+        is $freq->nelem, 10_000,
+            '->get_modfreqs accepts parameters if in hashref';
+    }
 };
 
 done_testing;
