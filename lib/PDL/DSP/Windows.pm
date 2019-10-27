@@ -422,7 +422,8 @@ they have not yet been generated.
 
 sub get_samples {
     my $self = shift;
-    $self->{samples} ? $self->{samples} : $self->samples;
+    return $self->{samples} if defined $self->{samples};
+    return $self->samples;
 }
 
 =head2 get_modfreqs
@@ -458,8 +459,9 @@ L</modfreqs>. Default 1000.
 
 sub get_modfreqs {
     my $self = shift;
-    my ($in_opts) = @_;
-    ($self->{modfreqs} and not $in_opts) ? $self->{modfreqs} : $self->modfreqs($in_opts);
+    return $self->modfreqs(@_) if @_;
+    return $self->{modfreqs} if defined $self->{modfreqs};
+    return $self->modfreqs;
 }
 
 =head2 get_params

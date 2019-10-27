@@ -41,8 +41,6 @@ subtest 'Empty constructor' => sub {
 };
 
 subtest 'Samples accesors' => sub {
-    my $error;
-
     my $window = PDL::DSP::Windows->new(10);
 
     is $window->{samples}, undef,
@@ -71,22 +69,11 @@ subtest 'Samples accesors' => sub {
     is ref $window->samples, 'PDL',
         '->samples redefines value';
 
-    try {
-        $window->get_samples;
-    }
-    catch {
-        chomp( $error = $_ );
-    }
-    finally {
-        local $TODO = 'Code uses piddle in conditional';
-        is $error, undef;
-        undef $error;
-    };
+    is ref $window->get_samples, 'PDL',
+        '->get_samples does not die if samples is already a piddle';
 };
 
 subtest 'Modfreqs accesors' => sub {
-    my $error;
-
     my $window = PDL::DSP::Windows->new(10);
 
     is $window->{modfreqs}, undef,
@@ -135,17 +122,8 @@ subtest 'Modfreqs accesors' => sub {
             '->get_modfreqs ignores parameters if not in hashref';
     }
 
-    try {
-        $window->get_modfreqs;
-    }
-    catch {
-        chomp( $error = $_ );
-    }
-    finally {
-        local $TODO = 'Code uses piddle in conditional';
-        is $error, undef;
-        undef $error;
-    };
+    is ref $window->get_modfreqs, 'PDL',
+        '->get_modfreqs does not die if modfreqs is already a piddle';
 
     {
         $window->{modfreqs} = [];
