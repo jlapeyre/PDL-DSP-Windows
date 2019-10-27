@@ -137,18 +137,8 @@ subtest 'Modfreqs accesors' => sub {
         '->get_modfreqs defines value';
 
     delete $window->{modfreqs};
-    try {
-        is ref $window->get('modfreqs'), 'PDL',
-            '->get("modfreqs") defines value';
-    }
-    catch {
-        chomp( $error = $_ );
-    }
-    finally {
-        local $TODO = 'Code calls undefined sub';
-        is $error, undef;
-        undef $error;
-    };
+    is ref $window->get('modfreqs'), 'PDL',
+        '->get("modfreqs") defines value';
 
     delete $window->{modfreqs};
     is ref $window->modfreqs, 'PDL',

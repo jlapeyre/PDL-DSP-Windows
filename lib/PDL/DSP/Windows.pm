@@ -443,11 +443,19 @@ For example:
 sub get {
     my $self = shift;
     my @res;
-    foreach (@_) {
-        $self->samples() if $_ eq 'samples' and not defined $self->{samples};
-        $self->freqs() if $_ eq 'modfreqs' and not defined $self->{modfreqs};
-        push @res, $self->{$_};
+
+    for (@_) {
+        if ($_ eq 'samples') {
+            push @res, $self->get_samples;
+        }
+        elsif ($_ eq 'modfreqs') {
+            push @res, $self->get_modfreqs;
+        }
+        else {
+            push @res, $self->{$_};
+        }
     };
+
     return wantarray ? @res : $res[0];
 }
 
