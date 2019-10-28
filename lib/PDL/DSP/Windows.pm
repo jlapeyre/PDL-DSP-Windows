@@ -798,14 +798,14 @@ sub bartlett_hann {
     barf 'bartlett_hann: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
     my ($N) = @_;
     0.62 - 0.48 * abs( zeroes($N)->xlinvals( -0.5, 0.5 ) )
-        + 0.38 * cos( zeroes($N)->xlinvals( -PI, PI ) );
+        + 0.38 * cos( zeroes($N)->xlinvals( - PI, PI ) );
 }
 
 sub bartlett_hann_per {
     barf 'bartlett_hann: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
     my ($N) = @_;
     0.62 - 0.48 * abs( zeroes($N)->xlinvals( -0.5, ( -0.5 + 0.5 * ( $N - 1 ) ) / $N ) )
-        + 0.38 * cos( zeroes($N)->xlinvals( -PI, ( -PI + PI * ( $N - 1 ) ) / $N ) );
+        + 0.38 * cos( zeroes($N)->xlinvals( - PI, ( - PI + PI * ( $N - 1 ) ) / $N ) );
 }
 
 sub blackman {
@@ -1192,7 +1192,7 @@ sub hann_poisson {
 sub hann_poisson_per {
     barf 'hann_poisson: 2 arguments expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 2;
     my ( $N, $alpha ) = @_;
-    0.5 * ( 1 + cos( zeroes($N)->xlinvals( -PI, ( -PI + PI * ( $N - 1 ) ) / $N ) ) )
+    0.5 * ( 1 + cos( zeroes($N)->xlinvals( - PI, ( - PI + PI * ( $N - 1 ) ) / $N ) ) )
         * exp( -$alpha * abs( zeroes($N)->xlinvals( -1, ( -1 + 1 * ( $N - 1 ) ) / $N ) ) );
 }
 
