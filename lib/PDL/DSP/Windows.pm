@@ -673,7 +673,7 @@ sub plot_freq {
     }
     elsif ($coord eq 'sample') {
         $coordinate_range = 0.5;
-        $xlab = 'Fraction of sampling freqeuncy';
+        $xlab = 'Fraction of sampling frequency';
     }
     elsif ($coord eq 'bin') {
         $coordinate_range = $self->{N} / 2;
@@ -683,7 +683,7 @@ sub plot_freq {
         barf "plot_freq: Unknown ordinate unit specification $coord";
     }
 
-    my $ylab = 'freqeuncy response (dB)';
+    my $ylab = 'frequency response (dB)';
     my $coordinates = zeroes($mf)
         ->xlinvals( -$coordinate_range, $coordinate_range );
 

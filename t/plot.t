@@ -59,28 +59,28 @@ subtest plot_freq => sub {
     do_test( plot_freq => PDL::DSP::Windows->new(10) => {}, {
         title   => qr/Hamming window, frequency response. ENBW=1.468/,
         x_label => qr/Fraction of Nyquist frequency/,
-        y_label => qr/freqeuncy response \(dB\)/,
+        y_label => qr/frequency response \(dB\)/,
     });
 
     note 'Samples';
     do_test( plot_freq => PDL::DSP::Windows->new(10) => { coord => 'sample' }, {
         title   => qr/Hamming window, frequency response. ENBW=1.468/,
-        x_label => qr/Fraction of sampling freqeuncy/,
-        y_label => qr/freqeuncy response \(dB\)/,
+        x_label => qr/Fraction of sampling frequency/,
+        y_label => qr/frequency response \(dB\)/,
     });
 
     note 'bin';
     do_test( plot_freq => PDL::DSP::Windows->new(10) => { coord => 'bin' }, {
         title   => qr/Hamming window, frequency response. ENBW=1.468/,
         x_label => qr/bin/,
-        y_label => qr/freqeuncy response \(dB\)/,
+        y_label => qr/frequency response \(dB\)/,
     });
 
     note 'Nyquist';
     do_test( plot_freq => PDL::DSP::Windows->new(10) => { coord => 'nyquist' }, {
         title   => qr/Hamming window, frequency response. ENBW=1.468/,
         x_label => qr/Fraction of Nyquist frequency/,
-        y_label => qr/freqeuncy response \(dB\)/,
+        y_label => qr/frequency response \(dB\)/,
     });
 
     note 'Invalid';
