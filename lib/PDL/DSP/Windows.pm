@@ -700,7 +700,7 @@ Compute and return the equivalent noise bandwidth of the window.
 
 sub enbw {
     my $w = shift->get_samples;
-    ($w->nelem) * ($w**2)->sum / ($w->sum)**2;
+    $w->nelem * ( $w ** 2 )->sum / $w->sum ** 2;
 }
 
 =head2 coherent_gain
@@ -756,9 +756,8 @@ Compute and return the scalloping loss of the window.
 
 sub scallop_loss {
     my ($w) = @_;
-    my $x = sequence($w) * (PI/$w->nelem);
-    sqrt( (($w*cos($x))->sum)**2 + (($w*sin($x))->sum)**2 ) /
-        $w->sum;
+    my $x = sequence($w) * ( PI / $w->nelem );
+    sqrt( ( $w * cos($x) )->sum ** 2 + ( $w * sin($x) )->sum ** 2 ) / $w->sum;
 }
 
 =head1 WINDOW FUNCTIONS
