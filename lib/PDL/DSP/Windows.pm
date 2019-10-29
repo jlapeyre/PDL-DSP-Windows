@@ -210,10 +210,7 @@ Defaults to false, meaning "symmetric".
 
 =cut
 
-sub window {
-    my $win = new PDL::DSP::Windows(@_);
-    $win->samples();
-}
+sub window { PDL::DSP::Windows->new(@_)->samples }
 
 =head2 list_windows
 
