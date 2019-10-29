@@ -547,40 +547,38 @@ function. This is static data and does not depend on the instance.
 
 sub get_name {
     my $self = shift;
-    my $wd = $window_definitions{$self->{name}};
+    my $wd = $window_definitions{ $self->{name} };
+
     return $wd->{pfn} . ' window' if $wd->{pfn};
     return $wd->{fn} . ' window' if $wd->{fn} and not $wd->{fn} =~ /^\*/;
     return $wd->{fn} if $wd->{fn};
-    return ucfirst($self->{name}) . ' window';
+
+    return ucfirst $self->{name} . ' window';
 }
 
 sub get_param_names {
     my $self = shift;
     my $wd = $window_definitions{$self->{name}};
-    $wd->{params} ? ref($wd->{params}) ? $wd->{params} : [$wd->{params}] : undef;
+    return undef unless $wd->{params};
+    ref $wd->{params} ? $wd->{params} : [ $wd->{params} ];
 }
 
 sub format_param_vals {
     my $self = shift;
-    my $p = $self->get('params');
-    return '' unless $p;
-    my $names = $self->get_param_names;
-    my @p = @$p;
-    my @names = @$names;
-    return '' unless $names;
-    my @s;
-    map { s/^\$// } @names;
-    foreach (@p) {
-        push @s, (shift @names) . ' = ' . $_;
-    }
-    join(', ', @s);
+
+    my @params = @{ $self->{params} || [] };
+    return '' unless @params;
+
+    my @names = @{ $self->get_param_names || [] };
+    return '' unless @names;
+
+    join ', ',
+        map join( ' = ', $names[$_] =~ s/^\$//r, $params[$_] ), 0 .. $#params;
 }
 
 sub format_plot_param_vals {
-    my $self = shift;
-    my $ps = $self->format_param_vals;
-    return '' unless $ps;
-    ': ' . $ps;
+    my $ps = shift->format_param_vals;
+    return $ps ? ": $ps" : $ps;
 }
 
 =head2 plot
@@ -599,10 +597,14 @@ default display type is used.
 sub plot {
     my $self = shift;
     barf 'PDL::DSP::Windows::plot Gnuplot not available!' unless HAVE_GNUPLOT;
-    my $w = $self->get('samples');
-    my $title = $self->get_name() .$self->format_plot_param_vals;
-    PDL::Graphics::Gnuplot::plot( title => $title, xlabel => 'Time (samples)',
-          ylabel => 'amplitude', $w );
+
+    PDL::Graphics::Gnuplot::plot(
+        title  => $self->get_name . $self->format_plot_param_vals,
+        xlabel => 'Time (samples)',
+        ylabel => 'amplitude',
+        $self->get_samples,
+    );
+
     return $self;
 }
 
@@ -647,42 +649,55 @@ Defaults to 1000.
 
 sub plot_freq {
     my $self = shift;
-    my $opt = new PDL::Options(
-        {
-            coord => 'nyquist',
-            min_bins => 1000
-        });
-    my $iopts = @_ ? shift : {};
-    my $opts = $opt->options($iopts);
+
     barf 'PDL::DSP::Windows::plot Gnuplot not available!' unless HAVE_GNUPLOT;
-    my $mf = $self->get_modfreqs({ min_bins => $opts->{min_bins}});
+
+    my $opts = new PDL::Options({
+        coord    => 'nyquist',
+        min_bins => 1000
+    })->options( @_ ? shift : {} );
+
+    my $mf = $self->get_modfreqs({ min_bins => $opts->{min_bins} });
     $mf /= $mf->max;
-    my $param_str = $self->format_plot_param_vals;
-    my $title = $self->get_name() . $param_str
-        . ', frequency response. ENBW=' . sprintf('%2.3f',$self->enbw);
+
+    my $title = $self->get_name . $self->format_plot_param_vals
+        . ', frequency response. ENBW=' . sprintf( '%2.3f', $self->enbw );
+
     my $coord = $opts->{coord};
-    my ($coordinate_range,$xlab);
+
+    my ( $coordinate_range, $xlab );
+
     if ($coord eq 'nyquist') {
         $coordinate_range = 1;
         $xlab = 'Fraction of Nyquist frequency';
     }
     elsif ($coord eq 'sample') {
-        $coordinate_range = .5;
+        $coordinate_range = 0.5;
         $xlab = 'Fraction of sampling freqeuncy';
     }
     elsif ($coord eq 'bin') {
-        $coordinate_range = ($self->get_N)/2;
+        $coordinate_range = $self->{N} / 2;
         $xlab = 'bin';
     }
     else {
         barf "plot_freq: Unknown ordinate unit specification $coord";
     }
-    my $coordinates = zeroes($mf)->xlinvals(-$coordinate_range,$coordinate_range);
+
     my $ylab = 'freqeuncy response (dB)';
-    PDL::Graphics::Gnuplot::plot(title => $title,
-       xmin => -$coordinate_range, xmax => $coordinate_range,
-       xlabel => $xlab,  ylabel => $ylab,
-       with => 'line', $coordinates, 20 * log10($mf) );
+    my $coordinates = zeroes($mf)
+        ->xlinvals( -$coordinate_range, $coordinate_range );
+
+    PDL::Graphics::Gnuplot::plot(
+        title  => $title,
+        xmin   => -$coordinate_range,
+        xmax   => $coordinate_range,
+        xlabel => $xlab,
+        ylabel => $ylab,
+        with => 'line',
+        $coordinates,
+        20 * log10($mf),
+    );
+
     return $self;
 }
 
