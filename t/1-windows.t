@@ -270,22 +270,6 @@ subtest 'relation between periodic and symmetric.' => sub {
     }
 };
 
-subtest 'chebpoly.' => sub {
-    tapprox(
-        chebpoly( 3, pdl( [ 0.5, 1, 1.2 ] ) ),
-        [ -1, 1, 3.312 ],
-        'chebpoly takes piddle'
-    );
-
-    tapprox(
-        chebpoly( 3, [ 0.5, 1, 1.2 ] ),
-        [ -1, 1, 3.312 ],
-        'chebpoly takes arrayref',
-    );
-
-    is chebpoly( 3, 1.2 ), 3.312, 'chebpoly takes plain scalar';
-};
-
 subtest 'modfreqs.' => sub {
     is +PDL::DSP::Windows->new({ N => 10 })->modfreqs->nelem, 1000,
         'modfreqs defaults to 1000 bins';
