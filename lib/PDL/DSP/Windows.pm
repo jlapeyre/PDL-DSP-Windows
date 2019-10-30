@@ -5,12 +5,14 @@ our $VERSION = '0.008';
 use strict;
 use warnings;
 
+use Carp qw( croak carp );
 use PDL::LiteF;
 use PDL::FFT;
 use PDL::Math qw( acos cosh acosh );
 use PDL::Core qw( topdl );
 use PDL::MatrixOps qw( eigens_sym );
 use PDL::Options qw( iparse ifhref );
+use Variable::Magic qw( wizard cast );
 
 use constant {
     HAVE_LinearAlgebra => eval { require PDL::LinearAlgebra::Special; 1 } || 0,
@@ -31,52 +33,155 @@ use constant TPI => 2 * PI;
 
 use Exporter 'import';
 
-our @EXPORT_OK = qw(
-    window
-    list_windows
+my %symmetric_windows = (
+    bartlett         => 1,
+    bartlett_hann    => 1,
+    blackman         => 1,
+    blackman_bnh     => 1,
+    blackman_ex      => 1,
+    blackman_gen     => 1,
+    blackman_gen3    => 1,
+    blackman_gen4    => 1,
+    blackman_gen5    => 1,
+    blackman_harris  => 1,
+    blackman_harris4 => 1,
+    blackman_nuttall => 1,
+    bohman           => 1,
+    cauchy           => 1,
+    chebyshev        => 1,
+    cos_alpha        => 1,
+    cosine           => 1,
+    dpss             => 1,
+    exponential      => 1,
+    flattop          => 1,
+    gaussian         => 1,
+    hamming          => 1,
+    hamming_ex       => 1,
+    hamming_gen      => 1,
+    hann             => 1,
+    hann_matlab      => 1,
+    hann_poisson     => 1,
+    kaiser           => 1,
+    lanczos          => 1,
+    nuttall          => 1,
+    nuttall1         => 1,
+    parzen           => 1,
+    parzen_octave    => 1,
+    poisson          => 1,
+    rectangular      => 1,
+    triangular       => 1,
+    tukey            => 1,
+    welch            => 1,
+);
 
-    chebpoly
-    cos_mult_to_pow
-    cos_pow_to_mult
+my %periodic_windows = (
+    bartlett         => 1,
+    bartlett_hann    => 1,
+    blackman         => 1,
+    blackman_bnh     => 1,
+    blackman_ex      => 1,
+    blackman_gen     => 1,
+    blackman_gen3    => 1,
+    blackman_gen4    => 1,
+    blackman_gen5    => 1,
+    blackman_harris  => 1,
+    blackman_harris4 => 1,
+    blackman_nuttall => 1,
+    bohman           => 1,
+    cauchy           => 1,
+    cos_alpha        => 1,
+    cosine           => 1,
+    dpss             => 1,
+    exponential      => 1,
+    flattop          => 1,
+    gaussian         => 1,
+    hamming          => 1,
+    hamming_ex       => 1,
+    hamming_gen      => 1,
+    hann             => 1,
+    hann_poisson     => 1,
+    kaiser           => 1,
+    lanczos          => 1,
+    nuttall          => 1,
+    nuttall1         => 1,
+    parzen           => 1,
+    poisson          => 1,
+    rectangular      => 1,
+    triangular       => 1,
+    tukey            => 1,
+    welch            => 1,
+);
 
-    bartlett                   bartlett_per
-    bartlett_hann         bartlett_hann_per
-    blackman                   blackman_per
-    blackman_bnh           blackman_bnh_per
-    blackman_ex             blackman_ex_per
-    blackman_gen           blackman_gen_per
-    blackman_gen3         blackman_gen3_per
-    blackman_gen4         blackman_gen4_per
-    blackman_gen5         blackman_gen5_per
-    blackman_harris     blackman_harris_per
-    blackman_harris4   blackman_harris4_per
-    blackman_nuttall   blackman_nuttall_per
-    bohman                       bohman_per
-    cauchy                       cauchy_per
-    chebyshev
-    cos_alpha                 cos_alpha_per
-    cosine                       cosine_per
-    dpss                           dpss_per
-    exponential             exponential_per
-    flattop                     flattop_per
-    gaussian                   gaussian_per
-    hamming                     hamming_per
-    hamming_ex               hamming_ex_per
-    hamming_gen             hamming_gen_per
-    hann                           hann_per
-    hann_matlab
-    hann_poisson           hann_poisson_per
-    kaiser                       kaiser_per
-    lanczos                     lanczos_per
-    nuttall                     nuttall_per
-    nuttall1                   nuttall1_per
-    parzen                       parzen_per
-    parzen_octave
-    poisson                     poisson_per
-    rectangular             rectangular_per
-    triangular               triangular_per
-    tukey                         tukey_per
-    welch                         welch_per
+my %window_aliases = (
+    bartlett_hann    => [ 'Modified Bartlett-Hann' ],
+    bartlett         => [ 'fejer' ],
+    blackman_harris4 => [ 'Blackman-Harris' ],
+    blackman_harris  => [ 'Minimum three term (sample) Blackman-Harris' ],
+    cauchy           => [ 'Abel', 'Poisson' ],
+    chebyshev        => [ 'Dolph-Chebyshev' ],
+    cos_alpha        => [ 'Power-of-cosine' ],
+    cosine           => [ 'sine' ],
+    dpss             => [ 'sleppian' ],
+    gaussian         => [ 'Weierstrass' ],
+    hann             => [ 'hanning' ],
+    kaiser           => [ 'Kaiser-Bessel' ],
+    lanczos          => [ 'sinc' ],
+    parzen           => [ 'Jackson', 'Valle-Poussin' ],
+    rectangular      => [ 'dirichlet', 'boxcar' ],
+    tukey            => [ 'tapered cosine' ],
+    welch            => [ 'Riez', 'Bochner', 'Parzen', 'parabolic' ],
+);
+
+my %window_parameters = (
+    blackman_gen  => [ '$alpha' ],
+    blackman_gen3 => [ '$a0', '$a1', '$a2' ],
+    blackman_gen4 => [ '$a0', '$a1', '$a2', '$a3' ],
+    blackman_gen5 => [ '$a0', '$a1', '$a2', '$a3', '$a4' ],
+    cauchy        => [ '$alpha' ],
+    chebyshev     => [ '$at' ],
+    cos_alpha     => [ '$alpha' ],
+    dpss          => [ '$beta' ],
+    gaussian      => [ '$beta' ],
+    hamming_gen   => [ '$a' ],
+    hann_poisson  => [ '$alpha' ],
+    kaiser        => [ '$beta' ],
+    poisson       => [ '$alpha' ],
+    tukey         => [ '$alpha' ],
+);
+
+my %window_names = (
+    bartlett_hann    => 'Bartlett-Hann',
+    blackman_bnh     => '*An improved version of the 3-term Blackman-Harris window given by Nuttall (Ref 2, p. 89).',
+    blackman_ex      => q!'exact' Blackman!,
+    blackman_gen     => '*A single parameter family of the 3-term Blackman window. ',
+    blackman_gen3    => '*The general form of the Blackman family. ',
+    blackman_gen4    => '*The general 4-term Blackman-Harris window. ',
+    blackman_gen5    => '*The general 5-term Blackman-Harris window. ',
+    blackman_harris4 => 'minimum (sidelobe) four term Blackman-Harris',
+    blackman_harris  => 'Blackman-Harris',
+    blackman_nuttall => 'Blackman-Nuttall',
+    blackman         => q!'classic' Blackman!,
+    dpss             => 'Digital Prolate Spheroidal Sequence (DPSS)',
+    flattop          => 'flat top',
+    hamming_ex       => q!'exact' Hamming!,
+    hamming_gen      => 'general Hamming',
+    hann_matlab      => '*Equivalent to the Hann window of N+2 points, with the endpoints (which are both zero) removed.',
+    hann_poisson     => 'Hann-Poisson',
+    nuttall1         => '*A window referred to as the Nuttall window.',
+    parzen_octave    => 'Parzen',
+);
+
+my %window_print_names = (
+    blackman_bnh => 'Blackman-Harris (bnh)',
+    blackman_gen => 'General classic Blackman',
+    hann_matlab  => 'Hann (matlab)',
+    nuttall1     => 'Nuttall (v1)',
+);
+
+our @EXPORT_OK = (
+    keys %symmetric_windows,
+    keys %periodic_windows,
+    qw( window list_windows chebpoly cos_mult_to_pow cos_pow_to_mult ),
 );
 
 $PDL::onlinedoc->scan(__FILE__) if $PDL::onlinedoc;
@@ -224,20 +329,27 @@ C<list_windows STR> prints only the names of windows matching the string C<STR>.
 
 sub list_windows {
     my ($expr) = @_;
+
     my @match;
     if ($expr) {
-        my @alias;
-        foreach (sort keys %winsubs) {
-            push(@match,$_) , next if /$expr/i;
-            push(@match, $_ . ' (alias ' . $alias[0] . ')') if @alias = grep(/$expr/i,@{$window_definitions{$_}->{alias}});
+        for my $name ( sort keys %symmetric_windows ) {
+            if ( $name =~ /$expr/ ) {
+                push @match, $name;
+                next;
+            }
+
+            for my $alias ( grep /$expr/i, @{ $window_aliases{$name} // [] } ) {
+                push @match, "$name (alias $alias)";
+                next;
+            }
         }
     }
     else {
-        @match = sort keys %winsubs;
+        @match = sort keys %symmetric_windows;
     }
-    print join(', ',@match),"\n";
-}
 
+    print join( ', ', @match ), "\n";
+}
 
 =head1 METHODS
 
@@ -314,17 +426,17 @@ sub init {
 
     $name =~ s/_per$//;
 
-    my $ws = $periodic ? \%winpersubs : \%winsubs;
-    if ( not exists $ws->{$name}) {
-        my $perstr = $periodic ? 'periodic' : 'symmetric';
-        barf "window: Unknown $perstr window '$name'.";
+    my $windows = $periodic ? \%periodic_windows : \%symmetric_windows;
+    unless ( $windows->{$name}) {
+        my $type = $periodic ? 'periodic' : 'symmetric';
+        barf "window: Unknown $type window '$name'.";
     }
 
     $self->{name}     = $name;
     $self->{N}        = $N;
     $self->{periodic} = $periodic;
     $self->{params}   = $params;
-    $self->{code}     = $ws->{$name};
+    $self->{code}     = __PACKAGE__->can( $name . ( $periodic ? '_per' : '' ) );
     $self->{samples}  = undef;
     $self->{modfreqs} = undef;
 
@@ -547,20 +659,24 @@ function. This is static data and does not depend on the instance.
 
 sub get_name {
     my $self = shift;
-    my $wd = $window_definitions{ $self->{name} };
 
-    return $wd->{pfn} . ' window' if $wd->{pfn};
-    return $wd->{fn} . ' window' if $wd->{fn} and not $wd->{fn} =~ /^\*/;
-    return $wd->{fn} if $wd->{fn};
+    if ( my $name = $window_print_names{ $self->{name} } ) {
+        return "$name window";
+    }
+
+    if ( my $name = $window_names{ $self->{name} } ) {
+        return "$name window" unless $name =~ /^\*/;
+        return $name;
+    }
 
     return ucfirst $self->{name} . ' window';
 }
 
 sub get_param_names {
     my $self = shift;
-    my $wd = $window_definitions{$self->{name}};
-    return undef unless $wd->{params};
-    ref $wd->{params} ? $wd->{params} : [ $wd->{params} ];
+    my $params = $window_parameters{ $self->{name} };
+    return undef unless $params;
+    return [ @{$params} ];
 }
 
 sub format_param_vals {
@@ -1437,214 +1553,49 @@ sub welch_per {
     1 - zeroes($N)->xlinvals( -1, ( -1 + 1 * ( $N - 1 ) ) / $N ) ** 2;
 }
 
-# Static data
+# Legacy static data
 
-%window_definitions = (
-    bartlett_hann => {
-        fn    => 'Bartlett-Hann',
-        alias => ['Modified Bartlett-Hann'],
-    },
-    bartlett => {
-        alias => ['fejer'],
-    },
-    blackman_bnh => {
-        pfn => 'Blackman-Harris (bnh)',
-        fn  => '*An improved version of the 3-term Blackman-Harris window given by Nuttall (Ref 2, p. 89).',
-    },
-    blackman_ex => {
-        fn => q!'exact' Blackman!,
-    },
-    blackman_gen => {
-        pfn    => 'General classic Blackman',
-        fn     => '*A single parameter family of the 3-term Blackman window. ',
-        params => ['$alpha'],
-    },
-    blackman_gen3 => {
-        fn     => '*The general form of the Blackman family. ',
-        params => [ '$a0', '$a1', '$a2' ],
-    },
-    blackman_gen4 => {
-        fn     => '*The general 4-term Blackman-Harris window. ',
-        params => [ '$a0', '$a1', '$a2', '$a3' ],
-    },
-    blackman_gen5 => {
-        fn     => '*The general 5-term Blackman-Harris window. ',
-        params => [ '$a0', '$a1', '$a2', '$a3', '$a4' ],
-    },
-    blackman_harris4 => {
-        fn    => 'minimum (sidelobe) four term Blackman-Harris',
-        alias => ['Blackman-Harris'],
-    },
-    blackman_harris => {
-        fn    => 'Blackman-Harris',
-        alias => ['Minimum three term (sample) Blackman-Harris'],
-    },
-    blackman_nuttall => {
-        fn => 'Blackman-Nuttall',
-    },
-    blackman => {
-        fn => q!'classic' Blackman!,
-    },
-    bohman => {},
-    cauchy => {
-        params => ['$alpha'],
-        alias  => [ 'Abel', 'Poisson' ],
-    },
-    chebyshev => {
-        params => ['$at'],
-        alias => ['Dolph-Chebyshev'],
-    },
-    cos_alpha => {
-        params => ['$alpha'],
-        alias  => ['Power-of-cosine'],
-    },
-    cosine => {
-        alias => ['sine'],
-    },
-    dpss => {
-        fn     => 'Digital Prolate Spheroidal Sequence (DPSS)',
-        params => ['$beta'],
-        alias  => ['sleppian'],
-    },
-    exponential => {},
-    flattop => {
-        fn => 'flat top',
-    },
-    gaussian => {
-        params => ['$beta'],
-        alias  => ['Weierstrass'],
-    },
-    hamming_ex => {
-        fn => q!'exact' Hamming!,
-    },
-    hamming_gen => {
-        fn     => 'general Hamming',
-        params => ['$a'],
-    },
-    hamming => {},
-    hann_matlab => {
-        pfn => 'Hann (matlab)',
-        fn  => '*Equivalent to the Hann window of N+2 points, with the endpoints (which are both zero) removed.',
-    },
-    hann_poisson => {
-        fn     => 'Hann-Poisson',
-        params => ['$alpha'],
-    },
-    hann => {
-        alias => ['hanning'],
-    },
-    kaiser => {
-        params => ['$beta'],
-        alias  => ['Kaiser-Bessel'],
-    },
-    lanczos => {
-        alias => ['sinc'],
-    },
-    nuttall1 => {
-        pfn => 'Nuttall (v1)',
-        fn  => '*A window referred to as the Nuttall window.',
-    },
-    nuttall => {},
-    parzen_octave => {
-        fn => 'Parzen',
-    },
-    parzen => {
-        alias => [ 'Jackson', 'Valle-Poussin'],
-    },
-    poisson => {
-        params => ['$alpha'],
-    },
-    rectangular => {
-        alias => [ 'dirichlet', 'boxcar' ],
-    },
-    triangular => {},
-    tukey => {
-        params => ['$alpha'],
-        alias  => ['tapered cosine'],
-    },
-    welch => {
-        alias => [ 'Riez', 'Bochner', 'Parzen', 'parabolic' ],
-    },
-);
+$window_definitions{$_} = {} for keys %symmetric_windows;
 
-%winpersubs = map { $_ => __PACKAGE__->can("${_}_per") } qw(
-    bartlett_hann
-    bartlett
-    blackman_bnh
-    blackman_ex
-    blackman_gen3
-    blackman_gen4
-    blackman_gen5
-    blackman_gen
-    blackman_harris4
-    blackman_harris
-    blackman_nuttall
-    blackman
-    bohman
-    cauchy
-    cos_alpha
-    cosine
-    dpss
-    exponential
-    flattop
-    gaussian
-    hamming_ex
-    hamming_gen
-    hamming
-    hann_poisson
-    hann
-    kaiser
-    lanczos
-    nuttall1
-    nuttall
-    parzen
-    poisson
-    rectangular
-    triangular
-    tukey
-    welch
-);
+$window_definitions{$_}{alias} = [ @{ $window_aliases{$_} } ]
+    for keys %window_aliases;
 
-%winsubs = map { $_ => __PACKAGE__->can($_) } qw(
-    bartlett_hann
-    bartlett
-    blackman_bnh
-    blackman_ex
-    blackman_gen3
-    blackman_gen4
-    blackman_gen5
-    blackman_gen
-    blackman_harris4
-    blackman_harris
-    blackman_nuttall
-    blackman
-    bohman
-    cauchy
-    chebyshev
-    cos_alpha
-    cosine
-    dpss
-    exponential
-    flattop
-    gaussian
-    hamming_ex
-    hamming_gen
-    hamming
-    hann_matlab
-    hann_poisson
-    hann
-    kaiser
-    lanczos
-    nuttall1
-    nuttall
-    parzen_octave
-    parzen
-    poisson
-    rectangular
-    triangular
-    tukey
-    welch
-);
+$window_definitions{$_}{params} = [ @{ $window_parameters{$_} } ]
+    for keys %window_parameters;
+
+$window_definitions{$_}{fn} = $window_names{$_}
+    for keys %window_names;
+
+$window_definitions{$_}{pfn} = $window_print_names{$_}
+    for keys %window_print_names;
+
+%winpersubs = map { $_ => __PACKAGE__->can("${_}_per") } keys %periodic_windows;
+%winsubs    = map { $_ => __PACKAGE__->can($_) } keys %symmetric_windows;
+
+my $wizard = do {
+    my $msg = 'Package variables from PDL::DSP::Windows are deprecated and will be removed in the future.';
+
+    my $read = sub {
+        carp $msg
+            . ' This attempt to read from them will soon become an error';
+    };
+
+    my $write = sub {
+        carp $msg
+            . ' This attempt to write to them will soon become an error';
+    };
+
+    wizard(
+        fetch  => $read,
+        exists => $read,
+        store  => $write,
+        delete => $write,
+    );
+};
+
+cast %winsubs,            $wizard;
+cast %winpersubs,         $wizard;
+cast %window_definitions, $wizard;
 
 =head1 Symmetric window functions
 
