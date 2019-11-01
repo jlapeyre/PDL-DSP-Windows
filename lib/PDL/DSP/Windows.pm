@@ -2072,6 +2072,10 @@ pp. 84-91.
 
 John Lapeyre, C<< <jlapeyre at cpan.org> >>
 
+=head1 MAINTAINER
+
+José Joaquín Atria, C<< <jjatria at cpan.org> >>
+
 =head1 ACKNOWLEDGMENTS
 
 For study and comparison, the author used documents or output from: Thomas
@@ -2081,7 +2085,7 @@ in the Octave signal package.
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright 2012 John Lapeyre.
+Copyright 2012-2019 John Lapeyre.
 
 This program is free software; you can redistribute it and/or modify it
 under the terms of either: the GNU General Public License as published
