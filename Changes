@@ -2,6 +2,8 @@ Revision history for PDL-DSP-Windows
 
 {{$NEXT}}
 
+0.007001  2019-11-01 23:33:11 GMT (TRIAL RELEASE)
+
     Breaking Changes!
     * Deprecate undocumented package variables: trying to read or write from
       them will now trigger a warning
