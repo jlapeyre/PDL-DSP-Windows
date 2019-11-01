@@ -2047,6 +2047,10 @@ sub cos_mult_to_pow {
     @cs;
 }
 
+1;
+
+__END__
+
 =head1 REFERENCES
 
 =over
@@ -2087,5 +2091,3 @@ See http://dev.perl.org/licenses/ for more information.
 
 This software is neither licensed nor distributed by The MathWorks, Inc.,
 maker and liscensor of MATLAB.
-
-1;
