@@ -25,7 +25,8 @@ my %WriteMakefileArgs = (
     "Capture::Tiny" => 0,
     "ExtUtils::MakeMaker" => 0,
     "File::Spec" => 0,
-    "Test::More" => "0.96"
+    "Test::More" => "0.96",
+    "Try::Tiny" => 0
   },
   "VERSION" => "0.007002",
   "test" => {
@@ -40,6 +41,7 @@ my %FallbackPrereqs = (
   "File::Spec" => 0,
   "PDL" => 0,
   "Test::More" => "0.96",
+  "Try::Tiny" => 0,
   "Variable::Magic" => 0,
   "namespace::clean" => 0
 );

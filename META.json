@@ -88,6 +88,7 @@
             "ExtUtils::MakeMaker" : "0",
             "File::Spec" : "0",
             "Test::More" : "0.96",
+            "Try::Tiny" : "0",
             "perl" : "5.013002"
          }
       }
@@ -95,7 +96,7 @@
    "provides" : {
       "PDL::DSP::Windows" : {
          "file" : "lib/PDL/DSP/Windows.pm",
-         "version" : "0.007001"
+         "version" : "0.007002"
       }
    },
    "release_status" : "testing",
@@ -110,7 +111,7 @@
          "web" : "https://github.com/jjatria/PDL-DSP-Windows"
       }
    },
-   "version" : "0.007001",
+   "version" : "0.007002",
    "x_Dist_Zilla" : {
       "perl" : {
          "version" : "5.030000"
@@ -123,7 +124,7 @@
                   "exclude_filename" : [
                      "META.json",
                      "Makefile.PL",
-                     "README"
+                     "README.md"
                   ],
                   "exclude_match" : [],
                   "follow_symlinks" : 0,
@@ -250,7 +251,7 @@
                   "filename" : [
                      "META.json",
                      "Makefile.PL",
-                     "README"
+                     "README.md"
                   ],
                   "match" : []
                }
