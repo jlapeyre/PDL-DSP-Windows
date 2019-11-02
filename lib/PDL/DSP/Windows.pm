@@ -20,7 +20,7 @@ use constant {
     HAVE_GNUPLOT       => eval { require PDL::Graphics::Gnuplot; 1 }      || 0,
     USE_FFTW_DIRECTION => do {
         use version;
-        version->parse($PDL::VERSION) < version->parse('2.006_04');
+        version->parse($PDL::VERSION) <= version->parse('2.007');
     },
 };
 
