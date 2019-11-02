@@ -3,8 +3,6 @@ use Test::More;
 use strict;
 use warnings;
 
-use Try::Tiny;
-
 unless ( eval { require PDL::Graphics::Gnuplot; 1 } ) {
     plan skip_all => 'Need PDL::Graphics::Gnuplot to run plot tests';
 }
@@ -12,16 +10,8 @@ unless ( eval { require PDL::Graphics::Gnuplot; 1 } ) {
 use PDL::DSP::Windows;
 use File::Temp;
 
-sub dies (&$$) {
-    my ( $code, $check, $message ) = @_;
-
-    my $error;
-    try { $code->() } catch { chomp( $error = $_ ) }
-    finally {
-        $error //= '';
-        like $error, $check, $message;
-    };
-}
+use lib 't/lib';
+use MyTest::Helper qw( dies );
 
 sub do_test {
     my ( $method, $win, $args, $checks ) = @_;

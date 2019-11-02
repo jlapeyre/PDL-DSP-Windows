@@ -12,153 +12,117 @@ my $HAVE_LinearAlgebra = 1 if !$@;
 eval { require PDL::GSLSF::BESSEL; };
 my $HAVE_BESSEL = 1 if !$@;
 
-sub tapprox {
-    my( $got, $expected, $message, $precision ) = @_;
-
-    $message   //= '';
-    $precision //= 8;
-
-    if (ref $got) {
-        is  0 + sprintf( "%.${precision}f", $got->sum ),
-            0 + sprintf( "%.${precision}f", pdl($expected)->sum ),
-            $message
-            or print STDERR $got;
-    }
-    else {
-        is  sprintf( "%.${precision}f", $got ),
-            sprintf( "%.${precision}f", $expected ),
-            $message
-            or print STDERR '# ', $got;
-    }
-}
+use lib 't/lib';
+use MyTest::Helper qw( dies is_approx );
 
 # Most of these were checked with Octave
 subtest 'explict values of windows.' => sub {
-    tapprox(
+    is_approx
         window( 4, 'hamming' ),
         [ 0.08, 0.77, 0.77, 0.08 ],
-        'hamming',
-    );
+        'hamming';
 
-    tapprox(
+    is_approx
         window( 4, 'hann' ),
         [ 0, 0.75, 0.75, 0 ],
-        'hann',
-    );
+        'hann';
 
-    tapprox(
+    is_approx
         window( 4, 'hann_matlab' ),
         [ 0.3454915,  0.9045085,  0.9045085,  0.3454915 ],
-        'hann_matlab',
-    );
+        'hann_matlab';
 
-    tapprox(
+    is_approx
         window( 6, 'bartlett_hann' ),
         [ 0, 0.35857354, 0.87942646, 0.87942646, 0.35857354, 0 ],
-        'bartlett_hann',
-    );
+        'bartlett_hann';
 
-    tapprox(
+    is_approx
         window( 6, 'bohman' ),
         [ 0, 0.17912389, 0.83431145, 0.83431145, 0.17912389, 0 ],
         'bohman',
-        6,
-    );
+        6;
 
-    tapprox(
+    is_approx
         window( 6, 'triangular' ),
         [ 0.16666667, 0.5, 0.83333333, 0.83333333, 0.5, 0.16666667 ],
-        'triangular',
-    );
+        'triangular';
 
-    tapprox(
+    is_approx
         window( 6, 'welch' ),
         [ 0, 0.64, 0.96, 0.96, 0.64, 0 ],
-        'welch',
-    );
+        'welch';
 
-    tapprox(
+    is_approx
         window( 6, 'blackman_harris4' ),
         [ 6e-05, 0.10301149, 0.79383351, 0.79383351, 0.10301149, 6e-05 ],
-        'blackman_harris4',
-    );
+        'blackman_harris4';
 
-    tapprox(
+    is_approx
         window( 6, 'blackman_nuttall' ),
         [ 0.0003628, 0.11051525, 0.7982581, 0.7982581, 0.11051525, 0.0003628 ],
-        'blackman_nuttall',
-    );
+        'blackman_nuttall';
 
-    tapprox(
+    is_approx
         window( 6, 'flattop' ),
         [ -0.000421051, -0.067714252, 0.60687215, 0.60687215, -0.067714252, -0.000421051 ],
         'flattop',
-        6,
-    );
+        6;
 
     SKIP: {
         skip 'PDL::GSLSF::BESSEL not installed', 1 unless $HAVE_BESSEL;
-        tapprox(
+        is_approx
             window( 6, 'kaiser', 0.5 / 3.1415926 ),
             [ 0.94030619, 0.97829624, 0.9975765, 0.9975765, 0.97829624, 0.94030619 ],
             'kaiser',
-            7,
-        )
+            7;
     }
 
-    tapprox(
+    is_approx
         window( 10, 'tukey', 0.4 ),
         [ 0, 0.58682409, 1, 1, 1, 1, 1, 1, 0.58682409, 0 ],
         'tukey',
-        6,
-    );
+        6;
 
-    tapprox(
+    is_approx
         window( 10, 'parzen' ),
         [ 0, 0.021947874, 0.17558299, 0.55555556, 0.93415638, 0.93415638, 0.55555556, 0.17558299, 0.021947874, 0],
         'parzen',
-        7,
-    );
+        7;
 
-    tapprox(
+    is_approx
         window( 10, 'parzen_octave' ),
         [ 0.002, 0.054, 0.25, 0.622, 0.946, 0.946, 0.622, 0.25, 0.054, 0.002 ],
-        'parzen',
-    );
+        'parzen';
 
-    tapprox(
+    is_approx
         window( 8, 'chebyshev', 10 ),
         [ 1, 0.45192476, 0.5102779, 0.54133813, 0.54133813, 0.5102779, 0.45192476, 1 ],
         'chebyshev',
-        6,
-    );
+        6;
 
-    tapprox(
+    is_approx
         window( 9, 'chebyshev', 10 ),
         [ 1, 0.39951163, 0.44938961, 0.48130908, 0.49229345, 0.48130908, 0.44938961, 0.39951163, 1 ],
         'chebyshev',
-        6,
-    );
+        6;
 };
 
 subtest 'relations between windows.' => sub {
-    tapprox(
+    is_approx
         window( 6, 'rectangular' ),
         window( 6, 'cos_alpha', 0 ),
-        'rectangular window is equivalent to cos_alpha 0',
-    );
+        'rectangular window is equivalent to cos_alpha 0';
 
-    tapprox(
+    is_approx
         window( 6, 'cosine' ),
         window( 6, 'cos_alpha', 1 ),
-        'cosine window is equivalent to cos_alpha 1',
-    );
+        'cosine window is equivalent to cos_alpha 1';
 
-    tapprox(
+    is_approx
         window( 6, 'hann' ),
         window( 6, 'cos_alpha', 2 ),
-        'hann window is equivalent to cos_alpha 2',
-    );
+        'hann window is equivalent to cos_alpha 2';
 };
 
 subtest 'enbw of windows.' => sub {
@@ -186,17 +150,16 @@ subtest 'enbw of windows.' => sub {
     ) {
         my ( $args, $expected, $precision ) = @{$_};
         my ( undef, $name ) = @{$args};
-        tapprox( $win->init( @{$args} )->enbw, $expected, $name, $precision );
+        is_approx $win->init( @{$args} )->enbw, $expected, $name, $precision;
     }
 
     SKIP: {
         skip 'PDL::GSLSF::BESSEL not installed', 1 unless $HAVE_BESSEL;
-        tapprox(
+        is_approx
             $win->init( $Nbw, 'kaiser', 8.6 / 3.1415926 )->enbw,
             1.72147863,
             'kaiser',
-            5,
-        );
+            5;
     }
 };
 
@@ -258,11 +221,10 @@ subtest 'relation between periodic and symmetric.' => sub {
                 $args{params} = $tests{$name} if @{ $tests{$name} };
 
                 my $window = window( $N + 1, $name, { %args } );
-                tapprox(
+                is_approx
                     $window->slice("0:$Nm"),
                     window( $N, $name, { per => 1, %args } ),
-                    $name,
-                );
+                    $name;
             }
         }
     }

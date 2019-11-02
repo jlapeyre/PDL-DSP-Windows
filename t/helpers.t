@@ -3,53 +3,24 @@ use Test::More;
 use strict;
 use warnings;
 
-use Try::Tiny;
 use PDL;
 use PDL::DSP::Windows qw(
     chebpoly
     cos_mult_to_pow
     cos_pow_to_mult
-) ;
+);
 
-sub dies (&$$) {
-    my ( $code, $check, $message ) = @_;
-
-    my $error;
-    try { $code->() } catch { chomp( $error = $_ ) }
-    finally {
-        $error //= '';
-        like $error, $check, $message;
-    };
-}
-
-sub tapprox {
-    my( $got, $expected, $message, $precision ) = @_;
-
-    $message   //= '';
-    $precision //= 8;
-
-    if (ref $got) {
-        is  0 + sprintf( "%.${precision}f", $got->sum ),
-            0 + sprintf( "%.${precision}f", pdl($expected)->sum ),
-            $message
-            or print STDERR $got;
-    }
-    else {
-        is  sprintf( "%.${precision}f", $got ),
-            sprintf( "%.${precision}f", $expected ),
-            $message
-            or print STDERR '# ', $got;
-    }
-}
+use lib 't/lib';
+use MyTest::Helper qw( dies is_approx );
 
 subtest 'chebpoly.' => sub {
-    tapprox(
+    is_approx(
         chebpoly( 3, pdl( [ 0.5, 1, 1.2 ] ) ),
         [ -1, 1, 3.312 ],
         'chebpoly takes piddle'
     );
 
-    tapprox(
+    is_approx(
         chebpoly( 3, [ 0.5, 1, 1.2 ] ),
         [ -1, 1, 3.312 ],
         'chebpoly takes arrayref',
