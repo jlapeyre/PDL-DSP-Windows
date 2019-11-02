@@ -2,24 +2,29 @@ Revision history for PDL-DSP-Windows
 
 {{$NEXT}}
 
+Fixes:
+  * Apply fix for chebyshev window to PDL > 2.007
+  * Avoid using PDL::LiteF in tests, since this module started being
+    indexed by CPAN only with PDL 2.012.
+
 0.007001  2019-11-01 23:33:11 GMT (TRIAL RELEASE)
 
-    Breaking Changes!
-    * Deprecate undocumented package variables: trying to read or write from
-      them will now trigger a warning
+Breaking Changes!
+  * Deprecate undocumented package variables: trying to read or write from
+    them will now trigger a warning
 
-    Fixes:
-    * Fix typos in plotted strings
-    * Fixed an error triggered when running $win->get('modfreqs')
-    * Fixed chebyshev window calculation with PDL >= 2.006_04
-    * Fixed errors triggered by using piddles in conditionals
+Fixes:
+  * Fix typos in plotted strings
+  * Fixed an error triggered when running $win->get('modfreqs')
+  * Fixed chebyshev window calculation with PDL >= 2.006_04
+  * Fixed errors triggered by using piddles in conditionals
 
-    Changes:
-    * Removed dependencies on PDL::Constants and base
-    * Move to statically generated source file instead of using
-      a code generator
-    * Move to Dist::Zilla for managing releases
-    * Move compwin.pl sample script to 'examples'
+Changes:
+  * Removed dependencies on PDL::Constants and base
+  * Move to statically generated source file instead of using
+    a code generator
+  * Move to Dist::Zilla for managing releases
+  * Move compwin.pl sample script to 'examples'
 
 0.007  Fri, 27 Jul 2012 18:23:43 +0200
        GJL. utf in pod
