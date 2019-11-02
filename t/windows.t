@@ -4,8 +4,7 @@ use strict;
 use warnings;
 use Test::More 0.96;
 
-use PDL::LiteF;
-use PDL::NiceSlice;
+use PDL;
 use PDL::DSP::Windows qw( window chebpoly ) ;
 
 eval { require PDL::LinearAlgebra::Special };

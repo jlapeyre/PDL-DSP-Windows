@@ -4,7 +4,7 @@ use warnings;
 use Test::More 0.96;
 
 use Try::Tiny;
-use PDL::LiteF;
+use PDL;
 use PDL::DSP::Windows qw(
     chebpoly
     cos_mult_to_pow
