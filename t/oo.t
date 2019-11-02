@@ -1,5 +1,8 @@
 use Test::More;
 
+use strict;
+use warnings;
+
 use PDL::DSP::Windows;
 use Try::Tiny;
 

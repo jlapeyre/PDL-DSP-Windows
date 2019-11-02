@@ -1,7 +1,7 @@
+use Test::More;
+
 use strict;
 use warnings;
-
-use Test::More 0.96;
 
 use Try::Tiny;
 use PDL;

@@ -1,7 +1,8 @@
+use Test::More;
+
 use strict;
 use warnings;
 
-use Test::More;
 use Try::Tiny;
 
 unless ( eval { require PDL::Graphics::Gnuplot; 1 } ) {

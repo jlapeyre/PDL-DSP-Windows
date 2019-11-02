@@ -1,8 +1,7 @@
-# -*-Perl-*-     # for emacs
+use Test::More;
 
 use strict;
 use warnings;
-use Test::More 0.96;
 
 use PDL;
 use PDL::DSP::Windows qw( window chebpoly ) ;

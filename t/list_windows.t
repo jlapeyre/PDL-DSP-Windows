@@ -1,8 +1,10 @@
 use Test::More;
 
-use PDL::DSP::Windows qw( list_windows );
+use strict;
+use warnings;
 
 use Capture::Tiny 'capture';
+use PDL::DSP::Windows qw( list_windows );
 
 my @windows = qw(
     bartlett
