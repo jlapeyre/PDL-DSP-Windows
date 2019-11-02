@@ -689,8 +689,11 @@ sub format_param_vals {
     my @names = @{ $self->get_param_names || [] };
     return '' unless @names;
 
-    join ', ',
-        map join( ' = ', $names[$_] =~ s/^\$//r, $params[$_] ), 0 .. $#params;
+    join ', ', map {
+        my $name = $names[$_];
+        $name =~ s/^\$//;
+        join' = ', $name, $params[$_];
+    } 0 .. $#params;
 }
 
 sub format_plot_param_vals {

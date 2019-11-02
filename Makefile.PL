@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 
-use 5.013002;
+use 5.010;
 
 use ExtUtils::MakeMaker;
 
@@ -14,7 +14,7 @@ my %WriteMakefileArgs = (
   },
   "DISTNAME" => "PDL-DSP-Windows",
   "LICENSE" => "perl",
-  "MIN_PERL_VERSION" => "5.013002",
+  "MIN_PERL_VERSION" => "5.010",
   "NAME" => "PDL::DSP::Windows",
   "PREREQ_PM" => {
     "PDL" => 0,

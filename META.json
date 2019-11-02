@@ -59,7 +59,7 @@
       "configure" : {
          "requires" : {
             "ExtUtils::MakeMaker" : "0",
-            "perl" : "5.013002"
+            "perl" : "5.010"
          }
       },
       "develop" : {
@@ -76,7 +76,7 @@
             "PDL" : "0",
             "Variable::Magic" : "0",
             "namespace::clean" : "0",
-            "perl" : "5.013002"
+            "perl" : "5.010"
          }
       },
       "test" : {
@@ -89,7 +89,7 @@
             "File::Spec" : "0",
             "Test::More" : "0.96",
             "Try::Tiny" : "0",
-            "perl" : "5.013002"
+            "perl" : "5.010"
          }
       }
    },
