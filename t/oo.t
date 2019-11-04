@@ -6,6 +6,13 @@ use warnings;
 use PDL::DSP::Windows;
 use Try::Tiny;
 
+use lib 't/lib';
+use MyTest::Helper qw( dies );
+
+dies { PDL::DSP::Windows->new( 10, 'foobar' ) }
+    qr/unknown .* window 'foobar'/,
+    'Dies if window is unknown';
+
 is ref PDL::DSP::Windows->new, 'PDL::DSP::Windows', 'Has constructor';
 
 subtest 'Default window' => sub {
