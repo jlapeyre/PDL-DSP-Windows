@@ -44,8 +44,8 @@ subtest 'relation between periodic and symmetric.' => sub {
     );
 
     while ( my ( $in, $want ) = splice @tests, 0, 2 ) {
-        my @cos  = cos_pow_to_mult( @{$in} );
-        my @mult = cos_mult_to_pow( @cos );
+        my @cos  = map 0 + $_, cos_pow_to_mult( @{$in} );
+        my @mult = map 0 + $_, cos_mult_to_pow( @cos );
 
         is_deeply \@cos, $want, '[ ' . join( ' ', @{$in} ) . ' ]'
             or diag '[ ' . join( ' ', @cos ) . ' ]';
