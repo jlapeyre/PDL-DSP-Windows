@@ -29,13 +29,6 @@ sub warnings (&) {
     return @warnings;
 }
 
-
-sub caught_warnings {
-    my @w = @warnings;
-    @warnings = ();
-    return @w;
-}
-
 sub is_approx ($$;$$) {
     my( $got, $expected, $message, $precision ) = @_;
 
