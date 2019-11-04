@@ -6,10 +6,16 @@ Fixes:
   * Apply fix for chebyshev window to PDL > 2.007
   * Avoid using PDL::LiteF in tests, since this module started being
     indexed by CPAN only with PDL 2.012.
+  * Add Try::Tiny to missing test dependencies.
+  * Re-instate support for Perl < 5.12 by removing use of non-destructive
+    substitutions. Minimum supported version of Perl is now 5.10.
+
+Changes:
+  * Avoid using PDL::Lite and PDL::LiteF to support older PDL releases
 
 0.007001  2019-11-01 23:33:11 GMT (TRIAL RELEASE)
 
-Breaking Changes!
+Deprecated:
   * Deprecate undocumented package variables: trying to read or write from
     them will now trigger a warning
 
