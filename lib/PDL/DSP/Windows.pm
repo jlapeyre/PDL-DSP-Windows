@@ -1401,8 +1401,8 @@ sub nuttall_per {
 }
 
 sub nuttall1 {
-  barf 'nuttall1: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
-  my ($N) = @_;
+    barf 'nuttall1: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
+    my ($N) = @_;
     my $cx = (cos(zeroes($N)->xlinvals(0,TPI)));
 
     (0.211536) +  ($cx * ((-0.449584) +  ($cx * (0.288464 + $cx * (-0.050416)  ))));
@@ -1416,20 +1416,20 @@ sub nuttall1_per {
 }
 
 sub parzen {
-  barf 'parzen: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
-  my ($N) = @_;
+    barf 'parzen: 1 argument expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 1;
+    my ($N) = @_;
 
-  my $x = zeroes($N)->xlinvals( -1, 1 );
+    my $x = zeroes($N)->xlinvals( -1, 1 );
 
-  my $x1 = $x->where( $x <= -0.5 );
-  my $x2 = $x->where( ( $x < 0.5 ) & ( $x > -0.5 ) );
-  my $x3 = $x->where( $x >= 0.5 );
+    my $x1 = $x->where( $x <= -0.5 );
+    my $x2 = $x->where( ( $x < 0.5 ) & ( $x > -0.5 ) );
+    my $x3 = $x->where( $x >= 0.5 );
 
-  $x1 .= 2 * ( 1 - abs($x1) ) ** 3;
-  $x2 .= 1 - 6 * $x2 ** 2 * ( 1 - abs($x2) );
-  $x3 .= $x1->slice('-1:0:-1');
+    $x1 .= 2 * ( 1 - abs($x1) ) ** 3;
+    $x2 .= 1 - 6 * $x2 ** 2 * ( 1 - abs($x2) );
+    $x3 .= $x1->slice('-1:0:-1');
 
-  $x;
+    $x;
 }
 
 sub parzen_per {

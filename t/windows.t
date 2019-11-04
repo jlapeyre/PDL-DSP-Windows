@@ -131,22 +131,22 @@ subtest 'enbw of windows.' => sub {
 
     for (
         # The following agree with Thomas Cokelaer's python package
-        [ [ $Nbw, 'hamming'                 ], 1.36288567 ],
-        [ [ $Nbw, 'rectangular'             ], 1.0        ],
-        [ [ $Nbw, 'triangular'              ], 4 / 3      ],
-        [ [ $Nbw * 10, 'hann'               ], 1.5  =>  4 ],
-        [ [ $Nbw, 'blackman'                ], 1.72686277 ],
-        [ [ $Nbw, 'blackman_harris4'        ], 2.00447524 ],
-        [ [ $Nbw, 'bohman'                  ], 1.78584988 ],
-        [ [ $Nbw, 'cauchy', 3               ], 1.48940773 ],
-        [ [ $Nbw, 'poisson', 2              ], 1.31307123 ],
-        [ [ $Nbw, 'hann_poisson', 0.5       ], 1.60925592 ],
-        [ [ $Nbw, 'lanczos'                 ], 1.29911200 ],
-        [ [ $Nbw, 'tukey', 0.25             ], 1.10210808 ],
-        [ [ $Nbw, 'parzen'                  ], 1.91757736 ],
-        [ [ $Nbw, 'parzen_octave'           ], 1.91746032 ],
+        [ [ $Nbw, 'hamming'           ], 1.36288567 ],
+        [ [ $Nbw, 'rectangular'       ], 1.0        ],
+        [ [ $Nbw, 'triangular'        ], 4 / 3      ],
+        [ [ $Nbw * 10, 'hann'         ], 1.5  =>  4 ],
+        [ [ $Nbw, 'blackman'          ], 1.72686277 ],
+        [ [ $Nbw, 'blackman_harris4'  ], 2.00447524 ],
+        [ [ $Nbw, 'bohman'            ], 1.78584988 ],
+        [ [ $Nbw, 'cauchy', 3         ], 1.48940773 ],
+        [ [ $Nbw, 'poisson', 2        ], 1.31307123 ],
+        [ [ $Nbw, 'hann_poisson', 0.5 ], 1.60925592 ],
+        [ [ $Nbw, 'lanczos'           ], 1.29911200 ],
+        [ [ $Nbw, 'tukey', 0.25       ], 1.10210808 ],
+        [ [ $Nbw, 'parzen'            ], 1.91757736 ],
+        [ [ $Nbw, 'parzen_octave'     ], 1.91746032 ],
         # These agree with other values found on web
-        [ [ $Nbw, 'flattop'                 ], 3.77 =>  3 ],
+        [ [ $Nbw, 'flattop'           ], 3.77 =>  3 ],
     ) {
         my ( $args, $expected, $precision ) = @{$_};
         my ( undef, $name ) = @{$args};
@@ -208,8 +208,6 @@ subtest 'relation between periodic and symmetric.' => sub {
         );
 
         for my $name ( keys %tests ) {
-            # diag $name;
-
             SKIP: {
                 skip 'PDL::GSLSF::BESSEL not installed', 1
                     if $name eq 'kaiser' and not $HAVE_BESSEL;
