@@ -2,6 +2,8 @@ Revision history for PDL-DSP-Windows
 
 {{$NEXT}}
 
+0.007003  2019-11-04 22:46:43 GMT (TRIAL RELEASE)
+
 Fixes:
   * Fixed check on exception test.
 
