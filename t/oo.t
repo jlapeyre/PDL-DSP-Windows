@@ -10,7 +10,7 @@ use lib 't/lib';
 use MyTest::Helper qw( dies );
 
 dies { PDL::DSP::Windows->new( 10, 'foobar' ) }
-    qr/unknown .* window 'foobar'/,
+    qr/^window: unknown .* window 'foobar'/i,
     'Dies if window is unknown';
 
 is ref PDL::DSP::Windows->new, 'PDL::DSP::Windows', 'Has constructor';
