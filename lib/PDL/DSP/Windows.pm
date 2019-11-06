@@ -1582,13 +1582,11 @@ my $wizard = do {
     my $msg = 'Package variables from PDL::DSP::Windows are deprecated and will be removed in the future.';
 
     my $read = sub {
-        carp $msg
-            . ' This attempt to read from them will soon become an error';
+        carp $msg . ' This attempt to read from them will soon stop working';
     };
 
     my $write = sub {
-        carp $msg
-            . ' This attempt to write to them will soon become an error';
+        carp $msg . ' This attempt to write to them will soon stop working';
     };
 
     wizard(

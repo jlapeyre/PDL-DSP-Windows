@@ -2,6 +2,9 @@ Revision history for PDL-DSP-Windows
 
 {{$NEXT}}
 
+Changes:
+  * Minor re-phrasing of deprecation warnings.
+
 0.007003  2019-11-04 22:46:43 GMT (TRIAL RELEASE)
 
 Fixes:
