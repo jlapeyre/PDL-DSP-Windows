@@ -74,6 +74,7 @@ my %symmetric_windows = (
     welch            => 1,
 );
 
+# These are not exported
 my %periodic_windows = (
     bartlett         => 1,
     bartlett_hann    => 1,
@@ -180,7 +181,6 @@ my %window_print_names = (
 
 our @EXPORT_OK = (
     keys %symmetric_windows,
-    keys %periodic_windows,
     qw( window list_windows chebpoly cos_mult_to_pow cos_pow_to_mult ),
 );
 
