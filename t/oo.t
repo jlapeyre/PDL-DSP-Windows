@@ -29,6 +29,9 @@ subtest 'Empty constructor' => sub {
     is +PDL::DSP::Windows->new(100)->init(10)->samples->nelem, 10,
         'Can override construction parameters with init';
 
+    is +PDL::DSP::Windows->new(100)->new(10)->samples->nelem, 10,
+        'Constructor called from instance creates new instance';
+
     try {
         # TODO: Should this die earlier?
         PDL::DSP::Windows->new->samples;

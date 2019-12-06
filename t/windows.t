@@ -237,4 +237,125 @@ subtest 'modfreqs.' => sub {
         'can pass bin number to modfreqs with hashref';
 };
 
+subtest 'argument validation' => sub {
+    my %windows = (
+        bartlett             => 1,
+        bartlett_hann        => 1,
+        blackman             => 1,
+        blackman_bnh         => 1,
+        blackman_ex          => 1,
+        blackman_gen         => 2,
+        blackman_gen3        => 4,
+        blackman_gen4        => 5,
+        blackman_gen5        => 6,
+        blackman_harris      => 1,
+        blackman_harris4     => 1,
+        blackman_nuttall     => 1,
+        bohman               => 1,
+        cauchy               => 2,
+        chebyshev            => 2,
+        cos_alpha            => 2,
+        cosine               => 1,
+        dpss                 => 2,
+        exponential          => 1,
+        flattop              => 1,
+        gaussian             => 2,
+        hamming              => 1,
+        hamming_ex           => 1,
+        hamming_gen          => 2,
+        hann                 => 1,
+        hann_matlab          => 1,
+        hann_poisson         => 2,
+        kaiser               => 2,
+        lanczos              => 1,
+        nuttall              => 1,
+        nuttall1             => 1,
+        parzen               => 1,
+        parzen_octave        => 1,
+        poisson              => 2,
+        rectangular          => 1,
+        triangular           => 1,
+        tukey                => 2,
+        welch                => 1,
+
+        bartlett_per         => 1,
+        bartlett_hann_per    => 1,
+        blackman_per         => 1,
+        blackman_bnh_per     => 1,
+        blackman_ex_per      => 1,
+        blackman_gen_per     => 2,
+        blackman_gen3_per    => 4,
+        blackman_gen4_per    => 5,
+        blackman_gen5_per    => 6,
+        blackman_harris_per  => 1,
+        blackman_harris4_per => 1,
+        blackman_nuttall_per => 1,
+        bohman_per           => 1,
+        cauchy_per           => 2,
+        cos_alpha_per        => 2,
+        cosine_per           => 1,
+        dpss_per             => 2,
+        exponential_per      => 1,
+        flattop_per          => 1,
+        gaussian_per         => 2,
+        hamming_per          => 1,
+        hamming_ex_per       => 1,
+        hamming_gen_per      => 2,
+        hann_per             => 1,
+        hann_poisson_per     => 2,
+        kaiser_per           => 2,
+        lanczos_per          => 1,
+        nuttall_per          => 1,
+        nuttall1_per         => 1,
+        parzen_per           => 1,
+        poisson_per          => 2,
+        rectangular_per      => 1,
+        triangular_per       => 1,
+        tukey_per            => 2,
+        welch_per            => 1,
+    );
+
+    while ( my ( $name, $args ) = each %windows ) {
+        for my $n ( 0 .. $args - 1, $args + 1 ) {
+            my $basename = $name =~ s/_per$//r;
+            dies { PDL::DSP::Windows->can($name)->( (1) x $n ) }
+                qr/^$basename: $args arguments? expected. Got $n/,
+                "$name dies when called with $n arguments";
+        }
+    }
+
+    for (qw( tukey tukey_per )) {
+        my $basename = $_ =~ s/_per$//r;
+        dies { PDL::DSP::Windows->can($_)->( 1, -1 ) }
+            qr/^$basename: alpha must be between 0 and 1/,
+            "$_ dies with alpha < 0";
+
+        dies { PDL::DSP::Windows->can($_)->( 1, 2 ) }
+            qr/^$basename: alpha must be between 0 and 1/,
+            "$_ dies with alpha > 1";
+    }
+};
+
+subtest 'argument parsing' => sub {
+    my $hamming  = window({ N => 10 });
+    my $kaiser   = window({ N => 10, name => 'kaiser', params => 2 });
+    my $periodic = window({ N => 10, name => 'kaiser', params => 2, per => 1 });
+
+    is_approx window( 10,           'hamming'  ), $hamming;
+    is_approx window( 10, { name => 'hamming' }), $hamming;
+
+    is_approx window( 10,           'kaiser',              2   ), $kaiser;
+    is_approx window( 10,           'kaiser',             [2]  ), $kaiser;
+    is_approx window( 10,           'kaiser', { params =>  2  }), $kaiser;
+    is_approx window( 10,           'kaiser', { params => [2] }), $kaiser;
+    is_approx window( 10, { name => 'kaiser',   params =>  2  }), $kaiser;
+
+    is_approx window( 10, 'kaiser',             2,          1  ), $periodic;
+    is_approx window( 10, 'kaiser',             2, { per => 1 }), $periodic;
+    is_approx window( 10, 'kaiser', { params => 2,   per => 1 }), $periodic;
+
+    is_approx window( 10, { name => 'kaiser', params => 2, per => 1 }),
+        $periodic;
+};
+
 done_testing;
