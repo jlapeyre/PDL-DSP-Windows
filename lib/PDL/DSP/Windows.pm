@@ -1509,7 +1509,7 @@ sub tukey {
     barf 'tukey: 2 arguments expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 2;
     my ( $N, $alpha ) = @_;
 
-    barf('tukey: alpha must be between 0 and 1') unless $alpha >=0 and $alpha <= 1;
+    barf('tukey: alpha must be between 0 and 1') unless $alpha >= 0 and $alpha <= 1;
 
     return ones($N) if $alpha == 0;
 
@@ -1530,7 +1530,7 @@ sub tukey_per {
     barf 'tukey: 2 arguments expected. Got ' . scalar(@_) . ' arguments.' unless @_ == 2;
     my ( $N, $alpha ) = @_;
 
-    barf('tukey: alpha must be between 0 and 1') unless $alpha >=0 and $alpha <= 1;
+    barf('tukey: alpha must be between 0 and 1') unless $alpha >= 0 and $alpha <= 1;
 
     return ones($N) if $alpha == 0;
 
