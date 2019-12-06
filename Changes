@@ -2,6 +2,8 @@ Revision history for PDL-DSP-Windows
 
 {{$NEXT}}
 
+  * Expand test coverage
+
 Changes:
   * Minor re-phrasing of deprecation warnings.
 
