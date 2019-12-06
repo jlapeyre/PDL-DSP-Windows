@@ -317,7 +317,8 @@ subtest 'argument validation' => sub {
 
     while ( my ( $name, $args ) = each %windows ) {
         for my $n ( 0 .. $args - 1, $args + 1 ) {
-            my $basename = $name =~ s/_per$//r;
+            my $basename = $name;
+            $basename =~ s/_per$//;
             dies { PDL::DSP::Windows->can($name)->( (1) x $n ) }
                 qr/^$basename: $args arguments? expected. Got $n/,
                 "$name dies when called with $n arguments";
@@ -325,7 +326,8 @@ subtest 'argument validation' => sub {
     }
 
     for (qw( tukey tukey_per )) {
-        my $basename = $_ =~ s/_per$//r;
+        my $basename = $name;
+        $basename =~ s/_per$//;
         dies { PDL::DSP::Windows->can($_)->( 1, -1 ) }
             qr/^$basename: alpha must be between 0 and 1/,
             "$_ dies with alpha < 0";
