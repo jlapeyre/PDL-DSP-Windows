@@ -326,7 +326,7 @@ subtest 'argument validation' => sub {
     }
 
     for (qw( tukey tukey_per )) {
-        my $basename = $name;
+        my $basename = $_;
         $basename =~ s/_per$//;
         dies { PDL::DSP::Windows->can($_)->( 1, -1 ) }
             qr/^$basename: alpha must be between 0 and 1/,
