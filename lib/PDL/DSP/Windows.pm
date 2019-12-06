@@ -1559,7 +1559,8 @@ sub welch_per {
     1 - zeroes($N)->xlinvals( -1, ( -1 + 1 * ( $N - 1 ) ) / $N ) ** 2;
 }
 
-# Legacy static data
+# Deprecated static data
+# These package variables will be removed entirely sometime in 2021
 
 $window_definitions{$_} = {} for keys %symmetric_windows;
 
@@ -1586,7 +1587,7 @@ my $wizard = do {
     };
 
     my $write = sub {
-        carp $msg . ' This attempt to write to them will soon stop working';
+        carp $msg . ' This attempt to write to them no longer has an effect';
     };
 
     wizard(
