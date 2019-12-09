@@ -1,6 +1,6 @@
 package PDL::DSP::Windows;
 
-our $VERSION = '0.007005';
+our $VERSION = '0.007006';
 
 use strict;
 use warnings;
