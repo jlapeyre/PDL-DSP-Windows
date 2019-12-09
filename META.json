@@ -96,10 +96,10 @@
    "provides" : {
       "PDL::DSP::Windows" : {
          "file" : "lib/PDL/DSP/Windows.pm",
-         "version" : "0.007003"
+         "version" : "0.007004"
       }
    },
-   "release_status" : "testing",
+   "release_status" : "stable",
    "resources" : {
       "bugtracker" : {
          "mailto" : "jjatria at cpan.org",
@@ -111,7 +111,7 @@
          "web" : "https://github.com/jjatria/PDL-DSP-Windows"
       }
    },
-   "version" : "0.007003",
+   "version" : "0.007004",
    "x_Dist_Zilla" : {
       "perl" : {
          "version" : "5.030000"
@@ -436,7 +436,7 @@
                   "branch" : null,
                   "changelog" : "Changes",
                   "signed" : 0,
-                  "tag" : "release/0.007003",
+                  "tag" : "release/0.007004",
                   "tag_format" : "release/%v",
                   "tag_message" : ""
                },
@@ -524,7 +524,7 @@
       "zilla" : {
          "class" : "Dist::Zilla::Dist::Builder",
          "config" : {
-            "is_trial" : 1
+            "is_trial" : 0
          },
          "version" : "6.012"
       }
