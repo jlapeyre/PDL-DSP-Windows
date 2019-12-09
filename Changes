@@ -2,6 +2,8 @@ Revision history for PDL-DSP-Windows
 
 {{$NEXT}}
 
+  * Do not run tests on unsupported windows
+
 0.007004  2019-12-08 21:11:30 GMT
 
   * Expand test coverage

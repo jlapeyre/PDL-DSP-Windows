@@ -256,7 +256,6 @@ subtest 'argument validation' => sub {
         chebyshev            => 2,
         cos_alpha            => 2,
         cosine               => 1,
-        dpss                 => 2,
         exponential          => 1,
         flattop              => 1,
         gaussian             => 2,
@@ -266,7 +265,6 @@ subtest 'argument validation' => sub {
         hann                 => 1,
         hann_matlab          => 1,
         hann_poisson         => 2,
-        kaiser               => 2,
         lanczos              => 1,
         nuttall              => 1,
         nuttall1             => 1,
@@ -294,7 +292,6 @@ subtest 'argument validation' => sub {
         cauchy_per           => 2,
         cos_alpha_per        => 2,
         cosine_per           => 1,
-        dpss_per             => 2,
         exponential_per      => 1,
         flattop_per          => 1,
         gaussian_per         => 2,
@@ -303,7 +300,6 @@ subtest 'argument validation' => sub {
         hamming_gen_per      => 2,
         hann_per             => 1,
         hann_poisson_per     => 2,
-        kaiser_per           => 2,
         lanczos_per          => 1,
         nuttall_per          => 1,
         nuttall1_per         => 1,
@@ -314,6 +310,16 @@ subtest 'argument validation' => sub {
         tukey_per            => 2,
         welch_per            => 1,
     );
+
+    if ($HAVE_LinearAlgebra) {
+        $windows{dpss}     = 2;
+        $windows{dpss_per} = 2;
+    }
+
+    if ($HAVE_BESSEL) {
+        $windows{kaiser}     = 2;
+        $windows{kaiser_per} = 2;
+    }
 
     while ( my ( $name, $args ) = each %windows ) {
         for my $n ( 0 .. $args - 1, $args + 1 ) {
