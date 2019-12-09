@@ -2,6 +2,8 @@ Revision history for PDL-DSP-Windows
 
 {{$NEXT}}
 
+0.008     2019-12-09 19:06:23 GMT
+
 Fixes:
   * Remove remaining uses of unsupported windows for tests.
 
