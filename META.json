@@ -96,7 +96,7 @@
    "provides" : {
       "PDL::DSP::Windows" : {
          "file" : "lib/PDL/DSP/Windows.pm",
-         "version" : "0.007005"
+         "version" : "0.008"
       }
    },
    "release_status" : "stable",
@@ -111,7 +111,7 @@
          "web" : "https://github.com/jjatria/PDL-DSP-Windows"
       }
    },
-   "version" : "0.007005",
+   "version" : "0.008",
    "x_Dist_Zilla" : {
       "perl" : {
          "version" : "5.030000"
@@ -436,7 +436,7 @@
                   "branch" : null,
                   "changelog" : "Changes",
                   "signed" : 0,
-                  "tag" : "release/0.007005",
+                  "tag" : "release/0.008",
                   "tag_format" : "release/%v",
                   "tag_message" : ""
                },
