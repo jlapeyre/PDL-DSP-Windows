@@ -346,23 +346,23 @@ subtest 'argument validation' => sub {
 
 subtest 'argument parsing' => sub {
     my $hamming  = window({ N => 10 });
-    my $kaiser   = window({ N => 10, name => 'kaiser', params => 2 });
-    my $periodic = window({ N => 10, name => 'kaiser', params => 2, per => 1 });
+    my $tukey    = window({ N => 10, name => 'tukey', params => 2 });
+    my $periodic = window({ N => 10, name => 'tukey', params => 2, per => 1 });
 
     is_approx window( 10,           'hamming'  ), $hamming;
     is_approx window( 10, { name => 'hamming' }), $hamming;
 
-    is_approx window( 10,           'kaiser',              2   ), $kaiser;
-    is_approx window( 10,           'kaiser',             [2]  ), $kaiser;
-    is_approx window( 10,           'kaiser', { params =>  2  }), $kaiser;
-    is_approx window( 10,           'kaiser', { params => [2] }), $kaiser;
-    is_approx window( 10, { name => 'kaiser',   params =>  2  }), $kaiser;
+    is_approx window( 10,           'tukey',              2   ), $tukey;
+    is_approx window( 10,           'tukey',             [2]  ), $tukey;
+    is_approx window( 10,           'tukey', { params =>  2  }), $tukey;
+    is_approx window( 10,           'tukey', { params => [2] }), $tukey;
+    is_approx window( 10, { name => 'tukey',   params =>  2  }), $tukey;
 
-    is_approx window( 10, 'kaiser',             2,          1  ), $periodic;
-    is_approx window( 10, 'kaiser',             2, { per => 1 }), $periodic;
-    is_approx window( 10, 'kaiser', { params => 2,   per => 1 }), $periodic;
+    is_approx window( 10, 'tukey',             2,          1  ), $periodic;
+    is_approx window( 10, 'tukey',             2, { per => 1 }), $periodic;
+    is_approx window( 10, 'tukey', { params => 2,   per => 1 }), $periodic;
 
-    is_approx window( 10, { name => 'kaiser', params => 2, per => 1 }),
+    is_approx window( 10, { name => 'tukey', params => 2, per => 1 }),
         $periodic;
 };
 
