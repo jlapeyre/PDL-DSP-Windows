@@ -34,12 +34,12 @@ and software, some functions referred to by several different names, and some
 names refer to several different functions. As a result, the choice of window
 names is somewhat arbitrary.
 
-The ["kaiser($N,$beta)"](#kaiser-n-beta) window function requires [PDL::GSLSF::BESSEL](https://metacpan.org/pod/PDL::GSLSF::BESSEL). The
-["dpss($N,$beta)"](#dpss-n-beta) window function requires [PDL::LinearAlgebra](https://metacpan.org/pod/PDL::LinearAlgebra). But the
+The ["kaiser($N,$beta)"](#kaiser-n-beta) window function requires [PDL::GSLSF::BESSEL](https://metacpan.org/pod/PDL%3A%3AGSLSF%3A%3ABESSEL). The
+["dpss($N,$beta)"](#dpss-n-beta) window function requires [PDL::LinearAlgebra](https://metacpan.org/pod/PDL%3A%3ALinearAlgebra). But the
 remaining window functions may be used if these modules are not installed.
 
 The most common and easiest usage of this module is indirect, via some
-higher-level filtering interface, such as [PDL::DSP::Fir::Simple](https://metacpan.org/pod/PDL::DSP::Fir::Simple). The next
+higher-level filtering interface, such as [PDL::DSP::Fir::Simple](https://metacpan.org/pod/PDL%3A%3ADSP%3A%3AFir%3A%3ASimple). The next
 easiest usage is to return a pdl of real-space samples with the subroutine
 ["window"](#window). Finally, for analyzing window functions, object methods, such as
 ["new"](#new), ["plot"](#plot), ["plot\_freq"](#plot_freq) are provided.
@@ -244,7 +244,7 @@ function. This is static data and does not depend on the instance.
 
     $win->plot;
 
-Plot the samples. Currently, only [PDL::Graphics::Gnuplot](https://metacpan.org/pod/PDL::Graphics::Gnuplot) is supported. The
+Plot the samples. Currently, only [PDL::Graphics::Gnuplot](https://metacpan.org/pod/PDL%3A%3AGraphics%3A%3AGnuplot) is supported. The
 default display type is used.
 
 ## plot\_freq
@@ -259,7 +259,7 @@ Or this
 
 Plot the frequency response (magnitude of the DFT of the window samples).
 The response is plotted in dB, and the frequency (by default) as a fraction of
-the Nyquist frequency. Currently, only [PDL::Graphics::Gnuplot](https://metacpan.org/pod/PDL::Graphics::Gnuplot) is supported.
+the Nyquist frequency. Currently, only [PDL::Graphics::Gnuplot](https://metacpan.org/pod/PDL%3A%3AGraphics%3A%3AGnuplot) is supported.
 The default display type is used.
 
 ### options
@@ -748,7 +748,7 @@ in the Octave signal package.
 
 # LICENSE AND COPYRIGHT
 
-Copyright 2012-2019 John Lapeyre.
+Copyright 2012-2021 John Lapeyre.
 
 This program is free software; you can redistribute it and/or modify it
 under the terms of either: the GNU General Public License as published

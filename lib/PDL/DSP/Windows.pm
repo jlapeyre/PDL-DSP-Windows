@@ -2079,7 +2079,7 @@ in the Octave signal package.
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright 2012-2019 John Lapeyre.
+Copyright 2012-2021 John Lapeyre.
 
 This program is free software; you can redistribute it and/or modify it
 under the terms of either: the GNU General Public License as published
