@@ -1,5 +1,4 @@
 requires 'PDL'              => 0;
-requires 'Variable::Magic'  => 0;
 requires 'namespace::clean' => 0;
 
 feature dpss => 'Support for DPSS windows' => sub {

@@ -1,6 +1,6 @@
 package PDL::DSP::Windows;
 
-our $VERSION = '0.009';
+our $VERSION = '0.008001';
 
 use strict;
 use warnings;
@@ -185,10 +185,6 @@ our @EXPORT_OK = (
 );
 
 $PDL::onlinedoc->scan(__FILE__) if $PDL::onlinedoc;
-
-our %winsubs;
-our %winpersubs;
-our %window_definitions;
 
 =encoding utf8
 
@@ -1558,49 +1554,6 @@ sub welch_per {
     my ($N) = @_;
     1 - zeroes($N)->xlinvals( -1, ( -1 + 1 * ( $N - 1 ) ) / $N ) ** 2;
 }
-
-# Deprecated static data
-# These package variables will be removed entirely sometime in 2021
-
-$window_definitions{$_} = {} for keys %symmetric_windows;
-
-$window_definitions{$_}{alias} = [ @{ $window_aliases{$_} } ]
-    for keys %window_aliases;
-
-$window_definitions{$_}{params} = [ @{ $window_parameters{$_} } ]
-    for keys %window_parameters;
-
-$window_definitions{$_}{fn} = $window_names{$_}
-    for keys %window_names;
-
-$window_definitions{$_}{pfn} = $window_print_names{$_}
-    for keys %window_print_names;
-
-%winpersubs = map { $_ => __PACKAGE__->can("${_}_per") } keys %periodic_windows;
-%winsubs    = map { $_ => __PACKAGE__->can($_) } keys %symmetric_windows;
-
-my $wizard = do {
-    my $msg = 'Package variables from PDL::DSP::Windows are deprecated and will be removed in the future.';
-
-    my $read = sub {
-        carp $msg . ' This attempt to read from them will soon stop working';
-    };
-
-    my $write = sub {
-        carp $msg . ' This attempt to write to them no longer has an effect';
-    };
-
-    wizard(
-        fetch  => $read,
-        exists => $read,
-        store  => $write,
-        delete => $write,
-    );
-};
-
-cast %winsubs,            $wizard;
-cast %winpersubs,         $wizard;
-cast %window_definitions, $wizard;
 
 =head1 Symmetric window functions
 
