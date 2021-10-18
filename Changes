@@ -2,6 +2,8 @@ Revision history for PDL-DSP-Windows
 
 {{$NEXT}}
 
+0.008001  2021-10-18 19:51:22 BST (TRIAL RELEASE)
+
 Changes:
   * Remove package variables deprecated in 0.007001
   * Tweaked distribution packaging, removing some authoring
