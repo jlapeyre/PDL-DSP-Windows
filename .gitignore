@@ -1,4 +1,5 @@
 *~
+*.swp
 cover_db
 .build/
 PDL-DSP-Windows-*
