@@ -4,6 +4,8 @@ Revision history for PDL-DSP-Windows
 
 Changes:
   * Remove package variables deprecated in 0.007001
+  * Tweaked distribution packaging, removing some authoring
+    files from the distributed tarball
 
 0.008     2019-12-09 19:06:23 GMT
 
