@@ -2038,12 +2038,12 @@ sub cos_mult_to_pow {
 }
 
 # Delete internal constants from namespace
-delete $PDL::DSP::Windows::{$_} for qw(
+delete @PDL::DSP::Windows::{qw(
     HAVE_LinearAlgebra
     HAVE_BESSEL
     HAVE_GNUPLOT
     USE_FFTW_DIRECTION
-);
+)};
 
 1;
 
