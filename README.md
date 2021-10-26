@@ -180,7 +180,7 @@ These values are stored in the object `$win`, but are regenerated every time
 - min\_bins => MIN
 
     This sets the minimum number of frequency bins. Defaults to 1000. If necessary,
-    the piddle of window samples are padded with zeros before the fourier transform
+    the piddle of window samples are padded with zeroes before the fourier transform
     is performed.
 
 ## get

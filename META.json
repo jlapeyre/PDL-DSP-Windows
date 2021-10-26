@@ -74,7 +74,6 @@
       "runtime" : {
          "requires" : {
             "PDL" : "0",
-            "namespace::clean" : "0",
             "perl" : "5.010"
          }
       },

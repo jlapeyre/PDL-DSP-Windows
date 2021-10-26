@@ -17,8 +17,7 @@ my %WriteMakefileArgs = (
   "MIN_PERL_VERSION" => "5.010",
   "NAME" => "PDL::DSP::Windows",
   "PREREQ_PM" => {
-    "PDL" => 0,
-    "namespace::clean" => 0
+    "PDL" => 0
   },
   "TEST_REQUIRES" => {
     "Capture::Tiny" => 0,
@@ -40,8 +39,7 @@ my %FallbackPrereqs = (
   "File::Spec" => 0,
   "PDL" => 0,
   "Test::More" => "0.96",
-  "Try::Tiny" => 0,
-  "namespace::clean" => 0
+  "Try::Tiny" => 0
 );
 
 

@@ -2,6 +2,9 @@ Revision history for PDL-DSP-Windows
 
 {{$NEXT}}
 
+Changes:
+  * Drop dependency on namespace::clean
+
 0.008001  2021-10-18 19:51:22 BST (TRIAL RELEASE)
 
 Changes:
