@@ -3,6 +3,10 @@
 use Test2::V0;
 use PDL::DSP::Windows;
 
+# FIXME: Why does this appear when running on 5.10?
+# See https://perldoc.perl.org/Exporter#Managing-Unknown-Symbols
+delete $PDL::DSP::Windows::{EXPORT_FAIL};
+
 is [ sort keys %PDL::DSP::Windows:: ], [qw(
     BEGIN
     EXPORT
