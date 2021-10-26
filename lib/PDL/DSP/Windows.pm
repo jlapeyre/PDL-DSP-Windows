@@ -17,13 +17,10 @@ use PDL::Ufunc ();
 
 # These constants are deleted at the end of this package
 use constant {
-    HAVE_LinearAlgebra => eval { require PDL::LinearAlgebra::Special; 1 } || 0,
-    HAVE_BESSEL        => eval { require PDL::GSLSF::BESSEL; 1 }          || 0,
-    HAVE_GNUPLOT       => eval { require PDL::Graphics::Gnuplot; 1 }      || 0,
-    USE_FFTW_DIRECTION => do {
-        require version;
-        version->parse($PDL::VERSION) <= version->parse('2.007');
-    },
+    HAVE_LinearAlgebra => eval { require PDL::LinearAlgebra::Special } || 0,
+    HAVE_BESSEL        => eval { require PDL::GSLSF::BESSEL }          || 0,
+    HAVE_GNUPLOT       => eval { require PDL::Graphics::Gnuplot }      || 0,
+    USE_FFTW_DIRECTION => version->parse($PDL::VERSION) <= v2.007,
 };
 
 # These constants are left in our namespace for historical reasons
