@@ -2,6 +2,9 @@ Revision history for PDL-DSP-Windows
 
 {{$NEXT}}
 
+Fixes:
+  * Fix a wrong dependency introduced in namespace test
+
 0.008002  2021-10-26 21:36:20 BST (TRIAL RELEASE)
 
 Changes:
