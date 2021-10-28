@@ -26,7 +26,7 @@ subtest 'chebpoly.' => sub {
         'chebpoly takes arrayref',
     );
 
-    is chebpoly( 3, 1.2 ), 3.312, 'chebpoly takes plain scalar';
+    is_approx chebpoly( 3, 1.2 ), 3.312, 'chebpoly takes plain scalar';
 };
 
 
